@@ -79,6 +79,31 @@ class SemanticDeduplicator:
         return list(groups.values())
 
 
-class Deduplicator(SemanticDeduplicator):
-    """Backward-compatible alias for hash-based deduplication fallback."""
-    pass
+class Deduplicator:
+    """Backward-compatible hash-based deduplication (no embedding model load)."""
+    def __init__(self):
+        self._seen: set[str] = set()
+
+    def is_duplicate(self, article: RawArticle) -> bool:
+        if article.hash in self._seen:
+            return True
+        self._seen.add(article.hash)
+        return False
+
+    def add(self, article: RawArticle) -> None:
+        self._seen.add(article.hash)
+
+    def deduplicate(self, articles: list[RawArticle]) -> list[RawArticle]:
+        unique = []
+        for article in articles:
+            if not self.is_duplicate(article):
+                unique.append(article)
+        return unique
+
+    def group_by_event(self, articles: list[RawArticle]) -> list[list[RawArticle]]:
+        from collections import defaultdict
+        groups: dict[str, list[RawArticle]] = defaultdict(list)
+        for article in articles:
+            key = f"{article.source_name}:{article.title[:30].lower().strip()}"
+            groups[key].append(article)
+        return list(groups.values())

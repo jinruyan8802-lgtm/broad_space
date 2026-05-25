@@ -18,9 +18,14 @@ def make_article(id_: str, title: str, content: str = "content here", source: st
     )
 
 
-def test_deduplicator_alias():
-    """Deduplicator is an alias for SemanticDeduplicator."""
-    assert issubclass(Deduplicator, SemanticDeduplicator)
+def test_deduplicator_no_embedding_load():
+    """Deduplicator does not inherit SemanticDeduplicator (no embedding model on init)."""
+    assert not issubclass(Deduplicator, SemanticDeduplicator)
+    # Instantiation must be fast (no model download)
+    import time
+    t0 = time.perf_counter()
+    dedup = Deduplicator()
+    assert time.perf_counter() - t0 < 0.1  # Must be <100ms
 
 
 @patch("processor.pipeline.dedup.FASTEMBED_AVAILABLE", False)
