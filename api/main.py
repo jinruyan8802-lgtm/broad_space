@@ -1,0 +1,97 @@
+import os
+
+from fastapi import FastAPI, Query, HTTPException
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import sessionmaker
+
+from api.models import ContentResponse
+
+app = FastAPI(title="BroadSpace API")
+
+db_url = os.environ.get("DATABASE_URL", "postgresql://broadspace:broadspace@localhost:5432/broadspace")
+engine = create_engine(db_url)
+Session = sessionmaker(bind=engine)
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
+@app.get("/content", response_model=list[ContentResponse])
+def list_content(
+    category: str | None = Query(None, description="Filter by category"),
+    min_signal: float = Query(0.0, ge=0.0, le=1.0),
+    limit: int = Query(20, ge=1, le=100),
+    offset: int = Query(0, ge=0),
+):
+    session = Session()
+    try:
+        query_str = """
+            SELECT id, title, url, summary, categories, key_points,
+                   signal_strength, sentiment, sources, processed_at
+            FROM processed_articles
+            WHERE signal_strength >= :min_signal
+              AND (:category IS NULL OR categories @> ARRAY[:category])
+            ORDER BY signal_strength DESC, processed_at DESC
+            LIMIT :limit OFFSET :offset
+        """
+        query = session.execute(
+            text(query_str),
+            {
+                "min_signal": min_signal,
+                "category": category,
+                "limit": limit,
+                "offset": offset,
+            }
+        )
+
+        results = []
+        for row in query:
+            results.append(ContentResponse(
+                id=row.id,
+                title=row.title,
+                url=row.url,
+                summary=row.summary or "",
+                categories=row.categories or [],
+                key_points=row.key_points or [],
+                signal_strength=row.signal_strength or 0.0,
+                sentiment=row.sentiment or "neutral",
+                sources=row.sources or [],
+                processed_at=row.processed_at,
+            ))
+        return results
+    finally:
+        session.close()
+
+
+@app.get("/content/{content_id}", response_model=ContentResponse)
+def get_content(content_id: str):
+    session = Session()
+    try:
+        row = session.execute(
+            text("""
+                SELECT id, title, url, summary, categories, key_points,
+                       signal_strength, sentiment, sources, processed_at
+                FROM processed_articles WHERE id = :id
+            """),
+            {"id": content_id}
+        ).fetchone()
+
+        if not row:
+            raise HTTPException(status_code=404, detail="Content not found")
+
+        return ContentResponse(
+            id=row.id,
+            title=row.title,
+            url=row.url,
+            summary=row.summary or "",
+            categories=row.categories or [],
+            key_points=row.key_points or [],
+            signal_strength=row.signal_strength or 0.0,
+            sentiment=row.sentiment or "neutral",
+            sources=row.sources or [],
+            processed_at=row.processed_at,
+        )
+    finally:
+        session.close()
