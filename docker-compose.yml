@@ -1,0 +1,52 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${DB_USER:-broadspace}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-broadspace}
+      POSTGRES_DB: ${DB_NAME:-broadspace}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-broadspace} -d ${DB_NAME:-broadspace}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  miniflux:
+    image: miniflux/miniflux:latest
+    environment:
+      DATABASE_URL: postgres://${DB_USER:-broadspace}:${DB_PASSWORD:-broadspace}@postgres/${DB_NAME:-broadspace}?sslmode=disable
+      RUN_MIGRATIONS: 1
+      CREATE_ADMIN: 1
+      ADMIN_USERNAME: ${MINIFLUX_ADMIN:-admin}
+      ADMIN_PASSWORD: ${MINIFLUX_PASSWORD:-admin123}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "/usr/bin/miniflux", "-healthcheck", "auto"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+  redis_data:
