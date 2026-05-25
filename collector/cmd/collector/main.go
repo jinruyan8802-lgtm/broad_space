@@ -1,0 +1,102 @@
+package main
+
+import (
+	"context"
+	"log"
+	"os"
+	"os/signal"
+	"sync"
+	"syscall"
+	"time"
+
+	"github.com/broadspace/collector/internal/config"
+	"github.com/broadspace/collector/internal/normalizer"
+	"github.com/broadspace/collector/internal/queue"
+	"github.com/broadspace/collector/internal/source"
+)
+
+func main() {
+	cfg := config.Load()
+
+	publisher, err := queue.NewPublisher(cfg.RedisURL, "broadspace:articles")
+	if err != nil {
+		log.Fatalf("redis publisher: %v", err)
+	}
+	defer publisher.Close()
+
+	sources := []source.Source{
+		source.NewMiniflux(cfg.MinifluxURL, cfg.MinifluxUser, cfg.MinifluxPass),
+		source.NewHackerNews(),
+		source.NewGitHubTrending(),
+		source.NewArXiv(),
+	}
+
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	// Graceful shutdown
+	sigCh := make(chan os.Signal, 1)
+	signal.Notify(sigCh, syscall.SIGINT, syscall.SIGTERM)
+	go func() {
+		<-sigCh
+		log.Println("shutting down...")
+		cancel()
+	}()
+
+	ticker := time.NewTicker(30 * time.Minute)
+	defer ticker.Stop()
+
+	// Run immediately on start
+	runCollection(ctx, sources, publisher, cfg.MaxConcurrency)
+
+	for {
+		select {
+		case <-ticker.C:
+			runCollection(ctx, sources, publisher, cfg.MaxConcurrency)
+		case <-ctx.Done():
+			return
+		}
+	}
+}
+
+func runCollection(ctx context.Context, sources []source.Source, pub *queue.Publisher, maxConcurrency int) {
+	start := time.Now()
+	log.Println("starting collection cycle...")
+
+	semaphore := make(chan struct{}, maxConcurrency)
+	var wg sync.WaitGroup
+
+	for _, src := range sources {
+		wg.Add(1)
+		go func(s source.Source) {
+			defer wg.Done()
+
+			semaphore <- struct{}{}
+			defer func() { <-semaphore }()
+
+			articles, err := s.Fetch(ctx)
+			if err != nil {
+				log.Printf("source %s failed: %v", s.Name(), err)
+				return
+			}
+
+			log.Printf("source %s: fetched %d articles", s.Name(), len(articles))
+
+			for _, article := range articles {
+				norm := normalizer.Normalize(article)
+				data, err := norm.ToJSON()
+				if err != nil {
+					log.Printf("normalize failed: %v", err)
+					continue
+				}
+
+				if err := pub.Publish(ctx, norm.Hash, data); err != nil {
+					log.Printf("publish failed: %v", err)
+				}
+			}
+		}(src)
+	}
+
+	wg.Wait()
+	log.Printf("collection cycle complete in %v", time.Since(start))
+}
