@@ -1,4 +1,5 @@
 import json
+import os
 import time
 import subprocess
 import sys
@@ -9,31 +10,44 @@ import requests
 from sqlalchemy import create_engine, text
 
 
+def _get_db_url():
+    return (
+        f"postgresql://{os.environ.get('DB_USER', 'broadspace')}:"
+        f"{os.environ.get('DB_PASSWORD', 'change_me_in_production')}@"
+        f"{os.environ.get('DB_HOST', 'localhost')}:5432/"
+        f"{os.environ.get('DB_NAME', 'broadspace')}"
+    )
+
+
 @pytest.fixture(scope="module")
 def services():
     """Ensure Docker services are running."""
     # Check Redis
-    r = redis.from_url("redis://localhost:6379/0")
+    r = redis.from_url(os.environ.get("REDIS_URL", "redis://localhost:6379/0"))
     try:
         r.ping()
     except redis.ConnectionError:
         pytest.skip("Redis not available — run 'docker compose up -d' first")
 
     # Check PostgreSQL
-    engine = create_engine("postgresql://broadspace:broadspace@localhost:5432/broadspace")
+    engine = create_engine(_get_db_url())
     try:
         with engine.connect() as conn:
             conn.execute(text("SELECT 1"))
     except Exception:
         pytest.skip("PostgreSQL not available — run 'docker compose up -d' first")
 
-    return {"redis": r, "db": engine}
+    return {"redis": r, "db": engine, "db_url": _get_db_url()}
 
 
 def test_end_to_end_pipeline(services):
     """Test: publish a raw article to Redis, run processor, verify it's in DB and API."""
     r = services["redis"]
     db = services["db"]
+
+    # Create table if not exists
+    from processor.worker_models import Base
+    Base.metadata.create_all(db)
 
     # Clean up
     r.delete("broadspace:articles")
@@ -68,8 +82,8 @@ def test_end_to_end_pipeline(services):
     }
 
     worker = Worker(
-        redis_url="redis://localhost:6379/0",
-        db_url="postgresql://broadspace:broadspace@localhost:5432/broadspace",
+        redis_url=os.environ.get("REDIS_URL", "redis://localhost:6379/0"),
+        db_url=services["db_url"],
         llm=mock_llm,
     )
 

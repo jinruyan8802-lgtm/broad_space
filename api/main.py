@@ -4,11 +4,15 @@ from fastapi import FastAPI, Query, HTTPException
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
-from api.models import ContentResponse
+from models import ContentResponse
 
 app = FastAPI(title="BroadSpace API")
 
-db_url = os.environ.get("DATABASE_URL", "postgresql://broadspace:broadspace@localhost:5432/broadspace")
+db_user = os.environ.get("DB_USER", "broadspace")
+db_pass = os.environ.get("DB_PASSWORD", "change_me_in_production")
+db_name = os.environ.get("DB_NAME", "broadspace")
+db_host = os.environ.get("DB_HOST", "localhost")
+db_url = f"postgresql://{db_user}:{db_pass}@{db_host}:5432/{db_name}"
 engine = create_engine(db_url)
 Session = sessionmaker(bind=engine)
 
