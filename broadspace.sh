@@ -55,14 +55,15 @@ start_services() {
     echo "Waiting for services..." | tee -a "$LOG_DIR/startup.log"
     sleep 5
 
-    # 2. Verify services
+    # 2. Wait for services to be healthy
     echo "[2/4] Verifying services..." | tee -a "$LOG_DIR/startup.log"
-    for i in {1..10}; do
-        if docker compose exec -T postgres psql -U "$DB_USER" -d "$DB_NAME" -c "SELECT 1" > /dev/null 2>&1; then
-            echo "PostgreSQL ready" | tee -a "$LOG_DIR/startup.log"
+    for i in {1..30}; do
+        STATUS=$(docker compose ps --format "{{.Status}}" 2>/dev/null | head -1)
+        if [ "$STATUS" = "Up" ] || [ "$STATUS" = "Up (healthy)" ]; then
+            echo "Services ready" | tee -a "$LOG_DIR/startup.log"
             break
         fi
-        echo "Waiting for PostgreSQL... ($i/10)" | tee -a "$LOG_DIR/startup.log"
+        echo "Waiting for services... ($i/30)" | tee -a "$LOG_DIR/startup.log"
         sleep 2
     done
 
@@ -70,7 +71,7 @@ start_services() {
     echo "[3/4] Building Go collector..." | tee -a "$LOG_DIR/startup.log"
     cd collector && go build -o bin/collector ./cmd/collector 2>&1 | tee -a "../$LOG_DIR/startup.log" && cd ..
 
-    # 4. Start services in background
+    # 4. Start application services in background
     echo "[4/4] Starting application services..." | tee -a "$LOG_DIR/startup.log"
     rm -f "$PID_FILE"
 
@@ -82,20 +83,20 @@ start_services() {
     (cd processor && source .venv/bin/activate && PYTHONPATH=src python -m processor.worker >> "../$LOG_DIR/processor.log" 2>&1) &
     echo $! >> "$PID_FILE"
 
-    # API server
-    (cd api && source ../processor/.venv/bin/activate && PYTHONPATH=../processor/src uvicorn main:app --host 0.0.0.0 --port 8000 >> "../$LOG_DIR/api.log" 2>&1) &
-    echo $! >> "$PID_FILE"
-
-    echo ""
-    echo "=== BroadSpace is running ==="
+    echo "" | tee -a "$LOG_DIR/startup.log"
+    echo "=== BroadSpace is running ===" | tee -a "$LOG_DIR/startup.log"
+    echo "Docker Services:" | tee -a "$LOG_DIR/startup.log"
+    docker compose ps 2>&1 | tee -a "$LOG_DIR/startup.log"
+    echo "" | tee -a "$LOG_DIR/startup.log"
     echo "API:        http://localhost:8000"
     echo "Miniflux:   http://localhost:8080 (admin:admin123)"
+    echo "Neo4j:      http://localhost:7474 (neo4j/broadspace)"
+    echo "Prometheus: http://localhost:9090"
+    echo "Grafana:    http://localhost:3000 (admin:admin)"
     echo "Logs:       ./$LOG_DIR/"
     echo "  - collector.log    (Go collector)"
     echo "  - processor.log    (Python processor)"
-    echo "  - api.log          (FastAPI server)"
-    echo "  - startup.log      (Orchestration)"
-    echo "PIDs:       $(tr '\n' ' ' < "$PID_FILE")"
+    echo "  - startup.log       (Orchestration)"
 }
 
 get_status() {
@@ -114,7 +115,6 @@ get_status() {
             case $idx in
                 1) name="collector" ;;
                 2) name="processor" ;;
-                3) name="api" ;;
             esac
 
             if kill -0 "$pid" 2>/dev/null; then
@@ -134,14 +134,15 @@ get_status() {
     docker compose ps --format "table {{.Name}}\t{{.Status}}\t{{.Ports}}" 2>/dev/null || echo "No Docker services running"
 
     echo ""
-    echo "PID file: $PID_FILE"
-    echo "Log directory: $LOG_DIR"
+    echo "API Endpoints:"
+    echo "  Health:    $(curl -s -o /dev/null -w '%{http_code}' http://localhost:8000/health 2>/dev/null || echo "down")"
+    echo "  Metrics:   $(curl -s -o /dev/null -w '%{http_code}' http://localhost:8000/metrics 2>/dev/null || echo "down")"
+    echo "  Content:   $(curl -s -o /dev/null -w '%{http_code}' http://localhost:8000/content 2>/dev/null || echo "down")"
 }
 
 run_test() {
     load_env
     echo "=== Running Integration Test ==="
-    export PYTHONPATH=processor/src
     PYTHONPATH=processor/src \
     DB_USER="$DB_USER" \
     DB_PASSWORD="$DB_PASSWORD" \
