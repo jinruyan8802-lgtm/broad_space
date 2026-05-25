@@ -56,15 +56,13 @@ LLM_API_KEY=sk-...
 ANTHROPIC_API_KEY=sk-ant-...
 ```
 
-### 3. Build & Run
+### 4. Run via orchestration script
 
 ```bash
-# Build Go collector
-cd collector && go build -o bin/collector ./cmd/collector && cd ..
-
-# Run via orchestration script
 ./broadspace.sh start
 ```
+
+This starts: Docker services → Go collector → Python processor → Next.js web
 
 Or manually:
 ```bash
@@ -74,7 +72,10 @@ Or manually:
 # Processor
 cd processor && source .venv/bin/activate && PYTHONPATH=src python -m processor.worker
 
-# API
+# Next.js Web
+cd web && npm run dev
+
+# API (optional - handled by Docker)
 cd api && source .venv/bin/activate && uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 

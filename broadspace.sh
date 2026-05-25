@@ -50,13 +50,13 @@ start_services() {
     echo "=== BroadSpace Startup ===" | tee -a "$LOG_DIR/startup.log"
 
     # 1. Start Docker services
-    echo "[1/4] Starting Docker services..." | tee -a "$LOG_DIR/startup.log"
+    echo "[1/5] Starting Docker services..." | tee -a "$LOG_DIR/startup.log"
     docker compose up -d 2>&1 | tee -a "$LOG_DIR/startup.log"
     echo "Waiting for services..." | tee -a "$LOG_DIR/startup.log"
     sleep 5
 
     # 2. Wait for services to be healthy
-    echo "[2/4] Verifying services..." | tee -a "$LOG_DIR/startup.log"
+    echo "[2/5] Verifying services..." | tee -a "$LOG_DIR/startup.log"
     for i in {1..30}; do
         STATUS=$(docker compose ps --format "{{.Status}}" 2>/dev/null | head -1)
         if [ "$STATUS" = "Up" ] || [ "$STATUS" = "Up (healthy)" ]; then
@@ -68,11 +68,11 @@ start_services() {
     done
 
     # 3. Build collector
-    echo "[3/4] Building Go collector..." | tee -a "$LOG_DIR/startup.log"
+    echo "[3/5] Building Go collector..." | tee -a "$LOG_DIR/startup.log"
     cd collector && go build -o bin/collector ./cmd/collector 2>&1 | tee -a "../$LOG_DIR/startup.log" && cd ..
 
     # 4. Start application services in background
-    echo "[4/4] Starting application services..." | tee -a "$LOG_DIR/startup.log"
+    echo "[4/5] Starting application services..." | tee -a "$LOG_DIR/startup.log"
     rm -f "$PID_FILE"
 
     # Collector
@@ -83,20 +83,34 @@ start_services() {
     (cd processor && source .venv/bin/activate && PYTHONPATH=src python -m processor.worker >> "../$LOG_DIR/processor.log" 2>&1) &
     echo $! >> "$PID_FILE"
 
+    # 5. Build & start Next.js web
+    echo "[5/5] Starting Next.js web..." | tee -a "$LOG_DIR/startup.log"
+    (cd web && npm run dev >> "../$LOG_DIR/web.log" 2>&1) &
+    echo $! >> "$PID_FILE"
+
     echo "" | tee -a "$LOG_DIR/startup.log"
     echo "=== BroadSpace is running ===" | tee -a "$LOG_DIR/startup.log"
     echo "Docker Services:" | tee -a "$LOG_DIR/startup.log"
     docker compose ps 2>&1 | tee -a "$LOG_DIR/startup.log"
     echo "" | tee -a "$LOG_DIR/startup.log"
-    echo "API:        http://localhost:8000"
-    echo "Miniflux:   http://localhost:8080 (admin:admin123)"
-    echo "Neo4j:      http://localhost:7474 (neo4j/broadspace)"
-    echo "Prometheus: http://localhost:9090"
-    echo "Grafana:    http://localhost:3000 (admin:admin)"
+    echo "Application Services:"
+    echo "  Collector:  ./collector/bin/collector (PID $(sed -n '1p' "$PID_FILE" 2>/dev/null || echo "?"))"
+    echo "  Processor:  Python worker (PID $(sed -n '2p' "$PID_FILE" 2>/dev/null || echo "?"))"
+    echo "  Web:        Next.js dev (PID $(sed -n '3p' "$PID_FILE" 2>/dev/null || echo "?"))"
+    echo ""
+    echo "Web URLs:"
+    echo "  Web App:    http://localhost:3000"
+    echo "  API:        http://localhost:8000"
+    echo "  Miniflux:   http://localhost:8080 (admin:admin123)"
+    echo "  Neo4j:      http://localhost:7474 (neo4j/broadspace)"
+    echo "  Prometheus: http://localhost:9090"
+    echo "  Grafana:    http://localhost:3001 (admin:admin)"
+    echo ""
     echo "Logs:       ./$LOG_DIR/"
     echo "  - collector.log    (Go collector)"
     echo "  - processor.log    (Python processor)"
-    echo "  - startup.log       (Orchestration)"
+    echo "  - web.log          (Next.js)"
+    echo "  - startup.log      (Orchestration)"
 }
 
 get_status() {
@@ -115,6 +129,7 @@ get_status() {
             case $idx in
                 1) name="collector" ;;
                 2) name="processor" ;;
+                3) name="next.js" ;;
             esac
 
             if kill -0 "$pid" 2>/dev/null; then
@@ -134,10 +149,10 @@ get_status() {
     docker compose ps --format "table {{.Name}}\t{{.Status}}\t{{.Ports}}" 2>/dev/null || echo "No Docker services running"
 
     echo ""
-    echo "API Endpoints:"
-    echo "  Health:    $(curl -s -o /dev/null -w '%{http_code}' http://localhost:8000/health 2>/dev/null || echo "down")"
-    echo "  Metrics:   $(curl -s -o /dev/null -w '%{http_code}' http://localhost:8000/metrics 2>/dev/null || echo "down")"
-    echo "  Content:   $(curl -s -o /dev/null -w '%{http_code}' http://localhost:8000/content 2>/dev/null || echo "down")"
+    echo "Web Endpoints:"
+    echo "  Web App:    $(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000 2>/dev/null || echo "down")"
+    echo "  API Health: $(curl -s -o /dev/null -w '%{http_code}' http://localhost:8000/health 2>/dev/null || echo "down")"
+    echo "  API Metrics:$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8000/metrics 2>/dev/null || echo "down")"
 }
 
 run_test() {
