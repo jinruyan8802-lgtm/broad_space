@@ -23,7 +23,7 @@ type NormalizedArticle struct {
 }
 
 func Normalize(article source.Article) NormalizedArticle {
-	hash := sha256.Sum256([]byte(article.URL + article.Title))
+	hash := sha256.Sum256([]byte(article.URL + "|" + article.Title))
 	return NormalizedArticle{
 		ID:          fmt.Sprintf("%s_%s", article.SourceName, article.ID),
 		Title:       article.Title,

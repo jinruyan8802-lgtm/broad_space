@@ -18,6 +18,9 @@ func NewPublisher(redisURL, stream string) (*Publisher, error) {
 		return nil, fmt.Errorf("parse redis url: %w", err)
 	}
 	client := redis.NewClient(opts)
+	if client == nil {
+		return nil, fmt.Errorf("failed to create redis client")
+	}
 	return &Publisher{client: client, stream: stream}, nil
 }
 
