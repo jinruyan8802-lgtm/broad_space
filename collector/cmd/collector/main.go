@@ -17,19 +17,24 @@ import (
 
 func main() {
 	cfg := config.Load()
+	log.Printf("BroadSpace collector starting (concurrency=%d interval=%s)", cfg.MaxConcurrency, cfg.FetchInterval)
 
 	publisher, err := queue.NewPublisher(cfg.RedisURL, "broadspace:articles")
 	if err != nil {
 		log.Fatalf("redis publisher: %v", err)
 	}
 	defer publisher.Close()
+	log.Printf("Connected to Redis: %s", cfg.RedisURL)
 
 	sources := []source.Source{
 		source.NewMiniflux(cfg.MinifluxURL, cfg.MinifluxUser, cfg.MinifluxPass),
 		source.NewHackerNews(),
 		source.NewGitHubTrending(),
 		source.NewArXiv(),
+		source.NewV2EX(),
+		// source.NewZhihu(), // requires auth, enable when ready
 	}
+	log.Printf("Configured %d sources: %v", len(sources), sourceNames(sources))
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -54,6 +59,7 @@ func main() {
 		case <-ticker.C:
 			runCollection(ctx, sources, publisher, cfg.MaxConcurrency)
 		case <-ctx.Done():
+			log.Println("collector stopped")
 			return
 		}
 	}
@@ -80,23 +86,39 @@ func runCollection(ctx context.Context, sources []source.Source, pub *queue.Publ
 				return
 			}
 
+			if len(articles) == 0 {
+				log.Printf("source %s: no articles fetched", s.Name())
+				return
+			}
 			log.Printf("source %s: fetched %d articles", s.Name(), len(articles))
 
+			published := 0
 			for _, article := range articles {
 				norm := normalizer.Normalize(article)
 				data, err := norm.ToJSON()
 				if err != nil {
-					log.Printf("normalize failed: %v", err)
+					log.Printf("normalize failed for article %s: %v", article.ID, err)
 					continue
 				}
 
 				if err := pub.Publish(ctx, norm.Hash, data); err != nil {
-					log.Printf("publish failed: %v", err)
+					log.Printf("publish failed for article %s: %v", norm.Hash, err)
+					continue
 				}
+				published++
 			}
+			log.Printf("source %s: published %d/%d articles", s.Name(), published, len(articles))
 		}(src)
 	}
 
 	wg.Wait()
 	log.Printf("collection cycle complete in %v", time.Since(start))
+}
+
+func sourceNames(sources []source.Source) []string {
+	names := make([]string, len(sources))
+	for i, s := range sources {
+		names[i] = s.Name()
+	}
+	return names
 }
