@@ -1,10 +1,16 @@
 import os
+import time
 
-from fastapi import FastAPI, Query, HTTPException
+from fastapi import FastAPI, Query, HTTPException, Request
+from fastapi.responses import Response
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
 from models import ContentResponse
+
+REQUEST_COUNT = Counter("api_requests_total", "Total requests", ["method", "endpoint", "status"])
+REQUEST_LATENCY = Histogram("api_request_duration_seconds", "Request latency")
 
 app = FastAPI(title="BroadSpace API")
 
@@ -17,9 +23,35 @@ engine = create_engine(db_url)
 Session = sessionmaker(bind=engine)
 
 
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start = time.perf_counter()
+    response = await call_next(request)
+    duration = (time.perf_counter() - start) * 1000
+    print(
+        f"{time.strftime('%Y-%m-%dT%H:%M:%S%z')} [{request.method}] {request.url.path} status={response.status_code} latency_ms={duration:.1f}"
+    )
+    return response
+
+
+@app.middleware("http")
+async def metrics_middleware(request: Request, call_next):
+    start = time.perf_counter()
+    response = await call_next(request)
+    duration = time.perf_counter() - start
+    REQUEST_COUNT.labels(method=request.method, endpoint=request.url.path, status=response.status_code).inc()
+    REQUEST_LATENCY.observe(duration)
+    return response
+
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+@app.get("/metrics")
+def metrics():
+    return Response(content=generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
 
 @app.get("/content", response_model=list[ContentResponse])
@@ -31,24 +63,29 @@ def list_content(
 ):
     session = Session()
     try:
-        query_str = """
+        query_parts = [
+            """
             SELECT id, title, url, summary, categories, key_points,
                    signal_strength, sentiment, sources, processed_at
             FROM processed_articles
             WHERE signal_strength >= :min_signal
-              AND (:category IS NULL OR categories @> ARRAY[:category])
-            ORDER BY signal_strength DESC, processed_at DESC
-            LIMIT :limit OFFSET :offset
-        """
-        query = session.execute(
-            text(query_str),
-            {
-                "min_signal": min_signal,
-                "category": category,
-                "limit": limit,
-                "offset": offset,
-            }
-        )
+            """
+        ]
+        params: dict = {
+            "min_signal": min_signal,
+            "limit": limit,
+            "offset": offset,
+        }
+
+        if category:
+            query_parts.append("AND to_jsonb(categories) @> to_jsonb(:category_json)")
+            params["category_json"] = [category]
+
+        query_parts.append("ORDER BY signal_strength DESC, processed_at DESC")
+        query_parts.append("LIMIT :limit OFFSET :offset")
+
+        query_str = " ".join(query_parts)
+        query = session.execute(text(query_str), params)
 
         results = []
         for row in query:

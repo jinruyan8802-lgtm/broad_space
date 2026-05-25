@@ -69,3 +69,43 @@ volumes:
   redis_data:
   neo4j_data:
   neo4j_logs:
+  prometheus_data:
+  grafana_data:
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: postgres
+      DB_USER: ${DB_USER:-broadspace}
+      DB_PASSWORD: ${DB_PASSWORD:-broadspace}
+      DB_NAME: ${DB_NAME:-broadspace}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://localhost:1234/v1}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    ports:
+      - "9090:9090"
+    depends_on:
+      - api
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
