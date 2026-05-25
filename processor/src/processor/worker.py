@@ -1,5 +1,8 @@
 import json
 import logging
+import os
+import sys
+import time
 from typing import Any
 
 import redis
@@ -15,6 +18,45 @@ from processor.pipeline.summarizer import Summarizer
 from processor.worker_models import ProcessedArticle, Base
 
 logger = logging.getLogger(__name__)
+
+
+def _setup_logging():
+    """Configure logging to file with rotation-like daily suffix via append mode."""
+    log_dir = os.path.join(os.path.dirname(__file__), "..", "..", "..", "logs")
+    os.makedirs(log_dir, exist_ok=True)
+    log_path = os.path.join(log_dir, "processor.log")
+
+    log_format = os.environ.get("LOG_FORMAT", "text")
+
+    if log_format == "json":
+        class JsonFormatter(logging.Formatter):
+            def format(self, record):
+                log_obj = {
+                    "ts": self.formatTime(record),
+                    "level": record.levelname,
+                    "logger": record.name,
+                    "msg": record.getMessage(),
+                }
+                if hasattr(record, "duration_ms"):
+                    log_obj["duration_ms"] = record.duration_ms
+                return json.dumps(log_obj, ensure_ascii=False)
+        formatter = JsonFormatter()
+    else:
+        formatter = logging.Formatter(
+            "%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+            datefmt="%Y-%m-%dT%H:%M:%S%z",
+        )
+
+    handler = logging.FileHandler(log_path, mode="a", encoding="utf-8")
+    handler.setFormatter(formatter)
+
+    root = logging.getLogger("processor")
+    root.setLevel(logging.INFO)
+    root.addHandler(handler)
+
+    # Also log SQLAlchemy warnings/errors
+    logging.getLogger("sqlalchemy.engine").setLevel(logging.WARNING)
+    logging.getLogger("sqlalchemy.engine").addHandler(handler)
 
 
 class Worker:
@@ -39,10 +81,12 @@ class Worker:
         self.Session = sessionmaker(bind=engine)
 
         self._ensure_consumer_group()
+        logger.info("Worker initialized: stream=%s group=%s db=%s", stream_key, consumer_group, db_url)
 
     def _ensure_consumer_group(self):
         try:
             self.redis.xgroup_create(self.stream_key, self.consumer_group, id="0", mkstream=True)
+            logger.info("Created consumer group %s", self.consumer_group)
         except redis.ResponseError as e:
             if "already exists" not in str(e):
                 raise
@@ -53,6 +97,7 @@ class Worker:
         articles: list[RawArticle] = []
 
         # Read from stream
+        logger.info("Polling Redis stream: count=%d block_ms=%d", count, block_ms)
         messages = self.redis.xreadgroup(
             self.consumer_group,
             "worker-1",
@@ -60,6 +105,9 @@ class Worker:
             count=count,
             block=block_ms,
         )
+
+        total_messages = sum(len(msgs) for _, msgs in messages)
+        logger.info("Received %d messages from stream", total_messages)
 
         for stream_name, stream_messages in messages:
             for msg_id, fields in stream_messages:
@@ -70,11 +118,15 @@ class Worker:
                         if not dedup.is_duplicate(article):
                             dedup.add(article)
                             articles.append(article)
+                        else:
+                            logger.debug("Duplicate article skipped: hash=%s", article.hash)
                     except Exception as e:
-                        logger.error(f"failed to parse message {msg_id}: {e}")
+                        logger.error("failed to parse message %s: %s", msg_id, e)
 
                 # Acknowledge message
                 self.redis.xack(self.stream_key, self.consumer_group, msg_id)
+
+        logger.info("Accepted %d unique articles after dedup", len(articles))
 
         if not articles:
             return []
@@ -82,21 +134,50 @@ class Worker:
         # Group by event for cross-source analysis
         groups = dedup.group_by_event(articles)
         results: list[ProcessedContent] = []
+        logger.info("Processing %d event groups", len(groups))
 
-        for group in groups:
+        for idx, group in enumerate(groups, 1):
+            start = time.perf_counter()
             processed = self._process_group(group)
+            duration = time.perf_counter() - start
             results.append(processed)
             self._save(processed)
+            logger.info(
+                "Group %d/%d processed: id=%s title=%.50s duration_ms=%.1f",
+                idx, len(groups), processed.id, processed.title, duration * 1000,
+            )
 
+        logger.info("Batch complete: %d articles -> %d processed results", len(articles), len(results))
         return results
 
     def _process_group(self, articles: list[RawArticle]) -> ProcessedContent:
         primary = articles[0]
+        logger.debug("Processing group: primary=%s sources=%d", primary.hash, len(articles))
 
         # Run pipeline steps
+        t0 = time.perf_counter()
         categories = self.classifier.classify(primary)
+        t1 = time.perf_counter()
+        logger.info("Classified %s: categories=%s duration_ms=%.1f", primary.hash, categories, (t1 - t0) * 1000)
+
         summary_result = self.summarizer.summarize(primary)
+        t2 = time.perf_counter()
+        logger.info(
+            "Summarized %s: signal=%.2f sentiment=%s duration_ms=%.1f",
+            primary.hash,
+            summary_result.get("signal_strength", 0.5),
+            summary_result.get("sentiment", "neutral"),
+            (t2 - t1) * 1000,
+        )
+
         analysis = self.analyzer.analyze(articles)
+        t3 = time.perf_counter()
+        logger.info(
+            "Analyzed %s: paradigm=%s duration_ms=%.1f",
+            primary.hash,
+            analysis.get("paradigm_signal", False),
+            (t3 - t2) * 1000,
+        )
 
         return ProcessedContent(
             id=primary.hash,
@@ -128,7 +209,37 @@ class Worker:
                 triples=content.triples,
                 sources=content.sources,
             )
-            session.merge(db_article)  # merge = upsert by primary key
+            session.merge(db_article)
             session.commit()
+            logger.info("Saved to DB: id=%s", content.id)
+        except Exception as e:
+            logger.error("Failed to save id=%s: %s", content.id, e)
+            raise
         finally:
             session.close()
+
+
+if __name__ == "__main__":
+    _setup_logging()
+
+    import os
+
+    redis_url = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
+    db_user = os.environ.get("DB_USER", "broadspace")
+    db_pass = os.environ.get("DB_PASSWORD", "change_me_in_production")
+    db_name = os.environ.get("DB_NAME", "broadspace")
+    db_host = os.environ.get("DB_HOST", "localhost")
+    db_url = f"postgresql://{db_user}:{db_pass}@{db_host}:5432/{db_name}"
+
+    llm = LLMClient()
+    worker = Worker(redis_url=redis_url, db_url=db_url, llm=llm)
+
+    logger.info("Starting BroadSpace processor worker")
+    try:
+        while True:
+            results = worker.run(count=10, block_ms=5000)
+            if results:
+                logger.info("Processed batch of %d articles", len(results))
+    except KeyboardInterrupt:
+        logger.info("Shutting down processor worker")
+        sys.exit(0)
