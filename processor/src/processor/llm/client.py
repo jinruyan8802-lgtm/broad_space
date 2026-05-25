@@ -54,7 +54,11 @@ class LLMClient:
                 system=system_prompt,
                 messages=[{"role": "user", "content": user_prompt}],
             )
-            return response.content[0].text
+            # Handle Claude extended thinking (ThinkingBlock) — skip thinking blocks
+            for block in response.content:
+                if hasattr(block, "text") and block.text:
+                    return block.text
+            return ""
 
     def chat_json(
         self,
