@@ -1,79 +1,125 @@
 #!/bin/bash
 set -e
 
-# Load environment variables
-if [ -f .env ]; then
-    export $(grep -v '^#' .env | xargs)
-fi
+PID_FILE="/tmp/broadspace.pid"
 
-# Defaults
-export DB_USER=${DB_USER:-broadspace}
-export DB_PASSWORD=${DB_PASSWORD:-change_me_in_production}
-export DB_NAME=${DB_NAME:-broadspace}
-export REDIS_URL=${REDIS_URL:-redis://localhost:6379/0}
-export LLM_BASE_URL=${LLM_BASE_URL:-http://localhost:1234/v1}
-export LLM_MODEL=${LLM_MODEL:-}
-export LLM_API_KEY=${LLM_API_KEY:-sk-null}
-
-echo "=== BroadSpace Startup ==="
-
-# 1. Start Docker services
-echo "[1/5] Starting Docker services..."
-docker compose up -d
-echo "Waiting for services..."
-sleep 5
-
-# 2. Verify services
-echo "[2/5] Verifying services..."
-for i in {1..10}; do
-    if docker compose exec -T postgres psql -U "$DB_USER" -d "$DB_NAME" -c "SELECT 1" > /dev/null 2>&1 && \
-       redis-cli -u "$REDIS_URL" ping > /dev/null 2>&1; then
-        echo "All services healthy"
-        break
+load_env() {
+    if [ -f .env ]; then
+        export $(grep -v '^#' .env | xargs)
     fi
-    echo "Waiting for services... ($i/10)"
-    sleep 2
-done
+    export DB_USER=${DB_USER:-broadspace}
+    export DB_PASSWORD=${DB_PASSWORD:-change_me_in_production}
+    export DB_NAME=${DB_NAME:-broadspace}
+    export DB_HOST=${DB_HOST:-localhost}
+    export REDIS_URL=${REDIS_URL:-redis://localhost:6379/0}
+    export LLM_BASE_URL=${LLM_BASE_URL:-http://localhost:1234/v1}
+    export LLM_MODEL=${LLM_MODEL:-}
+    export LLM_API_KEY=${LLM_API_KEY:-sk-null}
+}
 
-# 3. Build collector
-echo "[3/5] Building Go collector..."
-cd collector && go build -o bin/collector ./cmd/collector && cd ..
+get_pids() {
+    if [ -f "$PID_FILE" ]; then
+        cat "$PID_FILE"
+    else
+        echo ""
+    fi
+}
 
-# 4. Run end-to-end test
-echo "[4/5] Running integration test..."
-export PYTHONPATH=processor/src
-cd processor && source .venv/bin/activate && cd ..
-cd api && source ../processor/.venv/bin/activate && cd ..
+stop_services() {
+    echo "Stopping BroadSpace services..."
+    # Kill application processes
+    for pid in $(get_pids); do
+        if kill -0 "$pid" 2>/dev/null; then
+            kill "$pid" 2>/dev/null || true
+            sleep 1
+            kill -9 "$pid" 2>/dev/null || true
+        fi
+    done
+    rm -f "$PID_FILE"
+    # Stop Docker services
+    docker compose down 2>/dev/null || true
+    echo "Stopped."
+}
 
-PYTHONPATH=processor/src \
-DB_USER="$DB_USER" \
-DB_PASSWORD="$DB_PASSWORD" \
-DB_NAME="$DB_NAME" \
-REDIS_URL="$REDIS_URL" \
-python -m pytest tests/integration/test_pipeline.py -v
+start_services() {
+    load_env
 
-echo "[5/5] Starting services in background..."
-# Start collector (background)
-./collector/bin/collector &
-COLLECTOR_PID=$!
+    echo "=== BroadSpace Startup ==="
 
-# Start processor worker (background)
-cd processor && source .venv/bin/activate && PYTHONPATH=src python -m processor.worker &
-PROCESSOR_PID=$!
-cd ..
+    # 1. Start Docker services
+    echo "[1/4] Starting Docker services..."
+    docker compose up -d
+    echo "Waiting for services..."
+    sleep 5
 
-# Start API server (background)
-cd api && source ../processor/.venv/bin/activate && PYTHONPATH=../processor/src uvicorn main:app --host 0.0.0.0 --port 8000 &
-API_PID=$!
-cd ..
+    # 2. Verify services
+    echo "[2/4] Verifying services..."
+    for i in {1..10}; do
+        if docker compose exec -T postgres psql -U "$DB_USER" -d "$DB_NAME" -c "SELECT 1" > /dev/null 2>&1; then
+            echo "PostgreSQL ready"
+            break
+        fi
+        echo "Waiting for PostgreSQL... ($i/10)"
+        sleep 2
+    done
 
-echo ""
-echo "=== BroadSpace is running ==="
-echo "API:        http://localhost:8000"
-echo "Miniflux:   http://localhost:8080 (admin:admin123)"
-echo "Collector:  PID $COLLECTOR_PID"
-echo "Processor:  PID $PROCESSOR_PID"
-echo "API Server: PID $API_PID"
-echo ""
-echo "To stop: kill $COLLECTOR_PID $PROCESSOR_PID $API_PID"
-echo "To test API: curl http://localhost:8000/health"
+    # 3. Build collector
+    echo "[3/4] Building Go collector..."
+    cd collector && go build -o bin/collector ./cmd/collector && cd ..
+
+    # 4. Start services in background
+    echo "[4/4] Starting application services..."
+    rm -f "$PID_FILE"
+
+    # Collector
+    ./collector/bin/collector &
+    echo $! >> "$PID_FILE"
+
+    # Processor worker
+    (cd processor && source .venv/bin/activate && PYTHONPATH=src python -m processor.worker) &
+    echo $! >> "$PID_FILE"
+
+    # API server
+    (cd api && source ../processor/.venv/bin/activate && PYTHONPATH=../processor/src uvicorn main:app --host 0.0.0.0 --port 8000) &
+    echo $! >> "$PID_FILE"
+
+    echo ""
+    echo "=== BroadSpace is running ==="
+    echo "API:        http://localhost:8000"
+    echo "Miniflux:   http://localhost:8080 (admin:admin123)"
+    echo "PIDs:       $(tr '\n' ' ' < "$PID_FILE")"
+}
+
+run_test() {
+    load_env
+    echo "=== Running Integration Test ==="
+    export PYTHONPATH=processor/src
+    PYTHONPATH=processor/src \
+    DB_USER="$DB_USER" \
+    DB_PASSWORD="$DB_PASSWORD" \
+    DB_NAME="$DB_NAME" \
+    DB_HOST="$DB_HOST" \
+    REDIS_URL="$REDIS_URL" \
+    python -m pytest tests/integration/test_pipeline.py -v
+}
+
+case "${1:-start}" in
+    start)
+        start_services
+        ;;
+    stop)
+        stop_services
+        ;;
+    restart)
+        stop_services
+        sleep 2
+        start_services
+        ;;
+    test)
+        run_test
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|test}"
+        exit 1
+        ;;
+esac
