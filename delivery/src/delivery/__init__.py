@@ -1,3 +1,4 @@
-# WeComBot will be added in a future task
-# from delivery.wecom_bot import WeComBot
-# __all__ = ["EmailService", "WeComBot"]
+from delivery.email_service import EmailService
+from delivery.wecom_bot import WeComBot
+
+__all__ = ["EmailService", "WeComBot"]
