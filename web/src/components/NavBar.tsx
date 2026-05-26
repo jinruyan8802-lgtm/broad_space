@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 export default function NavBar() {
-  const router = useRouter();
-  const isGraph = router.pathname === "/graph";
+  const pathname = usePathname();
+  const isGraph = pathname === "/graph";
   const active = isGraph ? "graph" : "feed";
 
   return (
