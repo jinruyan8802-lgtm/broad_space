@@ -1,3 +1,5 @@
+logs/
+collector/bin
 .superpowers/
 .env
 node_modules/
