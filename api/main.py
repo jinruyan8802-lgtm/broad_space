@@ -184,9 +184,9 @@ def graph_search(
 
     results: list[GraphSearchResult] = []
     for r in raw_results:
-        text = r.get("text", "")
+        result_text = r.get("text", "")
         results.append(GraphSearchResult(
-            text=text,
+            text=result_text,
             score=r.get("score", 0.0),
             entities=[],
             entity_names_zh=[],
