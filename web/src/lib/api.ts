@@ -13,6 +13,18 @@ export interface ContentItem {
   processed_at: string | null;
 }
 
+export interface GraphSearchResult {
+  text: string;
+  score: number;
+  entities: string[];
+  entity_names_zh: string[];
+}
+
+export interface GraphSearchResponse {
+  query: string;
+  results: GraphSearchResult[];
+}
+
 export async function fetchContent(params?: {
   category?: string;
   min_signal?: number;
@@ -23,6 +35,17 @@ export async function fetchContent(params?: {
   if (params?.min_signal !== undefined) qs.set("min_signal", String(params.min_signal));
   if (params?.limit) qs.set("limit", String(params.limit));
   const res = await fetch(`${API_BASE}/content?${qs}`);
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  return res.json();
+}
+
+export async function fetchGraph(params: {
+  query: string;
+  limit?: number;
+}): Promise<GraphSearchResponse> {
+  const qs = new URLSearchParams({ query: params.query });
+  if (params.limit) qs.set("limit", String(params.limit));
+  const res = await fetch(`${API_BASE}/graph/search?${qs}`);
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   return res.json();
 }
