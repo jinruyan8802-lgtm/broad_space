@@ -53,6 +53,33 @@ test.describe('BroadSpace Next.js End-to-End', () => {
     expect(errors).toHaveLength(0);
   });
 
+  test('Dashboard page loads without console errors', async ({ page }) => {
+    const errors = [];
+    page.on('console', msg => {
+      if (msg.type() === 'error') errors.push(msg.text());
+    });
+
+    await page.goto(`${BASE_URL}/dashboard`);
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(3000);
+
+    // Verify page structure
+    const heading = await page.locator('h1').first().textContent();
+    expect(heading).toContain('Analytics');
+
+    // Verify NavBar has Dashboard link
+    const dashboardLink = await page.locator('nav a[href="/dashboard"]').count();
+    expect(dashboardLink).toBeGreaterThan(0);
+
+    // Verify Dashboard link is active
+    const activeDashboard = await page.locator('nav a[href="/dashboard"]').getAttribute('class');
+    expect(activeDashboard).toContain('font-semibold');
+
+    console.log('Dashboard page heading:', heading);
+    console.log('Console errors:', errors.length === 0 ? 'NONE' : errors);
+    expect(errors).toHaveLength(0);
+  });
+
   test('Navigation between Feed and Graph works', async ({ page }) => {
     await page.goto(BASE_URL);
     await page.waitForTimeout(1000);
@@ -72,5 +99,13 @@ test.describe('BroadSpace Next.js End-to-End', () => {
     // Should be back on feed page
     const feedHeading = await page.locator('h1').first().textContent();
     expect(feedHeading).toContain('Feed');
+
+    // Click Dashboard link
+    await page.locator('nav a[href="/dashboard"]').click();
+    await page.waitForTimeout(2000);
+
+    // Should be on dashboard page
+    const dashHeading = await page.locator('h1').first().textContent();
+    expect(dashHeading).toContain('Analytics');
   });
 });
