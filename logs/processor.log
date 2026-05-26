@@ -1,0 +1,1744 @@
+2026-05-26T09:39:19+0800 [INFO] processor.worker: Worker initialized: stream=broadspace:articles group=processor db=postgresql://broadspace:change_me_in_production@localhost:5432/broadspace
+2026-05-26T09:39:19+0800 [INFO] processor.worker: Starting BroadSpace processor worker
+2026-05-26T09:39:19+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:39:20+0800 [INFO] processor.worker: Received 1 messages from stream
+2026-05-26T09:39:20+0800 [INFO] processor.worker: Accepted 1 unique articles after dedup
+2026-05-26T09:39:20+0800 [INFO] processor.worker: Processing 1 event groups
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified e8fc123dcef981be5d3aa39a41a95d7a8992de2760ca815009c1e8f7edce83fb: categories=['Other'] duration_ms=252.2
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized e8fc123dcef981be5d3aa39a41a95d7a8992de2760ca815009c1e8f7edce83fb: signal=0.50 sentiment=neutral duration_ms=2.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed e8fc123dcef981be5d3aa39a41a95d7a8992de2760ca815009c1e8f7edce83fb: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=e8fc123dcef981be5d3aa39a41a95d7a8992de2760ca815009c1e8f7edce83fb
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 1/1 processed: id=e8fc123dcef981be5d3aa39a41a95d7a8992de2760ca815009c1e8f7edce83fb title=[GitHub] perplexityai/bumblebee duration_ms=254.7
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Batch complete: 1 articles -> 1 processed results
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Processed batch of 1 articles
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Received 10 messages from stream
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Accepted 10 unique articles after dedup
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Processing 10 event groups
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified acc94bcdc04e867e18e04520bbe98d03520191828aef8879069384ce54e805dd: categories=['Other'] duration_ms=2.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized acc94bcdc04e867e18e04520bbe98d03520191828aef8879069384ce54e805dd: signal=0.50 sentiment=neutral duration_ms=3.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed acc94bcdc04e867e18e04520bbe98d03520191828aef8879069384ce54e805dd: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=acc94bcdc04e867e18e04520bbe98d03520191828aef8879069384ce54e805dd
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 1/10 processed: id=acc94bcdc04e867e18e04520bbe98d03520191828aef8879069384ce54e805dd title=[GitHub] FoundZiGu/GuJumpgate duration_ms=5.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 1bf4dc577f8f9dbcf854194d77bc9cd3628403167f4afb9bc988f0602ced1e0b: categories=['Other'] duration_ms=2.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 1bf4dc577f8f9dbcf854194d77bc9cd3628403167f4afb9bc988f0602ced1e0b: signal=0.50 sentiment=neutral duration_ms=2.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 1bf4dc577f8f9dbcf854194d77bc9cd3628403167f4afb9bc988f0602ced1e0b: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=1bf4dc577f8f9dbcf854194d77bc9cd3628403167f4afb9bc988f0602ced1e0b
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 2/10 processed: id=1bf4dc577f8f9dbcf854194d77bc9cd3628403167f4afb9bc988f0602ced1e0b title=[GitHub] thananon/9arm-skills duration_ms=4.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 67160d1d79de37421791447490c2b6bfa781695ab6e676b77b848214af41e877: categories=['Other'] duration_ms=1.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 67160d1d79de37421791447490c2b6bfa781695ab6e676b77b848214af41e877: signal=0.50 sentiment=neutral duration_ms=2.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 67160d1d79de37421791447490c2b6bfa781695ab6e676b77b848214af41e877: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=67160d1d79de37421791447490c2b6bfa781695ab6e676b77b848214af41e877
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 3/10 processed: id=67160d1d79de37421791447490c2b6bfa781695ab6e676b77b848214af41e877 title=[GitHub] open-gsd/get-shit-done-redux duration_ms=3.9
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 0ced82923d1a7587eb3ebaded13a44f3a0252ab716859366e1996312b3929a4b: categories=['Other'] duration_ms=2.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 0ced82923d1a7587eb3ebaded13a44f3a0252ab716859366e1996312b3929a4b: signal=0.50 sentiment=neutral duration_ms=2.6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 0ced82923d1a7587eb3ebaded13a44f3a0252ab716859366e1996312b3929a4b: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=0ced82923d1a7587eb3ebaded13a44f3a0252ab716859366e1996312b3929a4b
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 4/10 processed: id=0ced82923d1a7587eb3ebaded13a44f3a0252ab716859366e1996312b3929a4b title=[GitHub] Tong89/smartNode duration_ms=4.8
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified d88f8d6a925205c08a807f879f0c8c33dbcc13fb847d21315e7650c668ae747d: categories=['Other'] duration_ms=1.8
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized d88f8d6a925205c08a807f879f0c8c33dbcc13fb847d21315e7650c668ae747d: signal=0.50 sentiment=neutral duration_ms=2.5
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed d88f8d6a925205c08a807f879f0c8c33dbcc13fb847d21315e7650c668ae747d: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=d88f8d6a925205c08a807f879f0c8c33dbcc13fb847d21315e7650c668ae747d
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 5/10 processed: id=d88f8d6a925205c08a807f879f0c8c33dbcc13fb847d21315e7650c668ae747d title=[GitHub] kageroumado/phosphene duration_ms=4.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 8703a39f68c9d7f7abc8f047c27fc3b1892624923a4d28f1ec37a34eac7c55ea: categories=['Other'] duration_ms=1.7
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 8703a39f68c9d7f7abc8f047c27fc3b1892624923a4d28f1ec37a34eac7c55ea: signal=0.50 sentiment=neutral duration_ms=3.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 8703a39f68c9d7f7abc8f047c27fc3b1892624923a4d28f1ec37a34eac7c55ea: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=8703a39f68c9d7f7abc8f047c27fc3b1892624923a4d28f1ec37a34eac7c55ea
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 6/10 processed: id=8703a39f68c9d7f7abc8f047c27fc3b1892624923a4d28f1ec37a34eac7c55ea title=[GitHub] 0xSero/codex-shim duration_ms=5.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified e360234e4a7623fbcebdaa99d67a1d22d2236fd15ebbb3bc8ea528905dac529a: categories=['Other'] duration_ms=2.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized e360234e4a7623fbcebdaa99d67a1d22d2236fd15ebbb3bc8ea528905dac529a: signal=0.50 sentiment=neutral duration_ms=2.6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed e360234e4a7623fbcebdaa99d67a1d22d2236fd15ebbb3bc8ea528905dac529a: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=e360234e4a7623fbcebdaa99d67a1d22d2236fd15ebbb3bc8ea528905dac529a
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 7/10 processed: id=e360234e4a7623fbcebdaa99d67a1d22d2236fd15ebbb3bc8ea528905dac529a title=[GitHub] run-liyi/wechatpay duration_ms=4.7
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 023d9d6b1d0cf5087be350800774661642b425b578147ad21561bbd8303e852d: categories=['Other'] duration_ms=1.6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 023d9d6b1d0cf5087be350800774661642b425b578147ad21561bbd8303e852d: signal=0.50 sentiment=neutral duration_ms=2.8
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 023d9d6b1d0cf5087be350800774661642b425b578147ad21561bbd8303e852d: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=023d9d6b1d0cf5087be350800774661642b425b578147ad21561bbd8303e852d
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 8/10 processed: id=023d9d6b1d0cf5087be350800774661642b425b578147ad21561bbd8303e852d title=[GitHub] MoonshotAI/kimi-code duration_ms=4.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 591455299c02789d711c63764e63ba5262068b6d3a0d67212f79ebfe9df099ad: categories=['Other'] duration_ms=2.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 591455299c02789d711c63764e63ba5262068b6d3a0d67212f79ebfe9df099ad: signal=0.50 sentiment=neutral duration_ms=2.2
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 591455299c02789d711c63764e63ba5262068b6d3a0d67212f79ebfe9df099ad: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=591455299c02789d711c63764e63ba5262068b6d3a0d67212f79ebfe9df099ad
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 9/10 processed: id=591455299c02789d711c63764e63ba5262068b6d3a0d67212f79ebfe9df099ad title=[GitHub] zhaoyue4810/pianke duration_ms=4.6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 81288de3d1bfacf85e4705fa6ae94ca191e57d8a27595872d10b14be19ef549a: categories=['Other'] duration_ms=1.8
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 81288de3d1bfacf85e4705fa6ae94ca191e57d8a27595872d10b14be19ef549a: signal=0.50 sentiment=neutral duration_ms=3.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 81288de3d1bfacf85e4705fa6ae94ca191e57d8a27595872d10b14be19ef549a: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=81288de3d1bfacf85e4705fa6ae94ca191e57d8a27595872d10b14be19ef549a
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 10/10 processed: id=81288de3d1bfacf85e4705fa6ae94ca191e57d8a27595872d10b14be19ef549a title=[GitHub] Unclecheng-li/poc-lab duration_ms=4.9
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Batch complete: 10 articles -> 10 processed results
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Processed batch of 10 articles
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Received 10 messages from stream
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Accepted 10 unique articles after dedup
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Processing 10 event groups
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 9be9d6b2aa30b1a8e628e0ceb9836dbed9b13b10e889dd4c5945f8f999b31e92: categories=['Other'] duration_ms=2.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 9be9d6b2aa30b1a8e628e0ceb9836dbed9b13b10e889dd4c5945f8f999b31e92: signal=0.50 sentiment=neutral duration_ms=2.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 9be9d6b2aa30b1a8e628e0ceb9836dbed9b13b10e889dd4c5945f8f999b31e92: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=9be9d6b2aa30b1a8e628e0ceb9836dbed9b13b10e889dd4c5945f8f999b31e92
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 1/10 processed: id=9be9d6b2aa30b1a8e628e0ceb9836dbed9b13b10e889dd4c5945f8f999b31e92 title=[GitHub] KNG7-P/Se7en-Pro duration_ms=4.9
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified cf38a910ea176ddd323cd557e1e44f084116f3dbfb04c424adb407cd7c3f7a6e: categories=['Other'] duration_ms=1.8
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized cf38a910ea176ddd323cd557e1e44f084116f3dbfb04c424adb407cd7c3f7a6e: signal=0.50 sentiment=neutral duration_ms=2.2
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed cf38a910ea176ddd323cd557e1e44f084116f3dbfb04c424adb407cd7c3f7a6e: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=cf38a910ea176ddd323cd557e1e44f084116f3dbfb04c424adb407cd7c3f7a6e
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 2/10 processed: id=cf38a910ea176ddd323cd557e1e44f084116f3dbfb04c424adb407cd7c3f7a6e title=[GitHub] bonus-2026/casino-bonus duration_ms=4.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified e43b3be6250b2851ec659d140b31be73bf53756a186a5f00820be4aece7cb163: categories=['Other'] duration_ms=1.6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized e43b3be6250b2851ec659d140b31be73bf53756a186a5f00820be4aece7cb163: signal=0.50 sentiment=neutral duration_ms=1.5
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed e43b3be6250b2851ec659d140b31be73bf53756a186a5f00820be4aece7cb163: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=e43b3be6250b2851ec659d140b31be73bf53756a186a5f00820be4aece7cb163
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 3/10 processed: id=e43b3be6250b2851ec659d140b31be73bf53756a186a5f00820be4aece7cb163 title=[GitHub] ShinyaTomitsuka/arbitrage-trading-bot duration_ms=3.2
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified fcc4fa3c00d9b47e03d89b3722e07e31865bde1d264cbebf19dd28a0e00ca478: categories=['Other'] duration_ms=1.6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized fcc4fa3c00d9b47e03d89b3722e07e31865bde1d264cbebf19dd28a0e00ca478: signal=0.50 sentiment=neutral duration_ms=2.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed fcc4fa3c00d9b47e03d89b3722e07e31865bde1d264cbebf19dd28a0e00ca478: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=fcc4fa3c00d9b47e03d89b3722e07e31865bde1d264cbebf19dd28a0e00ca478
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 4/10 processed: id=fcc4fa3c00d9b47e03d89b3722e07e31865bde1d264cbebf19dd28a0e00ca478 title=[GitHub] SalhaNabil/CloakBrowser duration_ms=4.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 3b89a49950055f8641114b3812f703fa864a0ca0c5003d1a0a9bc25c209e4d75: categories=['Other'] duration_ms=1.9
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 3b89a49950055f8641114b3812f703fa864a0ca0c5003d1a0a9bc25c209e4d75: signal=0.50 sentiment=neutral duration_ms=2.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 3b89a49950055f8641114b3812f703fa864a0ca0c5003d1a0a9bc25c209e4d75: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=3b89a49950055f8641114b3812f703fa864a0ca0c5003d1a0a9bc25c209e4d75
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 5/10 processed: id=3b89a49950055f8641114b3812f703fa864a0ca0c5003d1a0a9bc25c209e4d75 title=[GitHub] orchestration-agent/AgentOrchestration duration_ms=4.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 5b567f964cba130fe575b563163d11928ac3e2ecc25775232d5065d635fecc9d: categories=['Other'] duration_ms=2.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 5b567f964cba130fe575b563163d11928ac3e2ecc25775232d5065d635fecc9d: signal=0.50 sentiment=neutral duration_ms=2.5
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 5b567f964cba130fe575b563163d11928ac3e2ecc25775232d5065d635fecc9d: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=5b567f964cba130fe575b563163d11928ac3e2ecc25775232d5065d635fecc9d
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 6/10 processed: id=5b567f964cba130fe575b563163d11928ac3e2ecc25775232d5065d635fecc9d title=[GitHub] jianshuo/ccglass duration_ms=4.5
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified cced5555858988e3f0fe13806dfc836464fe545c8236da2e43f7eb48938afd18: categories=['Other'] duration_ms=2.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized cced5555858988e3f0fe13806dfc836464fe545c8236da2e43f7eb48938afd18: signal=0.50 sentiment=neutral duration_ms=2.2
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed cced5555858988e3f0fe13806dfc836464fe545c8236da2e43f7eb48938afd18: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=cced5555858988e3f0fe13806dfc836464fe545c8236da2e43f7eb48938afd18
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 7/10 processed: id=cced5555858988e3f0fe13806dfc836464fe545c8236da2e43f7eb48938afd18 title=[GitHub] littlefrogyq/UE4SS-Subnautica-2 duration_ms=4.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified f64e7b320b8a40711523f3f030bc59d08c96cba04d8b22c6e8591a787c7986ad: categories=['Other'] duration_ms=1.9
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized f64e7b320b8a40711523f3f030bc59d08c96cba04d8b22c6e8591a787c7986ad: signal=0.50 sentiment=neutral duration_ms=2.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed f64e7b320b8a40711523f3f030bc59d08c96cba04d8b22c6e8591a787c7986ad: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=f64e7b320b8a40711523f3f030bc59d08c96cba04d8b22c6e8591a787c7986ad
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 8/10 processed: id=f64e7b320b8a40711523f3f030bc59d08c96cba04d8b22c6e8591a787c7986ad title=[GitHub] mila89/polymarket-trading-bot duration_ms=4.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 2c42e1e3338501bc362205395fd7913205d111c10950a5b020aa2b67dd080273: categories=['Other'] duration_ms=1.6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 2c42e1e3338501bc362205395fd7913205d111c10950a5b020aa2b67dd080273: signal=0.50 sentiment=neutral duration_ms=4.6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 2c42e1e3338501bc362205395fd7913205d111c10950a5b020aa2b67dd080273: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=2c42e1e3338501bc362205395fd7913205d111c10950a5b020aa2b67dd080273
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 9/10 processed: id=2c42e1e3338501bc362205395fd7913205d111c10950a5b020aa2b67dd080273 title=[GitHub] VILA-Lab/FigMirror duration_ms=6.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified bf85d262f6aa5f3cb46db06f10f9e300902d29a10ac2c2b8c7547a14720305d4: categories=['Other'] duration_ms=2.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized bf85d262f6aa5f3cb46db06f10f9e300902d29a10ac2c2b8c7547a14720305d4: signal=0.50 sentiment=neutral duration_ms=2.5
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed bf85d262f6aa5f3cb46db06f10f9e300902d29a10ac2c2b8c7547a14720305d4: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=bf85d262f6aa5f3cb46db06f10f9e300902d29a10ac2c2b8c7547a14720305d4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 10/10 processed: id=bf85d262f6aa5f3cb46db06f10f9e300902d29a10ac2c2b8c7547a14720305d4 title=[GitHub] md0070/polymarket-trading-bot duration_ms=4.7
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Batch complete: 10 articles -> 10 processed results
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Processed batch of 10 articles
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Received 10 messages from stream
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Accepted 10 unique articles after dedup
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Processing 10 event groups
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 785c944ee762bfbb05ed708c8419214ba4b06327bae8333acb72024974869060: categories=['Other'] duration_ms=2.2
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 785c944ee762bfbb05ed708c8419214ba4b06327bae8333acb72024974869060: signal=0.50 sentiment=neutral duration_ms=1.8
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 785c944ee762bfbb05ed708c8419214ba4b06327bae8333acb72024974869060: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=785c944ee762bfbb05ed708c8419214ba4b06327bae8333acb72024974869060
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 1/10 processed: id=785c944ee762bfbb05ed708c8419214ba4b06327bae8333acb72024974869060 title=[GitHub] yui540/comimi duration_ms=4.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 94c2990e3989671a8f75ba72fc22a0e97654b6b4ab143a2d5836cbd7d6766f8b: categories=['Other'] duration_ms=3.7
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 94c2990e3989671a8f75ba72fc22a0e97654b6b4ab143a2d5836cbd7d6766f8b: signal=0.50 sentiment=neutral duration_ms=2.5
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 94c2990e3989671a8f75ba72fc22a0e97654b6b4ab143a2d5836cbd7d6766f8b: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=94c2990e3989671a8f75ba72fc22a0e97654b6b4ab143a2d5836cbd7d6766f8b
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 2/10 processed: id=94c2990e3989671a8f75ba72fc22a0e97654b6b4ab143a2d5836cbd7d6766f8b title=[GitHub] suyancc/openai-plus-vxt duration_ms=6.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 7b4e92f94b087427e3f1c745cea939c7ffb5e8a8a7618e16637fd261dbf4ca76: categories=['Other'] duration_ms=2.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 7b4e92f94b087427e3f1c745cea939c7ffb5e8a8a7618e16637fd261dbf4ca76: signal=0.50 sentiment=neutral duration_ms=2.7
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 7b4e92f94b087427e3f1c745cea939c7ffb5e8a8a7618e16637fd261dbf4ca76: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=7b4e92f94b087427e3f1c745cea939c7ffb5e8a8a7618e16637fd261dbf4ca76
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 3/10 processed: id=7b4e92f94b087427e3f1c745cea939c7ffb5e8a8a7618e16637fd261dbf4ca76 title=[GitHub] edgenuitybot/exodusbot duration_ms=5.2
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified e1e434632495066ce758b32bb887c2c6219f71749eff0deaaf20d274e68b6235: categories=['Other'] duration_ms=3.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized e1e434632495066ce758b32bb887c2c6219f71749eff0deaaf20d274e68b6235: signal=0.50 sentiment=neutral duration_ms=2.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed e1e434632495066ce758b32bb887c2c6219f71749eff0deaaf20d274e68b6235: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=e1e434632495066ce758b32bb887c2c6219f71749eff0deaaf20d274e68b6235
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 4/10 processed: id=e1e434632495066ce758b32bb887c2c6219f71749eff0deaaf20d274e68b6235 title=[GitHub] judithsulfan/trading-bot duration_ms=5.9
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 8dd32a6460d209bd8e786233c5ccefebd274bc7b78a7ddd3c36752eb19fa4b40: categories=['Other'] duration_ms=3.6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 8dd32a6460d209bd8e786233c5ccefebd274bc7b78a7ddd3c36752eb19fa4b40: signal=0.50 sentiment=neutral duration_ms=3.7
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 8dd32a6460d209bd8e786233c5ccefebd274bc7b78a7ddd3c36752eb19fa4b40: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=8dd32a6460d209bd8e786233c5ccefebd274bc7b78a7ddd3c36752eb19fa4b40
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 5/10 processed: id=8dd32a6460d209bd8e786233c5ccefebd274bc7b78a7ddd3c36752eb19fa4b40 title=[GitHub] unprovable/ShadowCat duration_ms=7.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 2898df226c33faf7e072b2139709ddeac736db583f04c20059eb581522c4b0cc: categories=['Other'] duration_ms=2.7
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 2898df226c33faf7e072b2139709ddeac736db583f04c20059eb581522c4b0cc: signal=0.50 sentiment=neutral duration_ms=2.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 2898df226c33faf7e072b2139709ddeac736db583f04c20059eb581522c4b0cc: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=2898df226c33faf7e072b2139709ddeac736db583f04c20059eb581522c4b0cc
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 6/10 processed: id=2898df226c33faf7e072b2139709ddeac736db583f04c20059eb581522c4b0cc title=[GitHub] XingYu-Zhong/DeepSeek-GUI duration_ms=4.9
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified ee3d2a1b24d046b695578907a5095f2f4a6ecb693327e732d3ee9d867667ece4: categories=['Other'] duration_ms=2.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized ee3d2a1b24d046b695578907a5095f2f4a6ecb693327e732d3ee9d867667ece4: signal=0.50 sentiment=neutral duration_ms=1.6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed ee3d2a1b24d046b695578907a5095f2f4a6ecb693327e732d3ee9d867667ece4: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=ee3d2a1b24d046b695578907a5095f2f4a6ecb693327e732d3ee9d867667ece4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 7/10 processed: id=ee3d2a1b24d046b695578907a5095f2f4a6ecb693327e732d3ee9d867667ece4 title=[GitHub] hanyi0000/chatgpt-plus-automation-toolkit duration_ms=3.9
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 12d4200fafa89f232ae71f88f89d205126715401e1df22953cb6af7cd61afe56: categories=['Other'] duration_ms=3.2
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 12d4200fafa89f232ae71f88f89d205126715401e1df22953cb6af7cd61afe56: signal=0.50 sentiment=neutral duration_ms=2.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 12d4200fafa89f232ae71f88f89d205126715401e1df22953cb6af7cd61afe56: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=12d4200fafa89f232ae71f88f89d205126715401e1df22953cb6af7cd61afe56
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 8/10 processed: id=12d4200fafa89f232ae71f88f89d205126715401e1df22953cb6af7cd61afe56 title=[GitHub] uktrash/LSFG-Desktop duration_ms=5.7
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified b97fb1ba7799f4bdf0f5a96ff46cc3e8fe7867fe9f7a56ab65c94cdcc763fe25: categories=['Other'] duration_ms=2.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized b97fb1ba7799f4bdf0f5a96ff46cc3e8fe7867fe9f7a56ab65c94cdcc763fe25: signal=0.50 sentiment=neutral duration_ms=1.8
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed b97fb1ba7799f4bdf0f5a96ff46cc3e8fe7867fe9f7a56ab65c94cdcc763fe25: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=b97fb1ba7799f4bdf0f5a96ff46cc3e8fe7867fe9f7a56ab65c94cdcc763fe25
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 9/10 processed: id=b97fb1ba7799f4bdf0f5a96ff46cc3e8fe7867fe9f7a56ab65c94cdcc763fe25 title=[GitHub] Simbastack-hq/framedex duration_ms=4.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 65385eb20c5a9bfa24b4103f8da83a87f0012f2bfc84c7d96ddc21d7ebdeec8f: categories=['Other'] duration_ms=2.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 65385eb20c5a9bfa24b4103f8da83a87f0012f2bfc84c7d96ddc21d7ebdeec8f: signal=0.50 sentiment=neutral duration_ms=3.2
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 65385eb20c5a9bfa24b4103f8da83a87f0012f2bfc84c7d96ddc21d7ebdeec8f: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=65385eb20c5a9bfa24b4103f8da83a87f0012f2bfc84c7d96ddc21d7ebdeec8f
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 10/10 processed: id=65385eb20c5a9bfa24b4103f8da83a87f0012f2bfc84c7d96ddc21d7ebdeec8f title=[GitHub] akitaonrails/ai-memory duration_ms=5.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Batch complete: 10 articles -> 10 processed results
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Processed batch of 10 articles
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Received 10 messages from stream
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Accepted 10 unique articles after dedup
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Processing 10 event groups
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 5975108acaa143b8ee7e83251e2cb8ecfc22681efcd81e18506e4ceb0d0a3fea: categories=['Other'] duration_ms=2.6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 5975108acaa143b8ee7e83251e2cb8ecfc22681efcd81e18506e4ceb0d0a3fea: signal=0.50 sentiment=neutral duration_ms=2.9
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 5975108acaa143b8ee7e83251e2cb8ecfc22681efcd81e18506e4ceb0d0a3fea: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=5975108acaa143b8ee7e83251e2cb8ecfc22681efcd81e18506e4ceb0d0a3fea
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 1/10 processed: id=5975108acaa143b8ee7e83251e2cb8ecfc22681efcd81e18506e4ceb0d0a3fea title=[GitHub] kouhxp/yapsnap duration_ms=5.5
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 030e03b0d27138f2f8e3f7578ae49617373a4781b4ca06e30bdf68209d6fa2b4: categories=['Other'] duration_ms=2.9
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 030e03b0d27138f2f8e3f7578ae49617373a4781b4ca06e30bdf68209d6fa2b4: signal=0.50 sentiment=neutral duration_ms=4.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 030e03b0d27138f2f8e3f7578ae49617373a4781b4ca06e30bdf68209d6fa2b4: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=030e03b0d27138f2f8e3f7578ae49617373a4781b4ca06e30bdf68209d6fa2b4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 2/10 processed: id=030e03b0d27138f2f8e3f7578ae49617373a4781b4ca06e30bdf68209d6fa2b4 title=[GitHub] hypnguyen1209/offensive-claude duration_ms=7.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified dd852bb8e775039f9d8bb35ef86c11f5ca24e9ac9fa5fb56436ca99d5a8296d6: categories=['Other'] duration_ms=2.5
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized dd852bb8e775039f9d8bb35ef86c11f5ca24e9ac9fa5fb56436ca99d5a8296d6: signal=0.50 sentiment=neutral duration_ms=2.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed dd852bb8e775039f9d8bb35ef86c11f5ca24e9ac9fa5fb56436ca99d5a8296d6: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=dd852bb8e775039f9d8bb35ef86c11f5ca24e9ac9fa5fb56436ca99d5a8296d6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 3/10 processed: id=dd852bb8e775039f9d8bb35ef86c11f5ca24e9ac9fa5fb56436ca99d5a8296d6 title=[GitHub] PredictiveFlow-Labs/polymarket-arbitrage- duration_ms=4.6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 42129a4382f8c0e07512742278bcc66a9e887a37a7c9b36ae53dca76b68fcc59: categories=['Other'] duration_ms=1.8
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 42129a4382f8c0e07512742278bcc66a9e887a37a7c9b36ae53dca76b68fcc59: signal=0.50 sentiment=neutral duration_ms=2.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 42129a4382f8c0e07512742278bcc66a9e887a37a7c9b36ae53dca76b68fcc59: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=42129a4382f8c0e07512742278bcc66a9e887a37a7c9b36ae53dca76b68fcc59
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 4/10 processed: id=42129a4382f8c0e07512742278bcc66a9e887a37a7c9b36ae53dca76b68fcc59 title=[GitHub] jazzband/web3-devkit-cli duration_ms=4.2
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 768b3f7b69a367c8e46a1eda298002a4367db0030023f44955af82001e7448c4: categories=['Other'] duration_ms=1.7
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 768b3f7b69a367c8e46a1eda298002a4367db0030023f44955af82001e7448c4: signal=0.50 sentiment=neutral duration_ms=2.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 768b3f7b69a367c8e46a1eda298002a4367db0030023f44955af82001e7448c4: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=768b3f7b69a367c8e46a1eda298002a4367db0030023f44955af82001e7448c4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 5/10 processed: id=768b3f7b69a367c8e46a1eda298002a4367db0030023f44955af82001e7448c4 title=[GitHub] modaic-ai/gepa-viz duration_ms=4.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 8251b1ed9ea2675be91342fb28886287f6f1cc85c2ffb5e7467ed669878b1f20: categories=['Other'] duration_ms=2.6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 8251b1ed9ea2675be91342fb28886287f6f1cc85c2ffb5e7467ed669878b1f20: signal=0.50 sentiment=neutral duration_ms=2.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 8251b1ed9ea2675be91342fb28886287f6f1cc85c2ffb5e7467ed669878b1f20: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=8251b1ed9ea2675be91342fb28886287f6f1cc85c2ffb5e7467ed669878b1f20
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 6/10 processed: id=8251b1ed9ea2675be91342fb28886287f6f1cc85c2ffb5e7467ed669878b1f20 title=[GitHub] redteamfortress/PhantomKiller duration_ms=4.7
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified e0ec5c1aa95dd313e20708c40e9c8cb44c200506077a85b017f1d703b76dad69: categories=['Other'] duration_ms=1.7
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized e0ec5c1aa95dd313e20708c40e9c8cb44c200506077a85b017f1d703b76dad69: signal=0.50 sentiment=neutral duration_ms=2.2
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed e0ec5c1aa95dd313e20708c40e9c8cb44c200506077a85b017f1d703b76dad69: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=e0ec5c1aa95dd313e20708c40e9c8cb44c200506077a85b017f1d703b76dad69
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 7/10 processed: id=e0ec5c1aa95dd313e20708c40e9c8cb44c200506077a85b017f1d703b76dad69 title=[GitHub] CylinderChairman/aida64 duration_ms=4.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 0339506b5ab2d88a2e9cf0270d84aa6b2667aa08cd13d3acdaf4fe65c2c0f1dd: categories=['Other'] duration_ms=1.7
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 0339506b5ab2d88a2e9cf0270d84aa6b2667aa08cd13d3acdaf4fe65c2c0f1dd: signal=0.50 sentiment=neutral duration_ms=2.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 0339506b5ab2d88a2e9cf0270d84aa6b2667aa08cd13d3acdaf4fe65c2c0f1dd: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=0339506b5ab2d88a2e9cf0270d84aa6b2667aa08cd13d3acdaf4fe65c2c0f1dd
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 8/10 processed: id=0339506b5ab2d88a2e9cf0270d84aa6b2667aa08cd13d3acdaf4fe65c2c0f1dd title=[GitHub] zzzhhh1/mg-Koyeb duration_ms=4.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified d5800a2931320443c8d9555d50c51cb7bcaea7ab8f7d56fe50a34c04e88ff016: categories=['Other'] duration_ms=1.9
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized d5800a2931320443c8d9555d50c51cb7bcaea7ab8f7d56fe50a34c04e88ff016: signal=0.50 sentiment=neutral duration_ms=2.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed d5800a2931320443c8d9555d50c51cb7bcaea7ab8f7d56fe50a34c04e88ff016: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=d5800a2931320443c8d9555d50c51cb7bcaea7ab8f7d56fe50a34c04e88ff016
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 9/10 processed: id=d5800a2931320443c8d9555d50c51cb7bcaea7ab8f7d56fe50a34c04e88ff016 title=[GitHub] ZettPW/KMSTools duration_ms=4.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified b0e9ba942bebf6632653599affe744c79ea638b62f10dc95bd8e56753939243c: categories=['Other'] duration_ms=1.5
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized b0e9ba942bebf6632653599affe744c79ea638b62f10dc95bd8e56753939243c: signal=0.50 sentiment=neutral duration_ms=1.7
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed b0e9ba942bebf6632653599affe744c79ea638b62f10dc95bd8e56753939243c: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=b0e9ba942bebf6632653599affe744c79ea638b62f10dc95bd8e56753939243c
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 10/10 processed: id=b0e9ba942bebf6632653599affe744c79ea638b62f10dc95bd8e56753939243c title=[GitHub] jackson-video-resources/markov-hedge-fund duration_ms=3.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Batch complete: 10 articles -> 10 processed results
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Processed batch of 10 articles
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Received 9 messages from stream
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Accepted 9 unique articles after dedup
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Processing 8 event groups
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified cb345cac9e7fc12d540458884cc853fd41868134b4e3fbe6a0a1f5158e81167f: categories=['Other'] duration_ms=2.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized cb345cac9e7fc12d540458884cc853fd41868134b4e3fbe6a0a1f5158e81167f: signal=0.50 sentiment=neutral duration_ms=2.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed cb345cac9e7fc12d540458884cc853fd41868134b4e3fbe6a0a1f5158e81167f: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=cb345cac9e7fc12d540458884cc853fd41868134b4e3fbe6a0a1f5158e81167f
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 1/8 processed: id=cb345cac9e7fc12d540458884cc853fd41868134b4e3fbe6a0a1f5158e81167f title=[GitHub] bryanyzhu/agentic-ai-system-course duration_ms=4.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 37aba4618af5e65731034ba5416971d80f8c4f34d2e45f26e226dda7cd947a88: categories=['Other'] duration_ms=1.9
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 37aba4618af5e65731034ba5416971d80f8c4f34d2e45f26e226dda7cd947a88: signal=0.50 sentiment=neutral duration_ms=2.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 37aba4618af5e65731034ba5416971d80f8c4f34d2e45f26e226dda7cd947a88: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=37aba4618af5e65731034ba5416971d80f8c4f34d2e45f26e226dda7cd947a88
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 2/8 processed: id=37aba4618af5e65731034ba5416971d80f8c4f34d2e45f26e226dda7cd947a88 title=[GitHub] open-gsd/gsd-pi duration_ms=4.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified e327c6d5d18c540c10e7d5e3d061901e0a6da93143064cef2e44800230db2143: categories=['Other'] duration_ms=1.9
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized e327c6d5d18c540c10e7d5e3d061901e0a6da93143064cef2e44800230db2143: signal=0.50 sentiment=neutral duration_ms=1.6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed e327c6d5d18c540c10e7d5e3d061901e0a6da93143064cef2e44800230db2143: paradigm=False duration_ms=0.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=e327c6d5d18c540c10e7d5e3d061901e0a6da93143064cef2e44800230db2143
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 3/8 processed: id=e327c6d5d18c540c10e7d5e3d061901e0a6da93143064cef2e44800230db2143 title=[GitHub] zqbxdev/webchat2api duration_ms=3.6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 662fa4b7ce1ae86919cefddb2d1dafa46902f5a8c6c19b4cf85202f8e7dbe692: categories=['Other'] duration_ms=1.7
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 662fa4b7ce1ae86919cefddb2d1dafa46902f5a8c6c19b4cf85202f8e7dbe692: signal=0.50 sentiment=neutral duration_ms=2.2
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 662fa4b7ce1ae86919cefddb2d1dafa46902f5a8c6c19b4cf85202f8e7dbe692: paradigm=False duration_ms=2.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=662fa4b7ce1ae86919cefddb2d1dafa46902f5a8c6c19b4cf85202f8e7dbe692
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 4/8 processed: id=662fa4b7ce1ae86919cefddb2d1dafa46902f5a8c6c19b4cf85202f8e7dbe692 title=[GitHub] Polymarket-Trading-kit/crypto-trading-bot duration_ms=6.3
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 45f8e8ebc0c8e810457e431dc9dca0ee464c9e8adf64f53b8f1b52d1e60e0725: categories=['Other'] duration_ms=1.6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 45f8e8ebc0c8e810457e431dc9dca0ee464c9e8adf64f53b8f1b52d1e60e0725: signal=0.50 sentiment=neutral duration_ms=2.5
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 45f8e8ebc0c8e810457e431dc9dca0ee464c9e8adf64f53b8f1b52d1e60e0725: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=45f8e8ebc0c8e810457e431dc9dca0ee464c9e8adf64f53b8f1b52d1e60e0725
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 5/8 processed: id=45f8e8ebc0c8e810457e431dc9dca0ee464c9e8adf64f53b8f1b52d1e60e0725 title=[GitHub] scheidydude/codeindex duration_ms=4.2
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified a50e6e64cb6021ce9ddfde5c1b8d3bd362d2f1064328f87524d38b5d81c7e94c: categories=['Other'] duration_ms=1.6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized a50e6e64cb6021ce9ddfde5c1b8d3bd362d2f1064328f87524d38b5d81c7e94c: signal=0.50 sentiment=neutral duration_ms=2.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed a50e6e64cb6021ce9ddfde5c1b8d3bd362d2f1064328f87524d38b5d81c7e94c: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=a50e6e64cb6021ce9ddfde5c1b8d3bd362d2f1064328f87524d38b5d81c7e94c
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 6/8 processed: id=a50e6e64cb6021ce9ddfde5c1b8d3bd362d2f1064328f87524d38b5d81c7e94c title=[GitHub] nv-tlabs/PiD duration_ms=4.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 107b72794a79a934764904a465047df929059be8a325115f867c316fa62ad4b6: categories=['Other'] duration_ms=1.4
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 107b72794a79a934764904a465047df929059be8a325115f867c316fa62ad4b6: signal=0.50 sentiment=neutral duration_ms=2.6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 107b72794a79a934764904a465047df929059be8a325115f867c316fa62ad4b6: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=107b72794a79a934764904a465047df929059be8a325115f867c316fa62ad4b6
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 7/8 processed: id=107b72794a79a934764904a465047df929059be8a325115f867c316fa62ad4b6 title=[GitHub] SIXIANGGUO/cc-note-ops duration_ms=4.1
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Classified 5e95dd818c3721e31bc911274eb8d5a2a798f04f5a05bb22fbe097d1b3392646: categories=['Other'] duration_ms=1.7
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Summarized 5e95dd818c3721e31bc911274eb8d5a2a798f04f5a05bb22fbe097d1b3392646: signal=0.50 sentiment=neutral duration_ms=2.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Analyzed 5e95dd818c3721e31bc911274eb8d5a2a798f04f5a05bb22fbe097d1b3392646: paradigm=False duration_ms=0.0
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Saved to DB: id=5e95dd818c3721e31bc911274eb8d5a2a798f04f5a05bb22fbe097d1b3392646
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Group 8/8 processed: id=5e95dd818c3721e31bc911274eb8d5a2a798f04f5a05bb22fbe097d1b3392646 title=[GitHub] tonbo-io/ursula duration_ms=3.8
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Batch complete: 9 articles -> 8 processed results
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Processed batch of 8 articles
+2026-05-26T09:39:21+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:39:26+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:39:26+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:39:26+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:39:31+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:39:31+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:39:31+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:39:36+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:39:36+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:39:36+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:39:41+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:39:41+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:39:41+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:39:46+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:39:46+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:39:46+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:39:51+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:39:51+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:39:51+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:39:56+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:39:56+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:39:56+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:40:01+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:40:01+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:40:01+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:40:06+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:40:06+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:40:06+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:40:11+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:40:11+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:40:11+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:40:16+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:40:16+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:40:16+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:40:21+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:40:21+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:40:21+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:40:26+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:40:26+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:40:26+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:40:32+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:40:32+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:40:32+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:40:37+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:40:37+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:40:37+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:40:42+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:40:42+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:40:42+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:40:47+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:40:47+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:40:47+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:40:52+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:40:52+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:40:52+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:40:57+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:40:57+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:40:57+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:41:02+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:41:02+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:41:02+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:41:07+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:41:07+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:41:07+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:41:12+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:41:12+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:41:12+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:41:17+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:41:17+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:41:17+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:41:22+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:41:22+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:41:22+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:41:27+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:41:27+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:41:27+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:41:32+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:41:32+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:41:32+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:41:37+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:41:37+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:41:37+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:41:42+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:41:42+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:41:42+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:41:47+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:41:47+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:41:47+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:41:52+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:41:52+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:41:52+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:41:58+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:41:58+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:41:58+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:42:03+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:42:03+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:42:03+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:42:08+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:42:08+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:42:08+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:42:13+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:42:13+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:42:13+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:42:18+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:42:18+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:42:18+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:42:23+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:42:23+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:42:23+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:42:28+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:42:28+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:42:28+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:42:33+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:42:33+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:42:33+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:42:38+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:42:38+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:42:38+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:42:43+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:42:43+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:42:43+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:42:48+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:42:48+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:42:48+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:42:53+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:42:53+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:42:53+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:42:58+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:42:58+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:42:58+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:43:03+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:43:03+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:43:03+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:43:08+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:43:08+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:43:08+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:43:13+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:43:13+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:43:13+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:43:18+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:43:18+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:43:18+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:43:23+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:43:23+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:43:23+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:43:28+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:43:28+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:43:28+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:43:33+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:43:33+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:43:33+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:43:39+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:43:39+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:43:39+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:43:44+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:43:44+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:43:44+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:43:49+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:43:49+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:43:49+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:43:54+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:43:54+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:43:54+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:43:59+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:43:59+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:43:59+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:44:04+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:44:04+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:44:04+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:44:09+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:44:09+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:44:09+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:44:14+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:44:14+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:44:14+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:44:19+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:44:19+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:44:19+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:44:24+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:44:24+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:44:24+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:44:29+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:44:29+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:44:29+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:44:34+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:44:34+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:44:34+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:44:39+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:44:39+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:44:39+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:44:44+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:44:44+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:44:44+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:44:49+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:44:49+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:44:49+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:44:54+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:44:54+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:44:54+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:44:59+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:44:59+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:44:59+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:45:04+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:45:04+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:45:04+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:45:09+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:45:09+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:45:09+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:45:14+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:45:14+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:45:14+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:45:19+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:45:19+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:45:19+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:45:24+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:45:24+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:45:24+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:45:29+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:45:29+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:45:29+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:45:34+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:45:34+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:45:34+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:45:39+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:45:39+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:45:39+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:45:44+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:45:44+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:45:44+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:45:49+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:45:49+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:45:49+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:45:54+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:45:54+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:45:54+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:45:59+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:45:59+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:45:59+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:46:04+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:46:04+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:46:04+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:46:09+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:46:09+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:46:09+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:46:15+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:46:15+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:46:15+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:46:20+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:46:20+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:46:20+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:46:25+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:46:25+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:46:25+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:46:30+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:46:30+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:46:30+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:46:35+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:46:35+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:46:35+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:46:40+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:46:40+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:46:40+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:46:45+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:46:45+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:46:45+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:46:50+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:46:50+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:46:50+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:46:55+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:46:55+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:46:55+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:47:00+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:47:00+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:47:00+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:47:05+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:47:05+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:47:05+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:47:10+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:47:10+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:47:10+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:47:15+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:47:15+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:47:15+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:47:20+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:47:20+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:47:20+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:47:25+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:47:25+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:47:25+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:47:30+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:47:30+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:47:30+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:47:35+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:47:35+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:47:35+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:47:40+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:47:40+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:47:40+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:47:45+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:47:45+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:47:45+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:47:50+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:47:50+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:47:50+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:47:55+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:47:55+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:47:55+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:48:00+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:48:00+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:48:00+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:48:05+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:48:05+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:48:05+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:48:10+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:48:10+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:48:10+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:48:15+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:48:15+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:48:15+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:48:20+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:48:20+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:48:20+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:48:25+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:48:25+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:48:25+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:48:30+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:48:30+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:48:30+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:48:35+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:48:35+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:48:35+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:48:40+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:48:40+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:48:40+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:48:45+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:48:45+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:48:45+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:48:51+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:48:51+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:48:51+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:48:56+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:48:56+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:48:56+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:49:01+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:49:01+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:49:01+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:49:06+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:49:06+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:49:06+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:49:11+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:49:11+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:49:11+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:49:16+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:49:16+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:49:16+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:49:21+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:49:21+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:49:21+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:49:26+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:49:26+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:49:26+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:49:31+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:49:31+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:49:31+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:49:36+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:49:36+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:49:36+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:49:41+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:49:41+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:49:41+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:49:46+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:49:46+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:49:46+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:49:51+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:49:51+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:49:51+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:49:56+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:49:56+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:49:56+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:50:01+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:50:01+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:50:01+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:50:06+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:50:06+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:50:06+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:50:11+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:50:11+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:50:11+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:50:16+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:50:16+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:50:16+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:50:21+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:50:21+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:50:21+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:50:26+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:50:26+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:50:26+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:50:31+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:50:31+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:50:31+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:50:36+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:50:36+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:50:36+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:50:41+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:50:41+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:50:41+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:50:46+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:50:46+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:50:46+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:50:51+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:50:51+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:50:51+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:50:56+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:50:56+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:50:56+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:51:01+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:51:01+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:51:01+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:51:06+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:51:06+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:51:06+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:51:12+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:51:12+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:51:12+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:51:17+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:51:17+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:51:17+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:51:22+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:51:22+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:51:22+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:51:27+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:51:27+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:51:27+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:51:32+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:51:32+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:51:32+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:51:37+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:51:37+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:51:37+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:51:42+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:51:42+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:51:42+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:51:47+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:51:47+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:51:47+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:51:52+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:51:52+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:51:52+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:51:57+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:51:57+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:51:57+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:52:02+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:52:02+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:52:02+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:52:07+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:52:07+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:52:07+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:52:12+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:52:12+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:52:12+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:52:17+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:52:17+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:52:17+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:52:22+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:52:22+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:52:22+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:52:27+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:52:27+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:52:27+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:52:32+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:52:32+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:52:32+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:52:37+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:52:37+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:52:37+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:52:42+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:52:42+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:52:42+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:52:47+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:52:47+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:52:47+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:52:52+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:52:52+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:52:52+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:52:57+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:52:57+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:52:57+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:53:02+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:53:02+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:53:02+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:53:07+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:53:07+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:53:07+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:53:12+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:53:12+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:53:12+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:53:17+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:53:17+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:53:17+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:53:22+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:53:22+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:53:22+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:53:27+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:53:27+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:53:27+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:53:33+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:53:33+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:53:33+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:53:38+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:53:38+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:53:38+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:53:43+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:53:43+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:53:43+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:53:48+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:53:48+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:53:48+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:53:53+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:53:53+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:53:53+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:53:58+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:53:58+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:53:58+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:54:03+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:54:03+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:54:03+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:54:08+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:54:08+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:54:08+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:54:13+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:54:13+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:54:13+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:54:18+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:54:18+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:54:18+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:54:23+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:54:23+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:54:23+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:54:28+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:54:28+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:54:28+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:54:33+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:54:33+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:54:33+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:54:38+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:54:38+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:54:38+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:54:43+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:54:43+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:54:43+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:54:48+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:54:48+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:54:48+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:54:53+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:54:53+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:54:53+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:54:58+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:54:58+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:54:58+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:55:03+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:55:03+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:55:03+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:55:08+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:55:08+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:55:08+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:55:13+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:55:13+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:55:13+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:55:18+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:55:18+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:55:18+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:55:23+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:55:23+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:55:23+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:55:28+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:55:28+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:55:28+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:55:33+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:55:33+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:55:33+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:55:38+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:55:38+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:55:38+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:55:43+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:55:43+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:55:43+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:55:48+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:55:48+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:55:48+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:55:53+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:55:53+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:55:53+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:55:58+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:55:58+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:55:58+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:56:03+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:56:03+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:56:03+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:56:09+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:56:09+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:56:09+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:56:14+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:56:14+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:56:14+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:56:19+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:56:19+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:56:19+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:56:24+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:56:24+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:56:24+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:56:29+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:56:29+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:56:29+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:56:34+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:56:34+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:56:34+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:56:39+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:56:39+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:56:39+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:56:44+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:56:44+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:56:44+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:56:49+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:56:49+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:56:49+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:56:54+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:56:54+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:56:54+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:56:59+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:56:59+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:56:59+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:57:04+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:57:04+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:57:04+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:57:09+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:57:09+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:57:09+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:57:14+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:57:14+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:57:14+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:57:19+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:57:19+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:57:19+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:57:24+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:57:24+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:57:24+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:57:29+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:57:29+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:57:29+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:57:34+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:57:34+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:57:34+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:57:39+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:57:39+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:57:39+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:57:44+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:57:44+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:57:44+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:57:49+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:57:49+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:57:49+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:57:54+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:57:54+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:57:54+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:57:59+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:57:59+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:57:59+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:58:04+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:58:04+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:58:04+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:58:09+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:58:09+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:58:09+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:58:14+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:58:14+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:58:14+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:58:19+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:58:19+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:58:19+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:58:24+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:58:24+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:58:24+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:58:29+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:58:29+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:58:29+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:58:35+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:58:35+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:58:35+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:58:40+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:58:40+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:58:40+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:58:45+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:58:45+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:58:45+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:58:50+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:58:50+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:58:50+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:58:55+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:58:55+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:58:55+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:59:00+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:59:00+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:59:00+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:59:05+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:59:05+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:59:05+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:59:10+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:59:10+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:59:10+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:59:15+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:59:15+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:59:15+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:59:20+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:59:20+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:59:20+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:59:25+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:59:25+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:59:25+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:59:30+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:59:30+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:59:30+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:59:35+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:59:35+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:59:35+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:59:40+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:59:40+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:59:40+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:59:45+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:59:45+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:59:45+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:59:50+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:59:50+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:59:50+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T09:59:55+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T09:59:55+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T09:59:55+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:00:00+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:00:00+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:00:00+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:00:05+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:00:05+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:00:05+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:00:10+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:00:10+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:00:10+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:00:15+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:00:15+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:00:15+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:00:20+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:00:20+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:00:20+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:00:25+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:00:25+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:00:25+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:00:30+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:00:30+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:00:30+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:00:35+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:00:35+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:00:35+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:00:40+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:00:40+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:00:40+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:00:45+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:00:45+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:00:45+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:00:51+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:00:51+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:00:51+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:00:56+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:00:56+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:00:56+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:01:01+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:01:01+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:01:01+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:01:06+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:01:06+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:01:06+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:01:11+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:01:11+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:01:11+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:01:16+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:01:16+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:01:16+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:01:21+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:01:21+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:01:21+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:01:26+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:01:26+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:01:26+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:01:31+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:01:31+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:01:31+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:01:36+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:01:36+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:01:36+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:01:41+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:01:41+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:01:41+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:01:46+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:01:46+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:01:46+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:01:52+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:01:52+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:01:52+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:01:57+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:01:57+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:01:57+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:02:02+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:02:02+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:02:02+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:02:07+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:02:07+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:02:07+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:02:12+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:02:12+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:02:12+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:02:17+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:02:17+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:02:17+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:02:22+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:02:22+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:02:22+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:02:27+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:02:27+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:02:27+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:02:32+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:02:32+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:02:32+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:02:37+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:02:37+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:02:37+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:02:42+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:02:42+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:02:42+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:02:47+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:02:47+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:02:47+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:02:52+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:02:52+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:02:52+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:02:57+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:02:57+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:02:57+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:03:02+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:03:02+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:03:02+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:03:07+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:03:07+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:03:07+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:03:12+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:03:12+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:03:12+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:03:17+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:03:17+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:03:17+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:03:22+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:03:22+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:03:22+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:03:27+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:03:27+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:03:27+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:03:32+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:03:32+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:03:32+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:03:37+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:03:37+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:03:37+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:03:42+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:03:42+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:03:42+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:03:47+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:03:47+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:03:47+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:03:52+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:03:52+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:03:52+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:03:57+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:03:57+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:03:57+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:04:02+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:04:02+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:04:02+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:04:07+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:04:07+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:04:07+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:04:12+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:04:12+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:04:12+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:04:17+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:04:17+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:04:17+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:04:22+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:04:22+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:04:22+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:04:27+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:04:27+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:04:27+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:04:32+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:04:32+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:04:32+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:04:37+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:04:37+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:04:37+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:04:42+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:04:42+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:04:42+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:04:47+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:04:47+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:04:47+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:04:52+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:04:52+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:04:52+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:04:58+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:04:58+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:04:58+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:05:03+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:05:03+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:05:03+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:05:08+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:05:08+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:05:08+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:05:13+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:05:13+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:05:13+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:05:18+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:05:18+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:05:18+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:05:23+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:05:23+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:05:23+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:05:28+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:05:28+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:05:28+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:05:33+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:05:33+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:05:33+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:05:38+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:05:38+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:05:38+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:05:43+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:05:43+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:05:43+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:05:48+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:05:48+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:05:48+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:05:53+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:05:53+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:05:53+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:05:58+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:05:58+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:05:58+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:06:03+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:06:03+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:06:03+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:06:08+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:06:08+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:06:08+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:06:13+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:06:13+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:06:13+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:06:18+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:06:18+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:06:18+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:06:23+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:06:23+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:06:23+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:06:28+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:06:28+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:06:28+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:06:33+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:06:33+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:06:33+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:06:38+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:06:38+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:06:38+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:06:43+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:06:43+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:06:43+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:06:48+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:06:48+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:06:48+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:06:53+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:06:53+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:06:53+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:06:58+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:06:58+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:06:58+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:07:03+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:07:03+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:07:03+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:07:08+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:07:08+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:07:08+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:07:13+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:07:13+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:07:13+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:07:18+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:07:18+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:07:18+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:07:23+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:07:23+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:07:23+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:07:28+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:07:28+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:07:28+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:07:33+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:07:33+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:07:33+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:07:38+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:07:38+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:07:38+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:07:43+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:07:43+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:07:43+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:07:49+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:07:49+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:07:49+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:07:54+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:07:54+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:07:54+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:07:59+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:07:59+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:07:59+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:08:04+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:08:04+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:08:04+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:08:09+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:08:09+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:08:09+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:08:14+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:08:14+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:08:14+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:08:19+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:08:19+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:08:19+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:08:24+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:08:24+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:08:24+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:08:29+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:08:29+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:08:29+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:08:34+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:08:34+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:08:34+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:08:39+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:08:39+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:08:39+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:08:44+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:08:44+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:08:44+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:08:49+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:08:49+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:08:49+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:08:54+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:08:54+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:08:54+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:08:59+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:08:59+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:08:59+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:09:04+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:09:04+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:09:04+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:09:09+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:09:09+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:09:09+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:09:14+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:09:14+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:09:14+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:09:19+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:09:19+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:09:19+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:09:24+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:09:24+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:09:24+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:09:29+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:09:29+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:09:29+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:09:34+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:09:34+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:09:34+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:09:40+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:09:40+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:09:40+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:09:45+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:09:45+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:09:45+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:09:50+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:09:50+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:09:50+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:09:55+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:09:55+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:09:55+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:10:00+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:10:00+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:10:00+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:10:05+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:10:05+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:10:05+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:10:10+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:10:10+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:10:10+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:10:15+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:10:15+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:10:15+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:10:20+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:10:20+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:10:20+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:10:25+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:10:25+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:10:25+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:10:30+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:10:30+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:10:30+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Received 1 messages from stream
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Accepted 1 unique articles after dedup
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Processing 1 event groups
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified e8fc123dcef981be5d3aa39a41a95d7a8992de2760ca815009c1e8f7edce83fb: categories=['Other'] duration_ms=10.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized e8fc123dcef981be5d3aa39a41a95d7a8992de2760ca815009c1e8f7edce83fb: signal=0.50 sentiment=neutral duration_ms=3.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed e8fc123dcef981be5d3aa39a41a95d7a8992de2760ca815009c1e8f7edce83fb: paradigm=False duration_ms=0.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=e8fc123dcef981be5d3aa39a41a95d7a8992de2760ca815009c1e8f7edce83fb
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 1/1 processed: id=e8fc123dcef981be5d3aa39a41a95d7a8992de2760ca815009c1e8f7edce83fb title=[GitHub] perplexityai/bumblebee duration_ms=13.8
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Batch complete: 1 articles -> 1 processed results
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Processed batch of 1 articles
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Received 10 messages from stream
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Accepted 10 unique articles after dedup
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Processing 10 event groups
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified acc94bcdc04e867e18e04520bbe98d03520191828aef8879069384ce54e805dd: categories=['Other'] duration_ms=2.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized acc94bcdc04e867e18e04520bbe98d03520191828aef8879069384ce54e805dd: signal=0.50 sentiment=neutral duration_ms=3.8
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed acc94bcdc04e867e18e04520bbe98d03520191828aef8879069384ce54e805dd: paradigm=False duration_ms=0.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=acc94bcdc04e867e18e04520bbe98d03520191828aef8879069384ce54e805dd
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 1/10 processed: id=acc94bcdc04e867e18e04520bbe98d03520191828aef8879069384ce54e805dd title=[GitHub] FoundZiGu/GuJumpgate duration_ms=5.9
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 1bf4dc577f8f9dbcf854194d77bc9cd3628403167f4afb9bc988f0602ced1e0b: categories=['Other'] duration_ms=1.7
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 1bf4dc577f8f9dbcf854194d77bc9cd3628403167f4afb9bc988f0602ced1e0b: signal=0.50 sentiment=neutral duration_ms=3.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 1bf4dc577f8f9dbcf854194d77bc9cd3628403167f4afb9bc988f0602ced1e0b: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=1bf4dc577f8f9dbcf854194d77bc9cd3628403167f4afb9bc988f0602ced1e0b
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 2/10 processed: id=1bf4dc577f8f9dbcf854194d77bc9cd3628403167f4afb9bc988f0602ced1e0b title=[GitHub] thananon/9arm-skills duration_ms=4.8
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 67160d1d79de37421791447490c2b6bfa781695ab6e676b77b848214af41e877: categories=['Other'] duration_ms=1.4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 67160d1d79de37421791447490c2b6bfa781695ab6e676b77b848214af41e877: signal=0.50 sentiment=neutral duration_ms=2.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 67160d1d79de37421791447490c2b6bfa781695ab6e676b77b848214af41e877: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=67160d1d79de37421791447490c2b6bfa781695ab6e676b77b848214af41e877
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 3/10 processed: id=67160d1d79de37421791447490c2b6bfa781695ab6e676b77b848214af41e877 title=[GitHub] open-gsd/get-shit-done-redux duration_ms=3.7
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 0ced82923d1a7587eb3ebaded13a44f3a0252ab716859366e1996312b3929a4b: categories=['Other'] duration_ms=1.6
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 0ced82923d1a7587eb3ebaded13a44f3a0252ab716859366e1996312b3929a4b: signal=0.50 sentiment=neutral duration_ms=2.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 0ced82923d1a7587eb3ebaded13a44f3a0252ab716859366e1996312b3929a4b: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=0ced82923d1a7587eb3ebaded13a44f3a0252ab716859366e1996312b3929a4b
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 4/10 processed: id=0ced82923d1a7587eb3ebaded13a44f3a0252ab716859366e1996312b3929a4b title=[GitHub] Tong89/smartNode duration_ms=3.8
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified d88f8d6a925205c08a807f879f0c8c33dbcc13fb847d21315e7650c668ae747d: categories=['Other'] duration_ms=1.5
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized d88f8d6a925205c08a807f879f0c8c33dbcc13fb847d21315e7650c668ae747d: signal=0.50 sentiment=neutral duration_ms=2.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed d88f8d6a925205c08a807f879f0c8c33dbcc13fb847d21315e7650c668ae747d: paradigm=False duration_ms=0.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=d88f8d6a925205c08a807f879f0c8c33dbcc13fb847d21315e7650c668ae747d
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 5/10 processed: id=d88f8d6a925205c08a807f879f0c8c33dbcc13fb847d21315e7650c668ae747d title=[GitHub] kageroumado/phosphene duration_ms=3.6
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 8703a39f68c9d7f7abc8f047c27fc3b1892624923a4d28f1ec37a34eac7c55ea: categories=['Other'] duration_ms=1.4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 8703a39f68c9d7f7abc8f047c27fc3b1892624923a4d28f1ec37a34eac7c55ea: signal=0.50 sentiment=neutral duration_ms=1.7
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 8703a39f68c9d7f7abc8f047c27fc3b1892624923a4d28f1ec37a34eac7c55ea: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=8703a39f68c9d7f7abc8f047c27fc3b1892624923a4d28f1ec37a34eac7c55ea
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 6/10 processed: id=8703a39f68c9d7f7abc8f047c27fc3b1892624923a4d28f1ec37a34eac7c55ea title=[GitHub] 0xSero/codex-shim duration_ms=3.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified e360234e4a7623fbcebdaa99d67a1d22d2236fd15ebbb3bc8ea528905dac529a: categories=['Other'] duration_ms=1.6
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized e360234e4a7623fbcebdaa99d67a1d22d2236fd15ebbb3bc8ea528905dac529a: signal=0.50 sentiment=neutral duration_ms=1.7
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed e360234e4a7623fbcebdaa99d67a1d22d2236fd15ebbb3bc8ea528905dac529a: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=e360234e4a7623fbcebdaa99d67a1d22d2236fd15ebbb3bc8ea528905dac529a
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 7/10 processed: id=e360234e4a7623fbcebdaa99d67a1d22d2236fd15ebbb3bc8ea528905dac529a title=[GitHub] run-liyi/wechatpay duration_ms=3.4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 023d9d6b1d0cf5087be350800774661642b425b578147ad21561bbd8303e852d: categories=['Other'] duration_ms=1.8
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 023d9d6b1d0cf5087be350800774661642b425b578147ad21561bbd8303e852d: signal=0.50 sentiment=neutral duration_ms=2.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 023d9d6b1d0cf5087be350800774661642b425b578147ad21561bbd8303e852d: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=023d9d6b1d0cf5087be350800774661642b425b578147ad21561bbd8303e852d
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 8/10 processed: id=023d9d6b1d0cf5087be350800774661642b425b578147ad21561bbd8303e852d title=[GitHub] MoonshotAI/kimi-code duration_ms=4.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 591455299c02789d711c63764e63ba5262068b6d3a0d67212f79ebfe9df099ad: categories=['Other'] duration_ms=1.7
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 591455299c02789d711c63764e63ba5262068b6d3a0d67212f79ebfe9df099ad: signal=0.50 sentiment=neutral duration_ms=1.9
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 591455299c02789d711c63764e63ba5262068b6d3a0d67212f79ebfe9df099ad: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=591455299c02789d711c63764e63ba5262068b6d3a0d67212f79ebfe9df099ad
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 9/10 processed: id=591455299c02789d711c63764e63ba5262068b6d3a0d67212f79ebfe9df099ad title=[GitHub] zhaoyue4810/pianke duration_ms=3.7
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 81288de3d1bfacf85e4705fa6ae94ca191e57d8a27595872d10b14be19ef549a: categories=['Other'] duration_ms=1.4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 81288de3d1bfacf85e4705fa6ae94ca191e57d8a27595872d10b14be19ef549a: signal=0.50 sentiment=neutral duration_ms=2.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 81288de3d1bfacf85e4705fa6ae94ca191e57d8a27595872d10b14be19ef549a: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=81288de3d1bfacf85e4705fa6ae94ca191e57d8a27595872d10b14be19ef549a
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 10/10 processed: id=81288de3d1bfacf85e4705fa6ae94ca191e57d8a27595872d10b14be19ef549a title=[GitHub] Unclecheng-li/poc-lab duration_ms=3.6
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Batch complete: 10 articles -> 10 processed results
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Processed batch of 10 articles
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Received 10 messages from stream
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Accepted 10 unique articles after dedup
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Processing 10 event groups
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 9be9d6b2aa30b1a8e628e0ceb9836dbed9b13b10e889dd4c5945f8f999b31e92: categories=['Other'] duration_ms=1.6
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 9be9d6b2aa30b1a8e628e0ceb9836dbed9b13b10e889dd4c5945f8f999b31e92: signal=0.50 sentiment=neutral duration_ms=2.4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 9be9d6b2aa30b1a8e628e0ceb9836dbed9b13b10e889dd4c5945f8f999b31e92: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=9be9d6b2aa30b1a8e628e0ceb9836dbed9b13b10e889dd4c5945f8f999b31e92
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 1/10 processed: id=9be9d6b2aa30b1a8e628e0ceb9836dbed9b13b10e889dd4c5945f8f999b31e92 title=[GitHub] KNG7-P/Se7en-Pro duration_ms=4.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified cf38a910ea176ddd323cd557e1e44f084116f3dbfb04c424adb407cd7c3f7a6e: categories=['Other'] duration_ms=1.4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized cf38a910ea176ddd323cd557e1e44f084116f3dbfb04c424adb407cd7c3f7a6e: signal=0.50 sentiment=neutral duration_ms=2.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed cf38a910ea176ddd323cd557e1e44f084116f3dbfb04c424adb407cd7c3f7a6e: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=cf38a910ea176ddd323cd557e1e44f084116f3dbfb04c424adb407cd7c3f7a6e
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 2/10 processed: id=cf38a910ea176ddd323cd557e1e44f084116f3dbfb04c424adb407cd7c3f7a6e title=[GitHub] bonus-2026/casino-bonus duration_ms=3.7
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified e43b3be6250b2851ec659d140b31be73bf53756a186a5f00820be4aece7cb163: categories=['Other'] duration_ms=1.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized e43b3be6250b2851ec659d140b31be73bf53756a186a5f00820be4aece7cb163: signal=0.50 sentiment=neutral duration_ms=1.9
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed e43b3be6250b2851ec659d140b31be73bf53756a186a5f00820be4aece7cb163: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=e43b3be6250b2851ec659d140b31be73bf53756a186a5f00820be4aece7cb163
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 3/10 processed: id=e43b3be6250b2851ec659d140b31be73bf53756a186a5f00820be4aece7cb163 title=[GitHub] ShinyaTomitsuka/arbitrage-trading-bot duration_ms=3.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified fcc4fa3c00d9b47e03d89b3722e07e31865bde1d264cbebf19dd28a0e00ca478: categories=['Other'] duration_ms=1.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized fcc4fa3c00d9b47e03d89b3722e07e31865bde1d264cbebf19dd28a0e00ca478: signal=0.50 sentiment=neutral duration_ms=2.4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed fcc4fa3c00d9b47e03d89b3722e07e31865bde1d264cbebf19dd28a0e00ca478: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=fcc4fa3c00d9b47e03d89b3722e07e31865bde1d264cbebf19dd28a0e00ca478
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 4/10 processed: id=fcc4fa3c00d9b47e03d89b3722e07e31865bde1d264cbebf19dd28a0e00ca478 title=[GitHub] SalhaNabil/CloakBrowser duration_ms=3.7
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 3b89a49950055f8641114b3812f703fa864a0ca0c5003d1a0a9bc25c209e4d75: categories=['Other'] duration_ms=1.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 3b89a49950055f8641114b3812f703fa864a0ca0c5003d1a0a9bc25c209e4d75: signal=0.50 sentiment=neutral duration_ms=1.9
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 3b89a49950055f8641114b3812f703fa864a0ca0c5003d1a0a9bc25c209e4d75: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=3b89a49950055f8641114b3812f703fa864a0ca0c5003d1a0a9bc25c209e4d75
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 5/10 processed: id=3b89a49950055f8641114b3812f703fa864a0ca0c5003d1a0a9bc25c209e4d75 title=[GitHub] orchestration-agent/AgentOrchestration duration_ms=3.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 5b567f964cba130fe575b563163d11928ac3e2ecc25775232d5065d635fecc9d: categories=['Other'] duration_ms=1.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 5b567f964cba130fe575b563163d11928ac3e2ecc25775232d5065d635fecc9d: signal=0.50 sentiment=neutral duration_ms=1.9
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 5b567f964cba130fe575b563163d11928ac3e2ecc25775232d5065d635fecc9d: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=5b567f964cba130fe575b563163d11928ac3e2ecc25775232d5065d635fecc9d
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 6/10 processed: id=5b567f964cba130fe575b563163d11928ac3e2ecc25775232d5065d635fecc9d title=[GitHub] jianshuo/ccglass duration_ms=3.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified cced5555858988e3f0fe13806dfc836464fe545c8236da2e43f7eb48938afd18: categories=['Other'] duration_ms=1.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized cced5555858988e3f0fe13806dfc836464fe545c8236da2e43f7eb48938afd18: signal=0.50 sentiment=neutral duration_ms=1.9
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed cced5555858988e3f0fe13806dfc836464fe545c8236da2e43f7eb48938afd18: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=cced5555858988e3f0fe13806dfc836464fe545c8236da2e43f7eb48938afd18
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 7/10 processed: id=cced5555858988e3f0fe13806dfc836464fe545c8236da2e43f7eb48938afd18 title=[GitHub] littlefrogyq/UE4SS-Subnautica-2 duration_ms=3.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 2c42e1e3338501bc362205395fd7913205d111c10950a5b020aa2b67dd080273: categories=['Other'] duration_ms=1.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 2c42e1e3338501bc362205395fd7913205d111c10950a5b020aa2b67dd080273: signal=0.50 sentiment=neutral duration_ms=1.8
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 2c42e1e3338501bc362205395fd7913205d111c10950a5b020aa2b67dd080273: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=2c42e1e3338501bc362205395fd7913205d111c10950a5b020aa2b67dd080273
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 8/10 processed: id=2c42e1e3338501bc362205395fd7913205d111c10950a5b020aa2b67dd080273 title=[GitHub] VILA-Lab/FigMirror duration_ms=3.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified f64e7b320b8a40711523f3f030bc59d08c96cba04d8b22c6e8591a787c7986ad: categories=['Other'] duration_ms=1.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized f64e7b320b8a40711523f3f030bc59d08c96cba04d8b22c6e8591a787c7986ad: signal=0.50 sentiment=neutral duration_ms=1.9
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed f64e7b320b8a40711523f3f030bc59d08c96cba04d8b22c6e8591a787c7986ad: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=f64e7b320b8a40711523f3f030bc59d08c96cba04d8b22c6e8591a787c7986ad
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 9/10 processed: id=f64e7b320b8a40711523f3f030bc59d08c96cba04d8b22c6e8591a787c7986ad title=[GitHub] mila89/polymarket-trading-bot duration_ms=3.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified bf85d262f6aa5f3cb46db06f10f9e300902d29a10ac2c2b8c7547a14720305d4: categories=['Other'] duration_ms=1.4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized bf85d262f6aa5f3cb46db06f10f9e300902d29a10ac2c2b8c7547a14720305d4: signal=0.50 sentiment=neutral duration_ms=1.9
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed bf85d262f6aa5f3cb46db06f10f9e300902d29a10ac2c2b8c7547a14720305d4: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=bf85d262f6aa5f3cb46db06f10f9e300902d29a10ac2c2b8c7547a14720305d4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 10/10 processed: id=bf85d262f6aa5f3cb46db06f10f9e300902d29a10ac2c2b8c7547a14720305d4 title=[GitHub] md0070/polymarket-trading-bot duration_ms=3.4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Batch complete: 10 articles -> 10 processed results
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Processed batch of 10 articles
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Received 10 messages from stream
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Accepted 10 unique articles after dedup
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Processing 10 event groups
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 785c944ee762bfbb05ed708c8419214ba4b06327bae8333acb72024974869060: categories=['Other'] duration_ms=1.5
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 785c944ee762bfbb05ed708c8419214ba4b06327bae8333acb72024974869060: signal=0.50 sentiment=neutral duration_ms=2.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 785c944ee762bfbb05ed708c8419214ba4b06327bae8333acb72024974869060: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=785c944ee762bfbb05ed708c8419214ba4b06327bae8333acb72024974869060
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 1/10 processed: id=785c944ee762bfbb05ed708c8419214ba4b06327bae8333acb72024974869060 title=[GitHub] yui540/comimi duration_ms=3.5
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 94c2990e3989671a8f75ba72fc22a0e97654b6b4ab143a2d5836cbd7d6766f8b: categories=['Other'] duration_ms=1.4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 94c2990e3989671a8f75ba72fc22a0e97654b6b4ab143a2d5836cbd7d6766f8b: signal=0.50 sentiment=neutral duration_ms=2.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 94c2990e3989671a8f75ba72fc22a0e97654b6b4ab143a2d5836cbd7d6766f8b: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=94c2990e3989671a8f75ba72fc22a0e97654b6b4ab143a2d5836cbd7d6766f8b
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 2/10 processed: id=94c2990e3989671a8f75ba72fc22a0e97654b6b4ab143a2d5836cbd7d6766f8b title=[GitHub] suyancc/openai-plus-vxt duration_ms=3.5
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 7b4e92f94b087427e3f1c745cea939c7ffb5e8a8a7618e16637fd261dbf4ca76: categories=['Other'] duration_ms=1.7
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 7b4e92f94b087427e3f1c745cea939c7ffb5e8a8a7618e16637fd261dbf4ca76: signal=0.50 sentiment=neutral duration_ms=1.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 7b4e92f94b087427e3f1c745cea939c7ffb5e8a8a7618e16637fd261dbf4ca76: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=7b4e92f94b087427e3f1c745cea939c7ffb5e8a8a7618e16637fd261dbf4ca76
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 3/10 processed: id=7b4e92f94b087427e3f1c745cea939c7ffb5e8a8a7618e16637fd261dbf4ca76 title=[GitHub] edgenuitybot/exodusbot duration_ms=3.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified e1e434632495066ce758b32bb887c2c6219f71749eff0deaaf20d274e68b6235: categories=['Other'] duration_ms=1.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized e1e434632495066ce758b32bb887c2c6219f71749eff0deaaf20d274e68b6235: signal=0.50 sentiment=neutral duration_ms=1.8
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed e1e434632495066ce758b32bb887c2c6219f71749eff0deaaf20d274e68b6235: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=e1e434632495066ce758b32bb887c2c6219f71749eff0deaaf20d274e68b6235
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 4/10 processed: id=e1e434632495066ce758b32bb887c2c6219f71749eff0deaaf20d274e68b6235 title=[GitHub] judithsulfan/trading-bot duration_ms=3.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 8dd32a6460d209bd8e786233c5ccefebd274bc7b78a7ddd3c36752eb19fa4b40: categories=['Other'] duration_ms=1.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 8dd32a6460d209bd8e786233c5ccefebd274bc7b78a7ddd3c36752eb19fa4b40: signal=0.50 sentiment=neutral duration_ms=2.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 8dd32a6460d209bd8e786233c5ccefebd274bc7b78a7ddd3c36752eb19fa4b40: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=8dd32a6460d209bd8e786233c5ccefebd274bc7b78a7ddd3c36752eb19fa4b40
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 5/10 processed: id=8dd32a6460d209bd8e786233c5ccefebd274bc7b78a7ddd3c36752eb19fa4b40 title=[GitHub] unprovable/ShadowCat duration_ms=3.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 2898df226c33faf7e072b2139709ddeac736db583f04c20059eb581522c4b0cc: categories=['Other'] duration_ms=1.6
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 2898df226c33faf7e072b2139709ddeac736db583f04c20059eb581522c4b0cc: signal=0.50 sentiment=neutral duration_ms=2.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 2898df226c33faf7e072b2139709ddeac736db583f04c20059eb581522c4b0cc: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=2898df226c33faf7e072b2139709ddeac736db583f04c20059eb581522c4b0cc
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 6/10 processed: id=2898df226c33faf7e072b2139709ddeac736db583f04c20059eb581522c4b0cc title=[GitHub] XingYu-Zhong/DeepSeek-GUI duration_ms=3.7
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified ee3d2a1b24d046b695578907a5095f2f4a6ecb693327e732d3ee9d867667ece4: categories=['Other'] duration_ms=1.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized ee3d2a1b24d046b695578907a5095f2f4a6ecb693327e732d3ee9d867667ece4: signal=0.50 sentiment=neutral duration_ms=2.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed ee3d2a1b24d046b695578907a5095f2f4a6ecb693327e732d3ee9d867667ece4: paradigm=False duration_ms=0.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=ee3d2a1b24d046b695578907a5095f2f4a6ecb693327e732d3ee9d867667ece4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 7/10 processed: id=ee3d2a1b24d046b695578907a5095f2f4a6ecb693327e732d3ee9d867667ece4 title=[GitHub] hanyi0000/chatgpt-plus-automation-toolkit duration_ms=3.5
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 12d4200fafa89f232ae71f88f89d205126715401e1df22953cb6af7cd61afe56: categories=['Other'] duration_ms=1.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 12d4200fafa89f232ae71f88f89d205126715401e1df22953cb6af7cd61afe56: signal=0.50 sentiment=neutral duration_ms=1.9
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 12d4200fafa89f232ae71f88f89d205126715401e1df22953cb6af7cd61afe56: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=12d4200fafa89f232ae71f88f89d205126715401e1df22953cb6af7cd61afe56
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 8/10 processed: id=12d4200fafa89f232ae71f88f89d205126715401e1df22953cb6af7cd61afe56 title=[GitHub] uktrash/LSFG-Desktop duration_ms=3.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified b97fb1ba7799f4bdf0f5a96ff46cc3e8fe7867fe9f7a56ab65c94cdcc763fe25: categories=['Other'] duration_ms=1.4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized b97fb1ba7799f4bdf0f5a96ff46cc3e8fe7867fe9f7a56ab65c94cdcc763fe25: signal=0.50 sentiment=neutral duration_ms=1.9
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed b97fb1ba7799f4bdf0f5a96ff46cc3e8fe7867fe9f7a56ab65c94cdcc763fe25: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=b97fb1ba7799f4bdf0f5a96ff46cc3e8fe7867fe9f7a56ab65c94cdcc763fe25
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 9/10 processed: id=b97fb1ba7799f4bdf0f5a96ff46cc3e8fe7867fe9f7a56ab65c94cdcc763fe25 title=[GitHub] Simbastack-hq/framedex duration_ms=3.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 65385eb20c5a9bfa24b4103f8da83a87f0012f2bfc84c7d96ddc21d7ebdeec8f: categories=['Other'] duration_ms=1.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 65385eb20c5a9bfa24b4103f8da83a87f0012f2bfc84c7d96ddc21d7ebdeec8f: signal=0.50 sentiment=neutral duration_ms=1.8
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 65385eb20c5a9bfa24b4103f8da83a87f0012f2bfc84c7d96ddc21d7ebdeec8f: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=65385eb20c5a9bfa24b4103f8da83a87f0012f2bfc84c7d96ddc21d7ebdeec8f
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 10/10 processed: id=65385eb20c5a9bfa24b4103f8da83a87f0012f2bfc84c7d96ddc21d7ebdeec8f title=[GitHub] akitaonrails/ai-memory duration_ms=3.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Batch complete: 10 articles -> 10 processed results
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Processed batch of 10 articles
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Received 10 messages from stream
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Accepted 10 unique articles after dedup
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Processing 10 event groups
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 5975108acaa143b8ee7e83251e2cb8ecfc22681efcd81e18506e4ceb0d0a3fea: categories=['Other'] duration_ms=1.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 5975108acaa143b8ee7e83251e2cb8ecfc22681efcd81e18506e4ceb0d0a3fea: signal=0.50 sentiment=neutral duration_ms=1.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 5975108acaa143b8ee7e83251e2cb8ecfc22681efcd81e18506e4ceb0d0a3fea: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=5975108acaa143b8ee7e83251e2cb8ecfc22681efcd81e18506e4ceb0d0a3fea
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 1/10 processed: id=5975108acaa143b8ee7e83251e2cb8ecfc22681efcd81e18506e4ceb0d0a3fea title=[GitHub] kouhxp/yapsnap duration_ms=2.7
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 030e03b0d27138f2f8e3f7578ae49617373a4781b4ca06e30bdf68209d6fa2b4: categories=['Other'] duration_ms=1.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 030e03b0d27138f2f8e3f7578ae49617373a4781b4ca06e30bdf68209d6fa2b4: signal=0.50 sentiment=neutral duration_ms=1.9
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 030e03b0d27138f2f8e3f7578ae49617373a4781b4ca06e30bdf68209d6fa2b4: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=030e03b0d27138f2f8e3f7578ae49617373a4781b4ca06e30bdf68209d6fa2b4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 2/10 processed: id=030e03b0d27138f2f8e3f7578ae49617373a4781b4ca06e30bdf68209d6fa2b4 title=[GitHub] hypnguyen1209/offensive-claude duration_ms=3.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified dd852bb8e775039f9d8bb35ef86c11f5ca24e9ac9fa5fb56436ca99d5a8296d6: categories=['Other'] duration_ms=1.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized dd852bb8e775039f9d8bb35ef86c11f5ca24e9ac9fa5fb56436ca99d5a8296d6: signal=0.50 sentiment=neutral duration_ms=1.8
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed dd852bb8e775039f9d8bb35ef86c11f5ca24e9ac9fa5fb56436ca99d5a8296d6: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=dd852bb8e775039f9d8bb35ef86c11f5ca24e9ac9fa5fb56436ca99d5a8296d6
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 3/10 processed: id=dd852bb8e775039f9d8bb35ef86c11f5ca24e9ac9fa5fb56436ca99d5a8296d6 title=[GitHub] PredictiveFlow-Labs/polymarket-arbitrage- duration_ms=3.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 768b3f7b69a367c8e46a1eda298002a4367db0030023f44955af82001e7448c4: categories=['Other'] duration_ms=1.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 768b3f7b69a367c8e46a1eda298002a4367db0030023f44955af82001e7448c4: signal=0.50 sentiment=neutral duration_ms=1.9
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 768b3f7b69a367c8e46a1eda298002a4367db0030023f44955af82001e7448c4: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=768b3f7b69a367c8e46a1eda298002a4367db0030023f44955af82001e7448c4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 4/10 processed: id=768b3f7b69a367c8e46a1eda298002a4367db0030023f44955af82001e7448c4 title=[GitHub] modaic-ai/gepa-viz duration_ms=3.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 42129a4382f8c0e07512742278bcc66a9e887a37a7c9b36ae53dca76b68fcc59: categories=['Other'] duration_ms=1.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 42129a4382f8c0e07512742278bcc66a9e887a37a7c9b36ae53dca76b68fcc59: signal=0.50 sentiment=neutral duration_ms=2.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 42129a4382f8c0e07512742278bcc66a9e887a37a7c9b36ae53dca76b68fcc59: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=42129a4382f8c0e07512742278bcc66a9e887a37a7c9b36ae53dca76b68fcc59
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 5/10 processed: id=42129a4382f8c0e07512742278bcc66a9e887a37a7c9b36ae53dca76b68fcc59 title=[GitHub] jazzband/web3-devkit-cli duration_ms=3.5
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified e0ec5c1aa95dd313e20708c40e9c8cb44c200506077a85b017f1d703b76dad69: categories=['Other'] duration_ms=1.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized e0ec5c1aa95dd313e20708c40e9c8cb44c200506077a85b017f1d703b76dad69: signal=0.50 sentiment=neutral duration_ms=1.9
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed e0ec5c1aa95dd313e20708c40e9c8cb44c200506077a85b017f1d703b76dad69: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=e0ec5c1aa95dd313e20708c40e9c8cb44c200506077a85b017f1d703b76dad69
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 6/10 processed: id=e0ec5c1aa95dd313e20708c40e9c8cb44c200506077a85b017f1d703b76dad69 title=[GitHub] CylinderChairman/aida64 duration_ms=3.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 8251b1ed9ea2675be91342fb28886287f6f1cc85c2ffb5e7467ed669878b1f20: categories=['Other'] duration_ms=1.8
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 8251b1ed9ea2675be91342fb28886287f6f1cc85c2ffb5e7467ed669878b1f20: signal=0.50 sentiment=neutral duration_ms=2.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 8251b1ed9ea2675be91342fb28886287f6f1cc85c2ffb5e7467ed669878b1f20: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=8251b1ed9ea2675be91342fb28886287f6f1cc85c2ffb5e7467ed669878b1f20
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 7/10 processed: id=8251b1ed9ea2675be91342fb28886287f6f1cc85c2ffb5e7467ed669878b1f20 title=[GitHub] redteamfortress/PhantomKiller duration_ms=4.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 0339506b5ab2d88a2e9cf0270d84aa6b2667aa08cd13d3acdaf4fe65c2c0f1dd: categories=['Other'] duration_ms=1.8
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 0339506b5ab2d88a2e9cf0270d84aa6b2667aa08cd13d3acdaf4fe65c2c0f1dd: signal=0.50 sentiment=neutral duration_ms=1.9
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 0339506b5ab2d88a2e9cf0270d84aa6b2667aa08cd13d3acdaf4fe65c2c0f1dd: paradigm=False duration_ms=0.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=0339506b5ab2d88a2e9cf0270d84aa6b2667aa08cd13d3acdaf4fe65c2c0f1dd
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 8/10 processed: id=0339506b5ab2d88a2e9cf0270d84aa6b2667aa08cd13d3acdaf4fe65c2c0f1dd title=[GitHub] zzzhhh1/mg-Koyeb duration_ms=3.8
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified d5800a2931320443c8d9555d50c51cb7bcaea7ab8f7d56fe50a34c04e88ff016: categories=['Other'] duration_ms=1.6
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized d5800a2931320443c8d9555d50c51cb7bcaea7ab8f7d56fe50a34c04e88ff016: signal=0.50 sentiment=neutral duration_ms=2.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed d5800a2931320443c8d9555d50c51cb7bcaea7ab8f7d56fe50a34c04e88ff016: paradigm=False duration_ms=0.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=d5800a2931320443c8d9555d50c51cb7bcaea7ab8f7d56fe50a34c04e88ff016
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 9/10 processed: id=d5800a2931320443c8d9555d50c51cb7bcaea7ab8f7d56fe50a34c04e88ff016 title=[GitHub] ZettPW/KMSTools duration_ms=4.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified b0e9ba942bebf6632653599affe744c79ea638b62f10dc95bd8e56753939243c: categories=['Other'] duration_ms=2.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized b0e9ba942bebf6632653599affe744c79ea638b62f10dc95bd8e56753939243c: signal=0.50 sentiment=neutral duration_ms=2.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed b0e9ba942bebf6632653599affe744c79ea638b62f10dc95bd8e56753939243c: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=b0e9ba942bebf6632653599affe744c79ea638b62f10dc95bd8e56753939243c
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 10/10 processed: id=b0e9ba942bebf6632653599affe744c79ea638b62f10dc95bd8e56753939243c title=[GitHub] jackson-video-resources/markov-hedge-fund duration_ms=4.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Batch complete: 10 articles -> 10 processed results
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Processed batch of 10 articles
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Received 9 messages from stream
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Accepted 9 unique articles after dedup
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Processing 8 event groups
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified cb345cac9e7fc12d540458884cc853fd41868134b4e3fbe6a0a1f5158e81167f: categories=['Other'] duration_ms=1.6
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized cb345cac9e7fc12d540458884cc853fd41868134b4e3fbe6a0a1f5158e81167f: signal=0.50 sentiment=neutral duration_ms=2.4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed cb345cac9e7fc12d540458884cc853fd41868134b4e3fbe6a0a1f5158e81167f: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=cb345cac9e7fc12d540458884cc853fd41868134b4e3fbe6a0a1f5158e81167f
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 1/8 processed: id=cb345cac9e7fc12d540458884cc853fd41868134b4e3fbe6a0a1f5158e81167f title=[GitHub] bryanyzhu/agentic-ai-system-course duration_ms=4.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 37aba4618af5e65731034ba5416971d80f8c4f34d2e45f26e226dda7cd947a88: categories=['Other'] duration_ms=1.5
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 37aba4618af5e65731034ba5416971d80f8c4f34d2e45f26e226dda7cd947a88: signal=0.50 sentiment=neutral duration_ms=1.7
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 37aba4618af5e65731034ba5416971d80f8c4f34d2e45f26e226dda7cd947a88: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=37aba4618af5e65731034ba5416971d80f8c4f34d2e45f26e226dda7cd947a88
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 2/8 processed: id=37aba4618af5e65731034ba5416971d80f8c4f34d2e45f26e226dda7cd947a88 title=[GitHub] open-gsd/gsd-pi duration_ms=3.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified e327c6d5d18c540c10e7d5e3d061901e0a6da93143064cef2e44800230db2143: categories=['Other'] duration_ms=1.4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized e327c6d5d18c540c10e7d5e3d061901e0a6da93143064cef2e44800230db2143: signal=0.50 sentiment=neutral duration_ms=2.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed e327c6d5d18c540c10e7d5e3d061901e0a6da93143064cef2e44800230db2143: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=e327c6d5d18c540c10e7d5e3d061901e0a6da93143064cef2e44800230db2143
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 3/8 processed: id=e327c6d5d18c540c10e7d5e3d061901e0a6da93143064cef2e44800230db2143 title=[GitHub] zqbxdev/webchat2api duration_ms=3.5
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 662fa4b7ce1ae86919cefddb2d1dafa46902f5a8c6c19b4cf85202f8e7dbe692: categories=['Other'] duration_ms=1.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 662fa4b7ce1ae86919cefddb2d1dafa46902f5a8c6c19b4cf85202f8e7dbe692: signal=0.50 sentiment=neutral duration_ms=2.8
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 662fa4b7ce1ae86919cefddb2d1dafa46902f5a8c6c19b4cf85202f8e7dbe692: paradigm=False duration_ms=2.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=662fa4b7ce1ae86919cefddb2d1dafa46902f5a8c6c19b4cf85202f8e7dbe692
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 4/8 processed: id=662fa4b7ce1ae86919cefddb2d1dafa46902f5a8c6c19b4cf85202f8e7dbe692 title=[GitHub] Polymarket-Trading-kit/crypto-trading-bot duration_ms=6.2
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 45f8e8ebc0c8e810457e431dc9dca0ee464c9e8adf64f53b8f1b52d1e60e0725: categories=['Other'] duration_ms=1.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 45f8e8ebc0c8e810457e431dc9dca0ee464c9e8adf64f53b8f1b52d1e60e0725: signal=0.50 sentiment=neutral duration_ms=2.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 45f8e8ebc0c8e810457e431dc9dca0ee464c9e8adf64f53b8f1b52d1e60e0725: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=45f8e8ebc0c8e810457e431dc9dca0ee464c9e8adf64f53b8f1b52d1e60e0725
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 5/8 processed: id=45f8e8ebc0c8e810457e431dc9dca0ee464c9e8adf64f53b8f1b52d1e60e0725 title=[GitHub] scheidydude/codeindex duration_ms=3.4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified a50e6e64cb6021ce9ddfde5c1b8d3bd362d2f1064328f87524d38b5d81c7e94c: categories=['Other'] duration_ms=1.4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized a50e6e64cb6021ce9ddfde5c1b8d3bd362d2f1064328f87524d38b5d81c7e94c: signal=0.50 sentiment=neutral duration_ms=2.3
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed a50e6e64cb6021ce9ddfde5c1b8d3bd362d2f1064328f87524d38b5d81c7e94c: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=a50e6e64cb6021ce9ddfde5c1b8d3bd362d2f1064328f87524d38b5d81c7e94c
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 6/8 processed: id=a50e6e64cb6021ce9ddfde5c1b8d3bd362d2f1064328f87524d38b5d81c7e94c title=[GitHub] nv-tlabs/PiD duration_ms=3.8
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 107b72794a79a934764904a465047df929059be8a325115f867c316fa62ad4b6: categories=['Other'] duration_ms=1.5
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 107b72794a79a934764904a465047df929059be8a325115f867c316fa62ad4b6: signal=0.50 sentiment=neutral duration_ms=2.1
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 107b72794a79a934764904a465047df929059be8a325115f867c316fa62ad4b6: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=107b72794a79a934764904a465047df929059be8a325115f867c316fa62ad4b6
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 7/8 processed: id=107b72794a79a934764904a465047df929059be8a325115f867c316fa62ad4b6 title=[GitHub] SIXIANGGUO/cc-note-ops duration_ms=3.7
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Classified 5e95dd818c3721e31bc911274eb8d5a2a798f04f5a05bb22fbe097d1b3392646: categories=['Other'] duration_ms=1.4
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Summarized 5e95dd818c3721e31bc911274eb8d5a2a798f04f5a05bb22fbe097d1b3392646: signal=0.50 sentiment=neutral duration_ms=2.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Analyzed 5e95dd818c3721e31bc911274eb8d5a2a798f04f5a05bb22fbe097d1b3392646: paradigm=False duration_ms=0.0
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Saved to DB: id=5e95dd818c3721e31bc911274eb8d5a2a798f04f5a05bb22fbe097d1b3392646
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Group 8/8 processed: id=5e95dd818c3721e31bc911274eb8d5a2a798f04f5a05bb22fbe097d1b3392646 title=[GitHub] tonbo-io/ursula duration_ms=3.5
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Batch complete: 9 articles -> 8 processed results
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Processed batch of 8 articles
+2026-05-26T10:10:34+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:10:39+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:10:39+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:10:39+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:10:44+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:10:44+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:10:44+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:10:49+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:10:49+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:10:49+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:10:54+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:10:54+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:10:54+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:10:59+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:10:59+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:10:59+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:11:04+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:11:04+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:11:04+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:11:09+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:11:09+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:11:09+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:11:15+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:11:15+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:11:15+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:11:20+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:11:20+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:11:20+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:11:25+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:11:25+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:11:25+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:11:30+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:11:30+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:11:30+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:11:35+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:11:35+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:11:35+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:11:40+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:11:40+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:11:40+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:11:45+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:11:45+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:11:45+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:11:50+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:11:50+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:11:50+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:11:55+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:11:55+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:11:55+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:12:00+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:12:00+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:12:00+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:12:05+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:12:05+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:12:05+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:12:10+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:12:10+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:12:10+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:12:15+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:12:15+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:12:15+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:12:20+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:12:20+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:12:20+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000
+2026-05-26T10:12:25+0800 [INFO] processor.worker: Received 0 messages from stream
+2026-05-26T10:12:25+0800 [INFO] processor.worker: Accepted 0 unique articles after dedup
+2026-05-26T10:12:25+0800 [INFO] processor.worker: Polling Redis stream: count=10 block_ms=5000

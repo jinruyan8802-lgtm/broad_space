@@ -29,7 +29,7 @@ get_pids() {
 stop_services() {
     mkdir -p "$LOG_DIR"
     echo "Stopping BroadSpace services..." | tee -a "$LOG_DIR/startup.log"
-    # Kill application processes
+    # Kill application processes by PID
     for pid in $(get_pids); do
         if kill -0 "$pid" 2>/dev/null; then
             kill "$pid" 2>/dev/null || true
@@ -38,12 +38,17 @@ stop_services() {
         fi
     done
     rm -f "$PID_FILE"
+    # Kill any remaining child processes by name (subshell PIDs may not propagate)
+    pkill -f "processor.worker" 2>/dev/null || true
+    pkill -f "feed-server.js" 2>/dev/null || true
+    pkill -f "bin/collector" 2>/dev/null || true
     # Stop Docker services
     docker compose down 2>/dev/null || true
     echo "Stopped."
 }
 
 start_services() {
+    cd /home/jinru/workon/broad_space
     load_env
 
     mkdir -p "$LOG_DIR"
@@ -57,9 +62,9 @@ start_services() {
 
     # 2. Wait for services to be healthy
     echo "[2/5] Verifying services..." | tee -a "$LOG_DIR/startup.log"
-    for i in {1..30}; do
+    for i in $(seq 1 30); do
         STATUS=$(docker compose ps --format "{{.Status}}" 2>/dev/null | head -1)
-        if [ "$STATUS" = "Up" ] || [ "$STATUS" = "Up (healthy)" ]; then
+        if [[ "$STATUS" == *"Up"* ]] || [[ "$STATUS" == *"healthy"* ]]; then
             echo "Services ready" | tee -a "$LOG_DIR/startup.log"
             break
         fi
@@ -83,9 +88,9 @@ start_services() {
     (cd processor && source .venv/bin/activate && PYTHONPATH=src python -m processor.worker >> "../$LOG_DIR/processor.log" 2>&1) &
     echo $! >> "$PID_FILE"
 
-    # 5. Build & start Next.js web
-    echo "[5/5] Starting Next.js web..." | tee -a "$LOG_DIR/startup.log"
-    (cd web && npm run dev >> "../$LOG_DIR/web.log" 2>&1) &
+    # 5. Start web feed server (standalone Node.js HTTP server)
+    echo "[5/5] Starting web feed server..." | tee -a "$LOG_DIR/startup.log"
+    (cd /home/jinru/workon/broad_space/web && node feed-server.js >> "../$LOG_DIR/web.log" 2>&1) &
     echo $! >> "$PID_FILE"
 
     echo "" | tee -a "$LOG_DIR/startup.log"
@@ -129,7 +134,7 @@ get_status() {
             case $idx in
                 1) name="collector" ;;
                 2) name="processor" ;;
-                3) name="next.js" ;;
+                3) name="web" ;;
             esac
 
             if kill -0 "$pid" 2>/dev/null; then

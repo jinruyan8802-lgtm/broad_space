@@ -17,13 +17,14 @@ class SemanticDeduplicator:
         self.threshold = similarity_threshold
         self.seen_hashes: set[str] = set()
         self.seen_embeddings: list[tuple[str, list[float]]] = []
-        self._model: Optional[TextEmbedding] = None
+        self._model = None
 
     @property
-    def model(self) -> Optional[TextEmbedding]:
+    def model(self):
         if not FASTEMBED_AVAILABLE:
             return None
         if self._model is None:
+            from fastembed import TextEmbedding
             self._model = TextEmbedding(model_name="BAAI/bge-small-en-v1.5")
         return self._model
 

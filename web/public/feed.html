@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>BroadSpace Feed</title>
+    <style>
+        body { font-family: system-ui; max-width: 800px; margin: 40px auto; padding: 0 20px; background: #f9fafb; }
+        h1 { color: #111; border-bottom: 2px solid #3b82f6; padding-bottom: 10px; }
+        .card { background: white; border-radius: 8px; padding: 16px; margin: 16px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .card h2 { margin: 0 0 8px; font-size: 18px; }
+        .card .meta { font-size: 12px; color: #666; margin-bottom: 8px; }
+        .card .summary { color: #374151; font-size: 14px; line-height: 1.5; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        .high { background: #fef2f2; color: #dc2626; }
+        .mid { background: #fefce8; color: #ca8a04; }
+        .low { background: #eff6ff; color: #2563eb; }
+        .categories { margin: 8px 0; }
+        .cat { background: #f3f4f6; color: #374151; padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-right: 4px; }
+        .signal { float: right; font-weight: 700; }
+        .loading { color: #666; font-style: italic; }
+        .error { background: #fef2f2; color: #dc2626; padding: 12px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>BroadSpace Feed</h1>
+    <div id="status" class="loading">Loading...</div>
+    <div id="content"></div>
+    <script>
+        const API = 'http://localhost:8000';
+        async function load() {
+            try {
+                const resp = await fetch(API + '/content?limit=20');
+                if (!resp.ok) throw new Error('API error: ' + resp.status);
+                const data = await resp.json();
+                const status = document.getElementById('status');
+                status.textContent = data.length + ' items loaded';
+                status.className = '';
+                const content = document.getElementById('content');
+                if (data.length === 0) {
+                    content.innerHTML = '<p>No content yet.</p>';
+                    return;
+                }
+                content.innerHTML = data.map(item => {
+                    const signalClass = item.signal_strength >= 0.7 ? 'high' : item.signal_strength >= 0.5 ? 'mid' : 'low';
+                    const cats = (item.categories || []).map(c => `<span class="cat">${c}</span>`).join('');
+                    return `<div class="card">
+                        <span class="signal signal-${signalClass}">${item.signal_strength}</span>
+                        <h2>${escapeHtml(item.title)}</h2>
+                        <div class="meta">${item.sources?.map(s => s.name).join(', ') || 'unknown'} | ${item.sentiment || 'neutral'}</div>
+                        <div class="categories">${cats}</div>
+                        <div class="summary">${escapeHtml(item.summary || item.title)}</div>
+                    </div>`;
+                }).join('');
+            } catch (e) {
+                document.getElementById('status').innerHTML = '<div class="error">Error: ' + escapeHtml(e.message) + '</div>';
+            }
+        }
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        load();
+        setInterval(load, 30000);
+    </script>
+</body>
+</html>
