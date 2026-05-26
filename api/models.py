@@ -15,3 +15,26 @@ class ContentResponse(BaseModel):
     sentiment: str
     sources: list[dict[str, str]]
     processed_at: datetime
+    triples: list["TripleItem"] = []
+
+
+class TripleItem(BaseModel):
+    subject: str
+    subject_zh: str
+    predicate: str
+    predicate_zh: str
+    object: str
+    object_zh: str
+    confidence: str  # EXTRACTED | INFERRED | SPECULATIVE
+
+
+class GraphSearchResult(BaseModel):
+    text: str
+    score: float
+    entities: list[str]
+    entity_names_zh: list[str]
+
+
+class GraphSearchResponse(BaseModel):
+    query: str
+    results: list[GraphSearchResult]
