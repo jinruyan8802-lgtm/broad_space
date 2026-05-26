@@ -1,5 +1,9 @@
+import logging
+
 from processor.llm.client import LLMClient
 from processor.models import ProcessedContent
+
+logger = logging.getLogger(__name__)
 
 SYSTEM_PROMPT = """Extract knowledge triples from the tech news article (supports both English and Chinese content).
 
@@ -65,10 +69,11 @@ class TripleExtractor:
             enriched = []
             for t in triples:
                 t.setdefault("confidence", "EXTRACTED")
-                t.setdefault("subject_zh", ENTITY_ZH_MAP.get(t["subject"], t["subject"]))
+                t.setdefault("subject_zh", t["subject"])
                 t.setdefault("predicate_zh", PREDICATE_ZH_MAP.get(t["predicate"], t["predicate"]))
-                t.setdefault("object_zh", ENTITY_ZH_MAP.get(t["object"], t["object"]))
+                t.setdefault("object_zh", t["object"])
                 enriched.append(t)
             return enriched
-        except Exception:
+        except Exception as e:
+            logger.warning("Triple extraction failed: %s", e)
             return []
