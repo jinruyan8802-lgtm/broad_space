@@ -93,6 +93,9 @@ def run_email_job():
 def run_wecom_job():
     """One-shot WeCom push (for CLI --mode wecom)."""
     bot = WeComBot()
+    if not bot.webhook_url:
+        print("[scheduler] WECOM_WEBHOOK_URL not set, skipping")
+        return
     svc = EmailService()
     articles = svc.fetch_top_content(limit=5)
     if articles:
