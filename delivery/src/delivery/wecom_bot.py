@@ -9,6 +9,14 @@ except ImportError:
 
 
 class WeComBot:
+    @staticmethod
+    def _signal_badge(signal: float) -> str:
+        if signal >= 0.8:
+            return "🔴"
+        if signal >= 0.5:
+            return "🟡"
+        return "🔵"
+
     def __init__(self, webhook_url: Optional[str] = None):
         self.webhook_url = webhook_url or os.environ.get("WECOM_WEBHOOK_URL", "")
 
@@ -28,7 +36,7 @@ class WeComBot:
     def send_digest(self, articles: list[dict]):
         lines = [f"📰 **BroadSpace {len(articles)} 条精选**"]
         for a in articles[:5]:
-            badge = "🔴" if a.get("signal_strength", 0) >= 0.8 else "🟡"
+            badge = self._signal_badge(a.get("signal_strength", 0))
             lines.append(
                 f"{badge} [{a['title']}]({a['url']}) — "
                 f"信号强度 {a.get('signal_strength', 0):.2f}"
