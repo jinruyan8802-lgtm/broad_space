@@ -7,8 +7,12 @@ from fastapi.responses import Response
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
+import asyncio
+from concurrent.futures import ThreadPoolExecutor
 
-from models import ContentResponse, TripleItem
+from processor.knowledge.graphiti_client import GraphitiClient
+
+from models import ContentResponse, TripleItem, GraphSearchResponse, GraphSearchResult
 
 REQUEST_COUNT = Counter("api_requests_total", "Total requests", ["method", "endpoint", "status"])
 REQUEST_LATENCY = Histogram("api_request_duration_seconds", "Request latency")
@@ -30,6 +34,13 @@ db_host = os.environ.get("DB_HOST", "localhost")
 db_url = f"postgresql://{db_user}:{db_pass}@{db_host}:5432/{db_name}"
 engine = create_engine(db_url)
 Session = sessionmaker(bind=engine)
+
+_executor = ThreadPoolExecutor(max_workers=4)
+_graphiti_client = GraphitiClient(
+    uri=os.environ.get("NEO4J_URI", "bolt://localhost:7687"),
+    user=os.environ.get("NEO4J_USER", "neo4j"),
+    password=os.environ.get("NEO4J_PASSWORD", "broadspace"),
+)
 
 
 @app.on_event("startup")
@@ -150,48 +161,35 @@ def list_content(
         session.close()
 
 
-@app.get("/content/{content_id}", response_model=ContentResponse)
-def get_content(content_id: str):
-    session = Session()
+@app.get("/graph/search", response_model=GraphSearchResponse)
+def graph_search(
+    query: str = Query(..., description="Natural language query"),
+    limit: int = Query(10, ge=1, le=50),
+):
+    """
+    Search the knowledge graph via Neo4j.
+
+    Returns matching triples with bilingual entity/relation labels.
+    """
     try:
-        row = session.execute(
-            text("""
-                SELECT id, title, url, summary, categories, key_points,
-                       signal_strength, sentiment, sources, processed_at, triples
-                FROM processed_articles WHERE id = :id
-            """),
-            {"id": content_id}
-        ).fetchone()
+        loop = asyncio.new_event_loop()
+        try:
+            raw_results = loop.run_until_complete(
+                _graphiti_client.search(query, limit=limit)
+            )
+        finally:
+            loop.close()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Graph search failed: {e}")
 
-        if not row:
-            raise HTTPException(status_code=404, detail="Content not found")
+    results: list[GraphSearchResult] = []
+    for r in raw_results:
+        text = r.get("text", "")
+        results.append(GraphSearchResult(
+            text=text,
+            score=r.get("score", 0.0),
+            entities=[],
+            entity_names_zh=[],
+        ))
 
-        raw_triples = row.triples or []
-        triples_list = []
-        for t in raw_triples:
-            if isinstance(t, dict):
-                triples_list.append(TripleItem(
-                    subject=t.get("subject", ""),
-                    subject_zh=t.get("subject_zh", t.get("subject", "")),
-                    predicate=t.get("predicate", ""),
-                    predicate_zh=t.get("predicate_zh", t.get("predicate", "")),
-                    object=t.get("object", ""),
-                    object_zh=t.get("object_zh", t.get("object", "")),
-                    confidence=t.get("confidence", "EXTRACTED"),
-                ))
-
-        return ContentResponse(
-            id=row.id,
-            title=row.title,
-            url=row.url,
-            summary=row.summary or "",
-            categories=row.categories or [],
-            key_points=row.key_points or [],
-            signal_strength=row.signal_strength or 0.0,
-            sentiment=row.sentiment or "neutral",
-            sources=row.sources or [],
-            processed_at=row.processed_at,
-            triples=triples_list,
-        )
-    finally:
-        session.close()
+    return GraphSearchResponse(query=query, results=results)
