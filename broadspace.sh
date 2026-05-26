@@ -4,6 +4,12 @@ set -e
 PID_FILE="/tmp/broadspace.pid"
 LOG_DIR="logs"
 
+# Helper: log with timestamp to both stdout and startup.log
+log_ts() {
+    local ts="[$(date '+%Y-%m-%d %H:%M:%S')]"
+    echo "$ts $*" | tee -a "$LOG_DIR/startup.log"
+}
+
 load_env() {
     if [ -f .env ]; then
         export $(grep -v '^#' .env | xargs)
@@ -28,7 +34,7 @@ get_pids() {
 
 stop_services() {
     mkdir -p "$LOG_DIR"
-    echo "Stopping BroadSpace services..." | tee -a "$LOG_DIR/startup.log"
+    log_ts "Stopping BroadSpace services..."
     # Kill application processes by PID
     for pid in $(get_pids); do
         if kill -0 "$pid" 2>/dev/null; then
@@ -52,32 +58,32 @@ start_services() {
     load_env
 
     mkdir -p "$LOG_DIR"
-    echo "=== BroadSpace Startup ===" | tee -a "$LOG_DIR/startup.log"
+    log_ts "=== BroadSpace Startup ==="
 
     # 1. Start Docker services
-    echo "[1/5] Starting Docker services..." | tee -a "$LOG_DIR/startup.log"
-    docker compose up -d 2>&1 | tee -a "$LOG_DIR/startup.log"
-    echo "Waiting for services..." | tee -a "$LOG_DIR/startup.log"
+    log_ts "[1/5] Starting Docker services..."
+    docker compose up -d 2>&1 | while IFS= read -r line; do log_ts "$line"; done
+    log_ts "Waiting for services..."
     sleep 5
 
     # 2. Wait for services to be healthy
-    echo "[2/5] Verifying services..." | tee -a "$LOG_DIR/startup.log"
+    log_ts "[2/5] Verifying services..."
     for i in $(seq 1 30); do
         STATUS=$(docker compose ps --format "{{.Status}}" 2>/dev/null | head -1)
         if [[ "$STATUS" == *"Up"* ]] || [[ "$STATUS" == *"healthy"* ]]; then
-            echo "Services ready" | tee -a "$LOG_DIR/startup.log"
+            log_ts "Services ready"
             break
         fi
-        echo "Waiting for services... ($i/30)" | tee -a "$LOG_DIR/startup.log"
+        log_ts "Waiting for services... ($i/30)"
         sleep 2
     done
 
     # 3. Build collector
-    echo "[3/5] Building Go collector..." | tee -a "$LOG_DIR/startup.log"
-    cd collector && go build -o bin/collector ./cmd/collector 2>&1 | tee -a "../$LOG_DIR/startup.log" && cd ..
+    log_ts "[3/5] Building Go collector..."
+    (cd collector && go build -o bin/collector ./cmd/collector 2>&1 | while IFS= read -r line; do log_ts "$line"; done)
 
     # 4. Start application services in background
-    echo "[4/5] Starting application services..." | tee -a "$LOG_DIR/startup.log"
+    log_ts "[4/5] Starting application services..."
     rm -f "$PID_FILE"
 
     # Collector
@@ -89,15 +95,16 @@ start_services() {
     echo $! >> "$PID_FILE"
 
     # 5. Start web feed server (standalone Node.js HTTP server)
-    echo "[5/5] Starting web feed server..." | tee -a "$LOG_DIR/startup.log"
-    (cd /home/jinru/workon/broad_space/web && node feed-server.js >> "../$LOG_DIR/web.log" 2>&1) &
+    log_ts "[5/5] Starting web feed server..."
+    (cd /home/jinru/workon/broad_space/web && node feed-server.js 2>&1 | while IFS= read -r line; do echo "[$(date '+%Y-%m-%d %H:%M:%S')] $line"; done >> "../$LOG_DIR/web.log") &
     echo $! >> "$PID_FILE"
 
-    echo "" | tee -a "$LOG_DIR/startup.log"
-    echo "=== BroadSpace is running ===" | tee -a "$LOG_DIR/startup.log"
-    echo "Docker Services:" | tee -a "$LOG_DIR/startup.log"
-    docker compose ps 2>&1 | tee -a "$LOG_DIR/startup.log"
-    echo "" | tee -a "$LOG_DIR/startup.log"
+    log_ts ""
+    log_ts "=== BroadSpace is running ==="
+    log_ts "Docker Services:"
+    docker compose ps 2>&1 | while IFS= read -r line; do log_ts "$line"; done
+    log_ts ""
+
     echo "Application Services:"
     echo "  Collector:  ./collector/bin/collector (PID $(sed -n '1p' "$PID_FILE" 2>/dev/null || echo "?"))"
     echo "  Processor:  Python worker (PID $(sed -n '2p' "$PID_FILE" 2>/dev/null || echo "?"))"
@@ -114,7 +121,7 @@ start_services() {
     echo "Logs:       ./$LOG_DIR/"
     echo "  - collector.log    (Go collector)"
     echo "  - processor.log    (Python processor)"
-    echo "  - web.log          (Next.js)"
+    echo "  - web.log          (web feed server)"
     echo "  - startup.log      (Orchestration)"
 }
 
