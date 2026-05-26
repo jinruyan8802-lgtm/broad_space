@@ -1,3 +1,5 @@
+web/test-results/
+.claude/
 logs/
 collector/bin
 .superpowers/
