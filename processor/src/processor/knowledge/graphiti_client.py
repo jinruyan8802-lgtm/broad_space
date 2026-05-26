@@ -66,17 +66,17 @@ class GraphitiClient:
         """Synchronous wrapper for async search()."""
         if not self.client:
             return []
-        loop = asyncio.new_event_loop()
+        loop = asyncio.get_event_loop()
         try:
             return loop.run_until_complete(self.search(query, limit))
         finally:
-            loop.close()
+            pass
 
     def add_triples_batch(self, content_id: str, triples: list[dict]) -> bool:
         """Synchronous wrapper for async add_triples()."""
         if not self.client:
             return False
-        loop = asyncio.new_event_loop()
+        loop = asyncio.get_event_loop()
         try:
             return loop.run_until_complete(self.add_triples(content_id, triples))
         finally:
