@@ -21,7 +21,7 @@ class EmailService:
         from_addr: Optional[str] = None,
         to_addrs: Optional[list[str]] = None,
     ):
-        self._client = ApiClient(base_url=api_url)
+        self._client = ApiClient(base_url=api_url or os.environ.get("API_URL"))
 
         self.smtp_host = smtp_host or os.environ.get("SMTP_HOST", "smtp.gmail.com")
         self.smtp_port = smtp_port or int(os.environ.get("SMTP_PORT", "587"))
