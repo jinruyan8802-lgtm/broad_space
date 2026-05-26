@@ -85,6 +85,36 @@ services:
       neo4j:
         condition: service_healthy
 
+  delivery:
+    build:
+      context: ./delivery
+      dockerfile: Dockerfile
+    container_name: broadspace-delivery
+    environment:
+      API_URL: http://api:8000
+      DELIVERY_HEALTH_PORT: 8081
+      DB_HOST: postgres
+      DB_USER: ${DB_USER:-broadspace}
+      DB_PASSWORD: ${DB_PASSWORD:-broadspace}
+      DB_NAME: ${DB_NAME:-broadspace}
+      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      FROM_EMAIL: ${FROM_EMAIL:-broadspace@example.com}
+      TO_EMAILS: ${TO_EMAILS:-}
+      WECOM_WEBHOOK_URL: ${WECOM_WEBHOOK_URL:-}
+    depends_on:
+      api:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8081/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
   prometheus:
     image: prom/prometheus:latest
     volumes:
