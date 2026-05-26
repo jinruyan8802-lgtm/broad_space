@@ -12,7 +12,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 from processor.knowledge.graphiti_client import GraphitiClient
 
-from models import ContentResponse, TripleItem, GraphSearchResponse, GraphSearchResult
+from models import ContentResponse, TripleItem, GraphSearchResponse, GraphSearchResult, AnalyticsResponse, SignalDistribution, CategoryCount, SentimentCounts, VolumeDataPoint, SourceCount
 
 REQUEST_COUNT = Counter("api_requests_total", "Total requests", ["method", "endpoint", "status"])
 REQUEST_LATENCY = Histogram("api_request_duration_seconds", "Request latency")
@@ -161,7 +161,113 @@ def list_content(
         session.close()
 
 
-@app.get("/graph/search", response_model=GraphSearchResponse)
+def _query_signal_distribution(days: int, session):
+    rows = session.execute(
+        text("""
+            SELECT
+                COUNT(*) FILTER (WHERE signal_strength >= 0.8) AS high,
+                COUNT(*) FILTER (WHERE signal_strength >= 0.5 AND signal_strength < 0.8) AS mid,
+                COUNT(*) FILTER (WHERE signal_strength < 0.5) AS low
+            FROM processed_articles
+            WHERE processed_at > NOW() - INTERVAL ':days days'
+        """),
+        {"days": days},
+    ).fetchone()
+    return SignalDistribution(high=rows.high or 0, mid=rows.mid or 0, low=rows.low or 0)
+
+
+def _query_category_counts(days: int, session):
+    rows = session.execute(
+        text("""
+            SELECT elem AS category, COUNT(*) AS count
+            FROM processed_articles,
+                 jsonb_array_elements_text(categories::jsonb) AS elem
+            WHERE processed_at > NOW() - INTERVAL ':days days'
+            GROUP BY elem
+            ORDER BY count DESC
+            LIMIT 10
+        """),
+        {"days": days},
+    ).fetchall()
+    return [CategoryCount(category=r.category, count=r.count) for r in rows]
+
+
+def _query_sentiment_counts(days: int, session):
+    rows = session.execute(
+        text("""
+            SELECT
+                COUNT(*) FILTER (WHERE sentiment = 'positive') AS positive,
+                COUNT(*) FILTER (WHERE sentiment = 'neutral') AS neutral,
+                COUNT(*) FILTER (WHERE sentiment = 'negative') AS negative
+            FROM processed_articles
+            WHERE processed_at > NOW() - INTERVAL ':days days'
+        """),
+        {"days": days},
+    ).fetchone()
+    return SentimentCounts(
+        positive=rows.positive or 0,
+        neutral=rows.neutral or 0,
+        negative=rows.negative or 0,
+    )
+
+
+def _query_volume_timeline(days: int, session):
+    rows = session.execute(
+        text("""
+            SELECT DATE(processed_at) AS date, COUNT(*) AS count
+            FROM processed_articles
+            WHERE processed_at > NOW() - INTERVAL ':days days'
+            GROUP BY DATE(processed_at)
+            ORDER BY date ASC
+        """),
+        {"days": days},
+    ).fetchall()
+    return [VolumeDataPoint(date=str(r.date), count=r.count) for r in rows]
+
+
+def _query_source_counts(days: int, session):
+    rows = session.execute(
+        text("""
+            SELECT (elem->>'name') AS source, COUNT(*) AS count
+            FROM processed_articles,
+                 jsonb_array_elements(sources::jsonb) AS elem
+            WHERE processed_at > NOW() - INTERVAL ':days days'
+            GROUP BY source
+            ORDER BY count DESC
+            LIMIT 10
+        """),
+        {"days": days},
+    ).fetchall()
+    return [SourceCount(source=r.source or 'unknown', count=r.count) for r in rows]
+
+
+@app.get("/analytics", response_model=AnalyticsResponse)
+def get_analytics(days: int = Query(7, ge=1, le=90)):
+    """
+    返回仪表板聚合数据:
+    - signal_distribution: 高/中/低 signal 计数
+    - category_counts: Top 10 分类
+    - sentiment_counts: positive/neutral/negative 计数
+    - volume_timeline: 近 N 天每日处理量
+    - source_counts: Top 10 来源
+    """
+    session = Session()
+    try:
+        signal_dist = _query_signal_distribution(days, session)
+        category_counts = _query_category_counts(days, session)
+        sentiment_counts = _query_sentiment_counts(days, session)
+        volume_timeline = _query_volume_timeline(days, session)
+        source_counts = _query_source_counts(days, session)
+
+        return AnalyticsResponse(
+            signal_distribution=signal_dist,
+            category_counts=category_counts,
+            sentiment_counts=sentiment_counts,
+            volume_timeline=volume_timeline,
+            source_counts=source_counts,
+        )
+    finally:
+        session.close()
 def graph_search(
     query: str = Query(..., description="Natural language query"),
     limit: int = Query(10, ge=1, le=50),
