@@ -6,13 +6,14 @@ from email.mime.text import MIMEText
 from typing import Optional
 
 from jinja2 import Template
-from sqlalchemy import create_engine, text
+
+from delivery.api_client import ApiClient
 
 
 class EmailService:
     def __init__(
         self,
-        db_url: Optional[str] = None,
+        api_url: Optional[str] = None,
         smtp_host: Optional[str] = None,
         smtp_port: Optional[int] = None,
         smtp_user: Optional[str] = None,
@@ -20,38 +21,24 @@ class EmailService:
         from_addr: Optional[str] = None,
         to_addrs: Optional[list[str]] = None,
     ):
-        self.db_url = db_url or os.environ.get(
-            "DATABASE_URL",
-            "postgresql://broadspace:broadspace@localhost:5432/broadspace"
-        )
-        self.engine = create_engine(self.db_url)
+        self._client = ApiClient(base_url=api_url)
 
         self.smtp_host = smtp_host or os.environ.get("SMTP_HOST", "smtp.gmail.com")
         self.smtp_port = smtp_port or int(os.environ.get("SMTP_PORT", "587"))
         self.smtp_user = smtp_user or os.environ.get("SMTP_USER", "")
         self.smtp_pass = smtp_pass or os.environ.get("SMTP_PASS", "")
         self.from_addr = from_addr or os.environ.get("FROM_EMAIL", "broadspace@example.com")
-        self.to_addrs = to_addrs or os.environ.get("TO_EMAILS", "").split(",")
+        to_env = os.environ.get("TO_EMAILS", "")
+        self.to_addrs = to_addrs or ([e.strip() for e in to_env.split(",") if e.strip()] if to_env else [])
 
         self._template_path = os.path.join(
             os.path.dirname(__file__), "..", "..", "templates", "daily_digest.html"
         )
 
-    def fetch_top_content(self, limit: int = 10):
-        with self.engine.connect() as conn:
-            rows = conn.execute(
-                text("""
-                    SELECT title, url, summary, categories, signal_strength, sentiment
-                    FROM processed_articles
-                    WHERE processed_at > NOW() - INTERVAL '24 hours'
-                    ORDER BY signal_strength DESC
-                    LIMIT :limit
-                """),
-                {"limit": limit},
-            ).fetchall()
-        return rows
+    def fetch_top_content(self, limit: int = 10) -> list[dict]:
+        return self._client.fetch_top_content(limit=limit, min_signal=0.0)
 
-    def render_digest(self, articles: list) -> str:
+    def render_digest(self, articles: list[dict]) -> str:
         template_path = self._template_path
         if os.path.exists(template_path):
             with open(template_path) as f:
@@ -81,9 +68,14 @@ class EmailService:
         <p>{{a.summary}}</p><small>Signal: {{a.signal_strength:.2f}} | Categories: {{a.categories|join(', ')}}</small>
         </div>{% endfor %}</body></html>"""
 
-    def send(self):
+    def send(self) -> None:
         articles = self.fetch_top_content()
         if not articles:
+            print("No articles to send.")
+            return
+
+        if not self.to_addrs:
+            print("No recipients configured (TO_EMAILS env var).")
             return
 
         msg = MIMEMultipart("alternative")
@@ -98,3 +90,4 @@ class EmailService:
             server.starttls()
             server.login(self.smtp_user, self.smtp_pass)
             server.sendmail(self.from_addr, self.to_addrs, msg.as_string())
+        print(f"Email sent to {len(self.to_addrs)} recipients.")
