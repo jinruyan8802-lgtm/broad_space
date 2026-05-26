@@ -268,6 +268,9 @@ def get_analytics(days: int = Query(7, ge=1, le=90)):
         )
     finally:
         session.close()
+
+
+@app.get("/graph/search", response_model=GraphSearchResponse)
 def graph_search(
     query: str = Query(..., description="Natural language query"),
     limit: int = Query(10, ge=1, le=50),
