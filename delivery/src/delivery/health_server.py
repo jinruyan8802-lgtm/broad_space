@@ -1,4 +1,5 @@
 import json
+import os
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 
@@ -18,7 +19,8 @@ class HealthHandler(BaseHTTPRequestHandler):
 
 
 class HealthServer:
-    def __init__(self, port: int = 8080):
+    def __init__(self, port: int = None):
+        port = port if port is not None else int(os.environ.get("DELIVERY_HEALTH_PORT", 8081))
         self.server = HTTPServer(("0.0.0.0", port), HealthHandler)
         self.port = port
 

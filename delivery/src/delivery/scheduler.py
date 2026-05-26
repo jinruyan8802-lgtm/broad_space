@@ -15,7 +15,7 @@ from delivery.health_server import HealthServer
 class DeliveryScheduler:
     def __init__(self):
         self.scheduler = BackgroundScheduler()
-        self.health_server = HealthServer(port=8080)
+        self.health_server = HealthServer(port=8081)
         self._health_thread: threading.Thread | None = None
 
     def _run_email_job(self):
@@ -75,7 +75,7 @@ class DeliveryScheduler:
         print("  [email_digest]      Daily Email Digest     — 08:00")
         print("  [wecom_morning]     WeCom Morning Digest   — 08:00")
         print("  [wecom_evening]     WeCom Evening Digest   — 18:00")
-        print("  Health check:       http://localhost:8080/health")
+        print("  Health check:       http://localhost:{}/health".format(self.health_server.port))
         print()
 
     def stop(self):
