@@ -19,6 +19,9 @@ export interface GraphLink {
 interface GraphCanvasProps {
   nodes: GraphNode[];
   links: GraphLink[];
+  onNodeSelect?: (node: GraphNode) => void;
+  selectedNode?: GraphNode | null;
+  theme?: "dark" | "light";
 }
 
 interface TooltipState {
@@ -28,7 +31,7 @@ interface TooltipState {
   content: { title: string; group: string; signal: number; summary: string };
 }
 
-export default function GraphCanvas({ nodes, links }: GraphCanvasProps) {
+export default function GraphCanvas({ nodes, links, onNodeSelect, selectedNode, theme = "dark" }: GraphCanvasProps) {
   const ref = useRef<SVGSVGElement>(null);
   const [tooltip, setTooltip] = useState<TooltipState>({
     visible: false,
@@ -37,6 +40,10 @@ export default function GraphCanvas({ nodes, links }: GraphCanvasProps) {
     content: { title: "", group: "", signal: 0, summary: "" },
   });
 
+  const isDark = theme === "dark";
+  const bgColor = isDark ? "#1a1a2e" : "#ffffff";
+  const nodeColor = isDark ? "#ffffff" : "#333333";
+
   useEffect(() => {
     if (!ref.current || nodes.length === 0) return;
 
@@ -44,7 +51,7 @@ export default function GraphCanvas({ nodes, links }: GraphCanvasProps) {
     svg.selectAll("*").remove();
 
     const width = window.innerWidth;
-    const height = window.innerHeight;
+    const height = 600;
     svg.attr("width", width).attr("height", height);
 
     const colorMap: Record<string, string> = {
@@ -74,8 +81,8 @@ export default function GraphCanvas({ nodes, links }: GraphCanvasProps) {
       .selectAll("line")
       .data(links)
       .join("line")
-      .attr("stroke", "#999")
-      .attr("stroke-opacity", 0.3)
+      .attr("stroke", isDark ? "#555" : "#ccc")
+      .attr("stroke-opacity", 0.5)
       .attr("stroke-width", (d: any) => Math.sqrt(d.value || 1));
 
     const node = svg
@@ -85,6 +92,9 @@ export default function GraphCanvas({ nodes, links }: GraphCanvasProps) {
       .join("circle")
       .attr("r", (d: any) => 5 + (d.signal || 0) * 8)
       .attr("fill", (d: any) => colorMap[d.group] || colorMap.Other)
+      .attr("stroke", (d: any) => selectedNode?.id === d.id ? "#fff" : "none")
+      .attr("stroke-width", (d: any) => selectedNode?.id === d.id ? 3 : 0)
+      .style("cursor", "pointer")
       .call(
         d3
           .drag<any, any>()
@@ -127,6 +137,11 @@ export default function GraphCanvas({ nodes, links }: GraphCanvasProps) {
       })
       .on("mouseout", function () {
         setTooltip((prev) => ({ ...prev, visible: false }));
+      })
+      .on("click", function (event, d: any) {
+        if (onNodeSelect) {
+          onNodeSelect(d as GraphNode);
+        }
       });
 
     node
@@ -135,6 +150,7 @@ export default function GraphCanvas({ nodes, links }: GraphCanvasProps) {
       .attr("x", 10)
       .attr("y", 3)
       .attr("font-size", "10px")
+      .attr("fill", nodeColor)
       .attr("pointer-events", "none");
 
     simulation.on("tick", () => {
@@ -149,11 +165,11 @@ export default function GraphCanvas({ nodes, links }: GraphCanvasProps) {
     return () => {
       simulation.stop();
     };
-  }, [nodes, links]);
+  }, [nodes, links, selectedNode, isDark]);
 
   return (
-    <div className="relative">
-      <svg ref={ref} className="w-full h-screen" />
+    <div className="relative" style={{ background: isDark ? "#0f0f1a" : "#f9fafb" }}>
+      <svg ref={ref} className="w-full" style={{ height: "600px" }} />
       {tooltip.visible && (
         <div
           className="absolute bg-white border border-gray-200 rounded-lg p-3 text-sm shadow-lg max-w-xs pointer-events-none z-50"

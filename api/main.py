@@ -12,7 +12,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 from processor.knowledge.graphiti_client import GraphitiClient
 
-from models import ContentResponse, TripleItem, GraphSearchResponse, GraphSearchResult, AnalyticsResponse, SignalDistribution, CategoryCount, SentimentCounts, VolumeDataPoint, SourceCount
+from models import ContentResponse, TripleItem, GraphSearchResponse, GraphSearchResult, AnalyticsResponse, SignalDistribution, CategoryCount, SentimentCounts, VolumeDataPoint, SourceCount, ScoreBreakdown, TrendingTopic, CategorySourceDiversity, ScoreBreakdownStats
 
 REQUEST_COUNT = Counter("api_requests_total", "Total requests", ["method", "endpoint", "status"])
 REQUEST_LATENCY = Histogram("api_request_duration_seconds", "Request latency")
@@ -143,6 +143,14 @@ def list_content(
                         object_zh=t.get("object_zh", t.get("object", "")),
                         confidence=t.get("confidence", "EXTRACTED"),
                     ))
+            # Compute exploit/expand/explore as proxy from signal_strength
+            # exploit: ~50% of signal for user interest overlap
+            # expand: ~30% of signal for graph proximity
+            # explore: ~20% of signal for novelty + high signal
+            exploit = (row.signal_strength or 0.0) * 0.5
+            expand = (row.signal_strength or 0.0) * 0.3
+            explore = (row.signal_strength or 0.0) * 0.2
+            final_score = exploit + expand + explore
             results.append(ContentResponse(
                 id=row.id,
                 title=row.title,
@@ -155,6 +163,12 @@ def list_content(
                 sources=row.sources or [],
                 processed_at=row.processed_at,
                 triples=triples_list,
+                final_score=final_score,
+                score_breakdown=ScoreBreakdown(
+                    exploit=exploit,
+                    expand=expand,
+                    explore=explore,
+                ),
             ))
         return results
     finally:
@@ -241,6 +255,115 @@ def _query_source_counts(days: int, session):
     return [SourceCount(source=r.source or 'unknown', count=r.count) for r in rows]
 
 
+def _query_trending_topics(days: int, session):
+    # Current period: last `days` days
+    current_rows = session.execute(
+        text("""
+            SELECT elem AS category, COUNT(*) AS count
+            FROM processed_articles,
+                 jsonb_array_elements_text(categories::jsonb) AS elem
+            WHERE processed_at > NOW() - INTERVAL ':days days'
+            GROUP BY elem
+        """),
+        {"days": days},
+    ).fetchall()
+
+    # Previous period: days+1 to 2*days
+    previous_rows = session.execute(
+        text("""
+            SELECT elem AS category, COUNT(*) AS count
+            FROM processed_articles,
+                 jsonb_array_elements_text(categories::jsonb) AS elem
+            WHERE processed_at > NOW() - INTERVAL ':double_days days'
+              AND processed_at <= NOW() - INTERVAL ':days days'
+            GROUP BY elem
+        """),
+        {"days": days, "double_days": days * 2},
+    ).fetchall()
+
+    prev_map = {r.category: r.count for r in previous_rows}
+    results = []
+    for r in current_rows:
+        prev_count = prev_map.get(r.category, 0)
+        if prev_count > 0:
+            change_ratio = (r.count - prev_count) / prev_count
+        elif r.count > 0:
+            change_ratio = 1.0  # from 0 to something = rising
+        else:
+            change_ratio = 0.0
+
+        if change_ratio > 0.2:
+            status = "rising"
+        elif change_ratio < -0.2:
+            status = "falling"
+        else:
+            status = "stable"
+
+        results.append(TrendingTopic(
+            topic=r.category,
+            current_count=r.count,
+            previous_count=prev_count,
+            change_ratio=change_ratio,
+            status=status,
+        ))
+
+    return sorted(results, key=lambda x: x.current_count, reverse=True)[:10]
+
+
+def _query_score_distribution(days: int, session):
+    row = session.execute(
+        text("""
+            SELECT
+                AVG(signal_strength) * 0.5 AS avg_exploit,
+                AVG(signal_strength) * 0.3 AS avg_expand,
+                AVG(signal_strength) * 0.2 AS avg_explore,
+                AVG(signal_strength) * 1.0 AS avg_final
+            FROM processed_articles
+            WHERE processed_at > NOW() - INTERVAL ':days days'
+        """),
+        {"days": days},
+    ).fetchone()
+    return ScoreBreakdownStats(
+        avg_exploit=row.avg_exploit or 0.0,
+        avg_expand=row.avg_expand or 0.0,
+        avg_explore=row.avg_explore or 0.0,
+        avg_final=row.avg_final or 0.0,
+    )
+
+
+DEFAULT_SOURCES = [
+    "Hacker News", "GitHub Trending", "ArXiv", "V2EX",
+    "机器之心", "量子位", "Miniflux", "Reddit",
+]
+
+
+def _query_source_diversity_by_category(days: int, session):
+    rows = session.execute(
+        text("""
+            SELECT elem AS category,
+                   array_agg(DISTINCT elem2->>'name') AS sources
+            FROM processed_articles,
+                 jsonb_array_elements_text(categories::jsonb) AS elem,
+                 jsonb_array_elements(sources::jsonb) AS elem2
+            WHERE processed_at > NOW() - INTERVAL ':days days'
+            GROUP BY elem
+        """),
+        {"days": days},
+    ).fetchall()
+
+    results = []
+    for r in rows:
+        covered = list(r.sources) if r.sources else []
+        missing = [s for s in DEFAULT_SOURCES if s not in covered]
+        results.append(CategorySourceDiversity(
+            category=r.category,
+            covered_sources=covered,
+            missing_sources=missing,
+            coverage_ratio=len(covered) / max(len(DEFAULT_SOURCES), 1),
+        ))
+    return results
+
+
 @app.get("/analytics", response_model=AnalyticsResponse)
 def get_analytics(days: int = Query(7, ge=1, le=90)):
     """
@@ -258,6 +381,9 @@ def get_analytics(days: int = Query(7, ge=1, le=90)):
         sentiment_counts = _query_sentiment_counts(days, session)
         volume_timeline = _query_volume_timeline(days, session)
         source_counts = _query_source_counts(days, session)
+        trending_topics = _query_trending_topics(days, session)
+        score_distribution = _query_score_distribution(days, session)
+        source_diversity = _query_source_diversity_by_category(days, session)
 
         return AnalyticsResponse(
             signal_distribution=signal_dist,
@@ -265,6 +391,9 @@ def get_analytics(days: int = Query(7, ge=1, le=90)):
             sentiment_counts=sentiment_counts,
             volume_timeline=volume_timeline,
             source_counts=source_counts,
+            trending_topics=trending_topics,
+            score_distribution=score_distribution,
+            source_diversity_by_category=source_diversity,
         )
     finally:
         session.close()

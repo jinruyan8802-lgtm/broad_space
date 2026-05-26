@@ -77,12 +77,58 @@ export interface SourceCount {
   count: number;
 }
 
+export interface ScoreBreakdown {
+  exploit: number;
+  expand: number;
+  explore: number;
+}
+
+export interface TrendingTopic {
+  topic: string;
+  current_count: number;
+  previous_count: number;
+  change_ratio: number;
+  status: "rising" | "falling" | "stable";
+}
+
+export interface ScoreBreakdownStats {
+  avg_exploit: number;
+  avg_expand: number;
+  avg_explore: number;
+  avg_final: number;
+}
+
+export interface CategorySourceDiversity {
+  category: string;
+  covered_sources: string[];
+  missing_sources: string[];
+  coverage_ratio: number;
+}
+
 export interface AnalyticsResponse {
   signal_distribution: SignalDistribution;
   category_counts: CategoryCount[];
   sentiment_counts: SentimentCounts;
   volume_timeline: VolumeDataPoint[];
   source_counts: SourceCount[];
+  trending_topics: TrendingTopic[];
+  score_distribution: ScoreBreakdownStats;
+  source_diversity_by_category: CategorySourceDiversity[];
+}
+
+export interface ContentItem {
+  id: string;
+  title: string;
+  url: string;
+  summary: string;
+  categories: string[];
+  key_points: string[];
+  signal_strength: number;
+  sentiment: string;
+  sources: { name: string; url: string }[];
+  processed_at: string | null;
+  final_score: number;
+  score_breakdown: ScoreBreakdown;
 }
 
 export async function fetchAnalytics(days: number = 7): Promise<AnalyticsResponse> {
