@@ -10,6 +10,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from processor.llm.client import LLMClient
+from processor.knowledge.extractor import TripleExtractor
+from processor.knowledge.graphiti_client import GraphitiClient
 from processor.models import ProcessedContent, RawArticle
 from processor.pipeline.analyzer import CrossSourceAnalyzer
 from processor.pipeline.classifier import Classifier
@@ -17,7 +19,7 @@ from processor.pipeline.dedup import Deduplicator
 from processor.pipeline.summarizer import Summarizer
 from processor.worker_models import ProcessedArticle, Base
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("processor.worker")
 
 
 def _setup_logging():
@@ -75,6 +77,9 @@ class Worker:
         self.classifier = Classifier(llm)
         self.summarizer = Summarizer(llm)
         self.analyzer = CrossSourceAnalyzer(llm)
+        self.knowledge_extractor = TripleExtractor(llm)
+        self.graphiti_client = GraphitiClient()
+        logger.info("Knowledge extractor and Graphiti client initialized")
 
         engine = create_engine(db_url)
         Base.metadata.create_all(engine)
@@ -179,6 +184,26 @@ class Worker:
             (t3 - t2) * 1000,
         )
 
+        t0_triples = time.perf_counter()
+        triples = self.knowledge_extractor.extract(
+            ProcessedContent(
+                id=primary.hash,
+                sources=[{"name": a.source_name, "url": a.url} for a in articles],
+                canonical_url=primary.url,
+                title=primary.title,
+                summary=summary_result.get("summary", ""),
+                key_points=summary_result.get("key_points", []),
+                categories=categories,
+                signal_strength=summary_result.get("signal_strength", 0.5),
+                sentiment=summary_result.get("sentiment", "neutral"),
+                cross_source_analysis=analysis,
+                triples=[],
+            )
+        )
+        t1_triples = time.perf_counter()
+        logger.info("Triple extraction for %s: count=%d duration_ms=%.1f",
+           primary.hash, len(triples), (t1_triples - t0_triples) * 1000)
+
         return ProcessedContent(
             id=primary.hash,
             sources=[{"name": a.source_name, "url": a.url} for a in articles],
@@ -190,7 +215,7 @@ class Worker:
             signal_strength=summary_result.get("signal_strength", 0.5),
             sentiment=summary_result.get("sentiment", "neutral"),
             cross_source_analysis=analysis,
-            triples=[],
+            triples=triples,
         )
 
     def _save(self, content: ProcessedContent):
@@ -212,6 +237,16 @@ class Worker:
             session.merge(db_article)
             session.commit()
             logger.info("Saved to DB: id=%s", content.id)
+            if self.graphiti_client and content.triples:
+                try:
+                    ok = self.graphiti_client.add_triples_batch(content.id, content.triples)
+                    if ok:
+                        logger.info("Triples written to Neo4j: content_id=%s count=%d",
+                                   content.id, len(content.triples))
+                    else:
+                        logger.warning("Neo4j write returned False: content_id=%s", content.id)
+                except Exception as e:
+                    logger.warning("Failed to write triples to Neo4j for %s: %s", content.id, e)
         except Exception as e:
             logger.error("Failed to save id=%s: %s", content.id, e)
             raise
