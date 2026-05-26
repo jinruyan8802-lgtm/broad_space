@@ -1,4 +1,4 @@
-import NavBar from "@/components/NavBar";
+import NavBarWrapper from "@/components/NavBarWrapper";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -11,7 +11,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="bg-gray-50 min-h-screen">
-        <NavBar />
+        <NavBarWrapper />
         {children}
       </body>
     </html>
