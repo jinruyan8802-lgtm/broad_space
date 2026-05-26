@@ -27,5 +27,5 @@ class ProcessedContent(BaseModel):
     signal_strength: float = Field(ge=0.0, le=1.0, default=0.0)
     sentiment: str = "neutral"
     cross_source_analysis: dict[str, Any] = Field(default_factory=dict)
-    triples: list[list[str]] = Field(default_factory=list)
+    triples: list[dict[str, str]] = Field(default_factory=list)
     processed_at: datetime = Field(default_factory=datetime.utcnow)
