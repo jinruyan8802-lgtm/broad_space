@@ -7,7 +7,7 @@ type ActiveTab = "feed" | "graph" | "dashboard";
 
 export default function NavBar({ active }: { active?: ActiveTab }) {
   const pathname = usePathname();
-  const current = active ?? (pathname === "/graph" ? "graph" : pathname === "/dashboard" ? "dashboard" : "feed");
+  const current = active ?? "feed";
 
   return (
     <nav className="flex items-center gap-1 px-6 py-3 border-b border-b-gray-200 bg-white">
