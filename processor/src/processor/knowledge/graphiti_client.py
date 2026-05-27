@@ -1,20 +1,24 @@
 from __future__ import annotations
 import asyncio
+import logging
 import os
 from datetime import datetime, timezone
-from typing import Any, TYPE_CHECKING
+from typing import Any
 
 try:
-    from graphiti_core import Graphiti
-    from graphiti_core.edges import EntityEdge
-    GRAPHTI_AVAILABLE = True
+    from neo4j import GraphDatabase, Driver
+    NEO4J_AVAILABLE = True
 except ImportError:
-    GRAPHTI_AVAILABLE = False
-    Graphiti = None  # type: ignore
-    EntityEdge = None  # type: ignore
+    NEO4J_AVAILABLE = False
+    GraphDatabase = None  # type: ignore
+    Driver = None  # type: ignore
+
+logger = logging.getLogger(__name__)
 
 
 class GraphitiClient:
+    """Stores and searches knowledge graph triples in Neo4j using the neo4j driver directly."""
+
     def __init__(
         self,
         uri: str | None = None,
@@ -24,60 +28,113 @@ class GraphitiClient:
         self.uri = uri or os.environ.get("NEO4J_URI", "bolt://localhost:7687")
         self.user = user or os.environ.get("NEO4J_USER", "neo4j")
         self.password = password or os.environ.get("NEO4J_PASSWORD", "broadspace")
-        self._client: Graphiti | None = None
+        self._driver: Driver | None = None
 
     @property
-    def client(self) -> Graphiti | None:
-        if not GRAPHTI_AVAILABLE:
+    def driver(self) -> Driver | None:
+        if not NEO4J_AVAILABLE:
             return None
-        if self._client is None:
-            self._client = Graphiti(self.uri, self.user, self.password)
-        return self._client
+        if self._driver is None:
+            self._driver = GraphDatabase.driver(self.uri, auth=(self.user, self.password))
+        return self._driver
 
-    async def add_triples(self, content_id: str, triples: list[dict], valid_at: datetime | None = None) -> bool:
-        if not self.client:
+    def add_triples(self, content_id: str, triples: list[dict], valid_at: datetime | None = None) -> bool:
+        if not self.driver:
             return False
         valid_at = valid_at or datetime.now(timezone.utc)
-        for t in triples:
-            try:
-                await self.client.add_entity_edge(
-                    EntityEdge(
-                        source_node_name=t["subject"],
-                        target_node_name=t["object"],
-                        relation_type=t["predicate"],
-                        fact=t.get("fact", f"{t['subject']} {t['predicate']} {t['object']}"),
-                        valid_at=valid_at,
+        all_ok = True
+        with self.driver.session() as session:
+            for t in triples:
+                try:
+                    session.run(
+                        """
+                        MERGE (s:Entity {name: $subject})
+                        SET s.entity_type = $subject_type, s.name_zh = $subject_zh
+                        MERGE (o:Entity {name: $object})
+                        SET o.entity_type = $object_type, o.name_zh = $object_zh
+                        MERGE (s)-[r:RELATES {source_id: $content_id, predicate: $predicate}]->(o)
+                        SET r.fact = $fact,
+                            r.subject_zh = $subject_zh,
+                            r.predicate_zh = $predicate_zh,
+                            r.object_zh = $object_zh,
+                            r.confidence = $confidence,
+                            r.valid_at = $valid_at
+                        """,
+                        subject=t.get("subject", ""),
+                        object=t.get("object", ""),
+                        predicate=t.get("predicate", ""),
+                        content_id=content_id,
+                        fact=t.get("fact", f"{t.get('subject', '')} {t.get('predicate', '')} {t.get('object', '')}"),
+                        subject_zh=t.get("subject_zh", ""),
+                        subject_type=t.get("subject_type", "Concept"),
+                        predicate_zh=t.get("predicate_zh", ""),
+                        object_zh=t.get("object_zh", ""),
+                        object_type=t.get("object_type", "Concept"),
+                        confidence=t.get("confidence", "EXTRACTED"),
+                        valid_at=valid_at.isoformat(),
                     )
+                except Exception as e:
+                    logger.warning("Failed to add triple %s -> %s: %s", t.get("subject"), t.get("object"), e)
+                    all_ok = False
+        return all_ok
+
+    def search(self, query: str, limit: int = 10) -> list[dict[str, Any]]:
+        if not self.driver:
+            return []
+        try:
+            with self.driver.session() as session:
+                result = session.run(
+                    """
+                    MATCH (s:Entity)-[r:RELATES]->(o:Entity)
+                    WHERE s.name CONTAINS $search_term
+                       OR o.name CONTAINS $search_term
+                       OR r.fact CONTAINS $search_term
+                    RETURN s.name AS subject, r.predicate AS predicate,
+                           o.name AS object, r.fact AS text,
+                           r.subject_zh AS subject_zh,
+                           r.predicate_zh AS predicate_zh,
+                           r.object_zh AS object_zh,
+                           r.confidence AS confidence,
+                           s.entity_type AS subject_type,
+                           o.entity_type AS object_type
+                    LIMIT $limit
+                    """,
+                    search_term=query,
+                    limit=limit,
                 )
-            except Exception:
-                return False
-        return True
-
-    async def search(self, query: str, limit: int = 10) -> list[dict[str, Any]]:
-        if not self.client:
+                data = result.data()
+                results = []
+                for row in data:
+                    text = row.get("text") or f"{row['subject']} {row['predicate']} {row['object']}"
+                    results.append({
+                        "text": text,
+                        "score": 1.0,
+                        "subject": row.get("subject", ""),
+                        "subject_zh": row.get("subject_zh", ""),
+                        "subject_type": row.get("subject_type", "Concept"),
+                        "predicate": row.get("predicate", ""),
+                        "predicate_zh": row.get("predicate_zh", ""),
+                        "object": row.get("object", ""),
+                        "object_zh": row.get("object_zh", ""),
+                        "object_type": row.get("object_type", "Concept"),
+                        "confidence": row.get("confidence", ""),
+                    })
+                return results
+        except Exception as e:
+            logger.warning("Graph search failed: %s", e)
             return []
-        try:
-            results = await self.client.search(query, limit=limit)
-            return [{"text": r.text, "score": r.score} for r in results]
-        except Exception:
-            return []
 
+    async def search_async(self, query: str, limit: int = 10) -> list[dict[str, Any]]:
+        """Async wrapper for search() - runs sync search in thread pool."""
+        return await asyncio.to_thread(self.search, query, limit)
+
+    async def add_triples_async(self, content_id: str, triples: list[dict], valid_at: datetime | None = None) -> bool:
+        """Async wrapper for add_triples() - runs sync add_triples in thread pool."""
+        return await asyncio.to_thread(self.add_triples, content_id, triples, valid_at)
+
+    # Keep old method names as aliases for backward compatibility
     def search_sync(self, query: str, limit: int = 10) -> list[dict[str, Any]]:
-        """Synchronous wrapper for async search()."""
-        if not self.client:
-            return []
-        loop = asyncio.get_event_loop()
-        try:
-            return loop.run_until_complete(self.search(query, limit))
-        finally:
-            pass
+        return self.search(query, limit)
 
     def add_triples_batch(self, content_id: str, triples: list[dict]) -> bool:
-        """Synchronous wrapper for async add_triples()."""
-        if not self.client:
-            return False
-        loop = asyncio.get_event_loop()
-        try:
-            return loop.run_until_complete(self.add_triples(content_id, triples))
-        finally:
-            loop.close()
+        return self.add_triples(content_id, triples)

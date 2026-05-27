@@ -7,9 +7,14 @@ logger = logging.getLogger(__name__)
 
 SYSTEM_PROMPT = """Extract knowledge triples from the tech news article (supports both English and Chinese content).
 
-Entity types + Chinese equivalents:
-- Technology → 技术, Event → 事件, Organization → 组织, Person → 人物
-- Concept → 概念, Trend → 趋势, Paper → 论文
+Entity types (use for subject_type and object_type):
+- Technology: tools, frameworks, languages, platforms, APIs
+- Organization: companies, teams, institutions
+- Person: researchers, developers, leaders
+- Concept: ideas, methodologies, theories, patterns
+- Event: releases, announcements, incidents, conferences
+- Trend: market shifts, adoption patterns
+- Paper: research papers, publications
 
 Relation types + Chinese equivalents:
 - depends_on → 依赖于, drives → 驱动, competes_with → 竞争于
@@ -25,10 +30,12 @@ Respond with JSON only:
         {
             "subject": "...",
             "subject_zh": "...",
+            "subject_type": "Technology|Organization|Person|Concept|Event|Trend|Paper",
             "predicate": "...",
             "predicate_zh": "...",
             "object": "...",
             "object_zh": "...",
+            "object_type": "Technology|Organization|Person|Concept|Event|Trend|Paper",
             "confidence": "EXTRACTED|INFERRED|SPECULATIVE"
         }
     ]
@@ -72,6 +79,8 @@ class TripleExtractor:
                 t.setdefault("subject_zh", t["subject"])
                 t.setdefault("predicate_zh", PREDICATE_ZH_MAP.get(t["predicate"], t["predicate"]))
                 t.setdefault("object_zh", t["object"])
+                t.setdefault("subject_type", "Concept")
+                t.setdefault("object_type", "Concept")
                 enriched.append(t)
             return enriched
         except Exception as e:

@@ -1,5 +1,11 @@
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
+export interface ScoreBreakdown {
+  exploit: number;
+  expand: number;
+  explore: number;
+}
+
 export interface ContentItem {
   id: string;
   title: string;
@@ -11,6 +17,8 @@ export interface ContentItem {
   sentiment: string;
   sources: { name: string; url: string }[];
   processed_at: string | null;
+  final_score: number;
+  score_breakdown: ScoreBreakdown;
 }
 
 export interface GraphSearchResult {
@@ -18,6 +26,15 @@ export interface GraphSearchResult {
   score: number;
   entities: string[];
   entity_names_zh: string[];
+  subject: string;
+  subject_zh: string;
+  subject_type: string;
+  predicate: string;
+  predicate_zh: string;
+  object: string;
+  object_zh: string;
+  object_type: string;
+  confidence: string;
 }
 
 export interface GraphSearchResponse {
@@ -77,12 +94,6 @@ export interface SourceCount {
   count: number;
 }
 
-export interface ScoreBreakdown {
-  exploit: number;
-  expand: number;
-  explore: number;
-}
-
 export interface TrendingTopic {
   topic: string;
   current_count: number;
@@ -114,21 +125,6 @@ export interface AnalyticsResponse {
   trending_topics: TrendingTopic[];
   score_distribution: ScoreBreakdownStats;
   source_diversity_by_category: CategorySourceDiversity[];
-}
-
-export interface ContentItem {
-  id: string;
-  title: string;
-  url: string;
-  summary: string;
-  categories: string[];
-  key_points: string[];
-  signal_strength: number;
-  sentiment: string;
-  sources: { name: string; url: string }[];
-  processed_at: string | null;
-  final_score: number;
-  score_breakdown: ScoreBreakdown;
 }
 
 export async function fetchAnalytics(days: number = 7): Promise<AnalyticsResponse> {

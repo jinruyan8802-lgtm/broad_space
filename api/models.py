@@ -68,6 +68,15 @@ class GraphSearchResult(BaseModel):
     score: float
     entities: list[str]
     entity_names_zh: list[str]
+    subject: str = ""
+    subject_zh: str = ""
+    subject_type: str = ""
+    predicate: str = ""
+    predicate_zh: str = ""
+    object: str = ""
+    object_zh: str = ""
+    object_type: str = ""
+    confidence: str = ""
 
 
 class GraphSearchResponse(BaseModel):

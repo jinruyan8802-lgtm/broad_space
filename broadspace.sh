@@ -94,9 +94,9 @@ start_services() {
     (cd processor && source .venv/bin/activate && PYTHONPATH=src python -m processor.worker >> "../$LOG_DIR/processor.log" 2>&1) &
     echo $! >> "$PID_FILE"
 
-    # 5. Start web feed server (standalone Node.js HTTP server)
-    log_ts "[5/5] Starting web feed server..."
-    (cd /home/jinru/workon/broad_space/web && node feed-server.js 2>&1 | while IFS= read -r line; do echo "[$(date '+%Y-%m-%d %H:%M:%S')] $line"; done >> "../$LOG_DIR/web.log") &
+    # 5. Start Next.js web app
+    log_ts "[5/5] Starting Next.js web app..."
+    (cd /home/jinru/workon/broad_space/web && npm run dev 2>&1 | while IFS= read -r line; do echo "[$(date '+%Y-%m-%d %H:%M:%S')] $line"; done >> "../$LOG_DIR/web.log") &
     echo $! >> "$PID_FILE"
 
     log_ts ""

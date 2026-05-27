@@ -1,5 +1,6 @@
 import os
 import time
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Query, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -7,8 +8,6 @@ from fastapi.responses import Response
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
-import asyncio
-from concurrent.futures import ThreadPoolExecutor
 
 from processor.knowledge.graphiti_client import GraphitiClient
 
@@ -16,16 +15,6 @@ from models import ContentResponse, TripleItem, GraphSearchResponse, GraphSearch
 
 REQUEST_COUNT = Counter("api_requests_total", "Total requests", ["method", "endpoint", "status"])
 REQUEST_LATENCY = Histogram("api_request_duration_seconds", "Request latency")
-
-app = FastAPI(title="BroadSpace API")
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 db_user = os.environ.get("DB_USER", "broadspace")
 db_pass = os.environ.get("DB_PASSWORD", "change_me_in_production")
@@ -35,7 +24,6 @@ db_url = f"postgresql://{db_user}:{db_pass}@{db_host}:5432/{db_name}"
 engine = create_engine(db_url)
 Session = sessionmaker(bind=engine)
 
-_executor = ThreadPoolExecutor(max_workers=4)
 _graphiti_client = GraphitiClient(
     uri=os.environ.get("NEO4J_URI", "bolt://localhost:7687"),
     user=os.environ.get("NEO4J_USER", "neo4j"),
@@ -43,8 +31,8 @@ _graphiti_client = GraphitiClient(
 )
 
 
-@app.on_event("startup")
-async def ensure_triples_column():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     session = Session()
     try:
         result = session.execute(text("""
@@ -62,6 +50,18 @@ async def ensure_triples_column():
         print(f"Note: triples column check error (may already exist): {e}")
     finally:
         session.close()
+    yield
+
+
+app = FastAPI(title="BroadSpace API", lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.middleware("http")
@@ -400,7 +400,7 @@ def get_analytics(days: int = Query(7, ge=1, le=90)):
 
 
 @app.get("/graph/search", response_model=GraphSearchResponse)
-def graph_search(
+async def graph_search(
     query: str = Query(..., description="Natural language query"),
     limit: int = Query(10, ge=1, le=50),
 ):
@@ -410,24 +410,36 @@ def graph_search(
     Returns matching triples with bilingual entity/relation labels.
     """
     try:
-        loop = asyncio.new_event_loop()
-        try:
-            raw_results = loop.run_until_complete(
-                _graphiti_client.search(query, limit=limit)
-            )
-        finally:
-            loop.close()
+        raw_results = await _graphiti_client.search_async(query, limit=limit)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Graph search failed: {e}")
 
     results: list[GraphSearchResult] = []
     for r in raw_results:
         result_text = r.get("text", "")
+        subject = r.get("subject", "")
+        subject_zh = r.get("subject_zh", "")
+        predicate = r.get("predicate", "")
+        predicate_zh = r.get("predicate_zh", "")
+        obj = r.get("object", "")
+        object_zh = r.get("object_zh", "")
+        confidence = r.get("confidence", "")
+        entities = [e for e in [subject, obj] if e]
+        entity_zh = [e for e in [subject_zh, object_zh] if e]
         results.append(GraphSearchResult(
             text=result_text,
             score=r.get("score", 0.0),
-            entities=[],
-            entity_names_zh=[],
+            entities=entities,
+            entity_names_zh=entity_zh,
+            subject=subject,
+            subject_zh=subject_zh,
+            subject_type=r.get("subject_type") or "Concept",
+            predicate=predicate,
+            predicate_zh=predicate_zh,
+            object=obj,
+            object_zh=object_zh,
+            object_type=r.get("object_type") or "Concept",
+            confidence=confidence,
         ))
 
     return GraphSearchResponse(query=query, results=results)
