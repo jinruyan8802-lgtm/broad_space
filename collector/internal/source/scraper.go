@@ -2,7 +2,6 @@ package source
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"time"
@@ -81,14 +80,3 @@ func (s *ScraperSource) Fetch(ctx context.Context) ([]Article, error) {
 	return nil, lastErr
 }
 
-func NewHackerNews() *ScraperSource {
-	return NewScraper("hackernews", "https://hacker-news.firebaseio.com/v0/topstories.json",
-		func(body []byte) ([]Article, error) {
-			var ids []int
-			if err := json.Unmarshal(body, &ids); err != nil {
-				return nil, fmt.Errorf("hn parse ids: %w", err)
-			}
-			// For Phase 1, just return empty — full implementation needs batch item fetching
-			return []Article{}, nil
-		})
-}
