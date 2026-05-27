@@ -30,7 +30,11 @@ func (s *ScraperSource) Fetch(ctx context.Context) ([]Article, error) {
 	var lastErr error
 	for attempt := 0; attempt < 3; attempt++ {
 		if attempt > 0 {
-			time.Sleep(time.Duration(attempt*2) * time.Second)
+			select {
+			case <-time.After(time.Duration(attempt*2) * time.Second):
+			case <-ctx.Done():
+				return nil, ctx.Err()
+			}
 		}
 
 		req, err := http.NewRequestWithContext(ctx, "GET", s.fetchURL, nil)
@@ -41,6 +45,9 @@ func (s *ScraperSource) Fetch(ctx context.Context) ([]Article, error) {
 
 		resp, err := s.client.Do(req)
 		if err != nil {
+			if resp != nil {
+				resp.Body.Close()
+			}
 			lastErr = fmt.Errorf("%s fetch failed: %w", s.name, err)
 			continue
 		}
