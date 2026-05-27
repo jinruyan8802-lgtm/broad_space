@@ -1,6 +1,7 @@
 import os
 import time
 from contextlib import asynccontextmanager
+from datetime import datetime, timezone
 
 from fastapi import FastAPI, Query, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,7 +12,7 @@ from sqlalchemy.orm import sessionmaker
 
 from processor.knowledge.graphiti_client import GraphitiClient
 
-from models import ContentResponse, TripleItem, GraphSearchResponse, GraphSearchResult, AnalyticsResponse, SignalDistribution, CategoryCount, SentimentCounts, VolumeDataPoint, SourceCount, ScoreBreakdown, TrendingTopic, CategorySourceDiversity, ScoreBreakdownStats
+from models import ContentResponse, TripleItem, GraphSearchResponse, GraphSearchResult, AnalyticsResponse, SignalDistribution, CategoryCount, SentimentCounts, VolumeDataPoint, SourceCount, ScoreBreakdown, TrendingTopic, CategorySourceDiversity, ScoreBreakdownStats, DashboardStatsResponse, SourceHealthItem, KnowledgeGraphStats, RecentActivity
 
 REQUEST_COUNT = Counter("api_requests_total", "Total requests", ["method", "endpoint", "status"])
 REQUEST_LATENCY = Histogram("api_request_duration_seconds", "Request latency")
@@ -443,3 +444,156 @@ async def graph_search(
         ))
 
     return GraphSearchResponse(query=query, results=results)
+
+
+def _query_graph_stats():
+    """Query Neo4j for knowledge graph statistics."""
+    nodes = 0
+    edges = 0
+    today_new_edges = 0
+    today_new_nodes = 0
+
+    driver = _graphiti_client.driver
+    if not driver:
+        return KnowledgeGraphStats()
+
+    try:
+        with driver.session() as session:
+            result = session.run("MATCH (n:Entity) RETURN count(n) AS cnt")
+            record = result.single()
+            nodes = record["cnt"] if record else 0
+
+            result = session.run("MATCH ()-[r:RELATES]->() RETURN count(r) AS cnt")
+            record = result.single()
+            edges = record["cnt"] if record else 0
+
+            result = session.run(
+                "MATCH ()-[r:RELATES]->() WHERE r.valid_at >= date() RETURN count(r) AS cnt"
+            )
+            record = result.single()
+            today_new_edges = record["cnt"] if record else 0
+    except Exception:
+        pass
+
+    # Approximate today's new nodes from PG triples
+    session_pg = Session()
+    try:
+        row = session_pg.execute(
+            text("""
+                SELECT COUNT(DISTINCT elem->>'subject') + COUNT(DISTINCT elem->>'object') AS cnt
+                FROM processed_articles,
+                     jsonb_array_elements(triples::jsonb) AS elem
+                WHERE processed_at >= CURRENT_DATE
+            """)
+        ).fetchone()
+        today_new_nodes = row.cnt if row and row.cnt else 0
+    except Exception:
+        pass
+    finally:
+        session_pg.close()
+
+    return KnowledgeGraphStats(
+        nodes=nodes,
+        edges=edges,
+        today_new_nodes=today_new_nodes,
+        today_new_edges=today_new_edges,
+    )
+
+
+def _query_source_health(session):
+    """Determine health status of each data source."""
+    rows = session.execute(
+        text("""
+            SELECT (elem->>'name') AS source, MAX(processed_at) AS last_seen
+            FROM processed_articles,
+                 jsonb_array_elements(sources::jsonb) AS elem
+            GROUP BY source
+        """)
+    ).fetchall()
+
+    seen_map = {r.source: r.last_seen for r in rows}
+    now = datetime.now(timezone.utc)
+    results = []
+
+    for src in DEFAULT_SOURCES:
+        last_seen_dt = seen_map.get(src)
+        if last_seen_dt:
+            if last_seen_dt.tzinfo is None:
+                last_seen_dt = last_seen_dt.replace(tzinfo=timezone.utc)
+            age_hours = (now - last_seen_dt).total_seconds() / 3600
+            if age_hours < 24:
+                status = "online"
+            elif age_hours < 72:
+                status = "stale"
+            else:
+                status = "offline"
+            results.append(SourceHealthItem(
+                source=src,
+                last_seen=last_seen_dt.isoformat(),
+                status=status,
+            ))
+        else:
+            results.append(SourceHealthItem(source=src, last_seen=None, status="offline"))
+
+    return results
+
+
+def _query_recent_activity(session):
+    """Get the 10 most recently processed articles."""
+    rows = session.execute(
+        text("""
+            SELECT title, sources->0->>'name' AS source, processed_at, signal_strength
+            FROM processed_articles
+            ORDER BY processed_at DESC
+            LIMIT 10
+        """)
+    ).fetchall()
+
+    return [
+        RecentActivity(
+            title=r.title or "",
+            source=r.source or "unknown",
+            processed_at=r.processed_at.isoformat() if r.processed_at else "",
+            signal_strength=r.signal_strength or 0.0,
+        )
+        for r in rows
+    ]
+
+
+@app.get("/dashboard/stats", response_model=DashboardStatsResponse)
+def get_dashboard_stats():
+    """
+    返回仪表盘统计数据:
+    - today_articles: 今日采集数
+    - total_articles: 总文章数
+    - graph: 知识图谱统计
+    - source_health: 数据源健康状态
+    - recent_activity: 最近处理的 10 条文章
+    """
+    session = Session()
+    try:
+        # Today's and total article counts
+        row = session.execute(
+            text("""
+                SELECT
+                    COUNT(*) FILTER (WHERE processed_at >= CURRENT_DATE) AS today_count,
+                    COUNT(*) AS total_count
+                FROM processed_articles
+            """)
+        ).fetchone()
+        today_articles = row.today_count if row else 0
+        total_articles = row.total_count if row else 0
+
+        graph_stats = _query_graph_stats()
+        source_health = _query_source_health(session)
+        recent_activity = _query_recent_activity(session)
+
+        return DashboardStatsResponse(
+            today_articles=today_articles,
+            total_articles=total_articles,
+            graph=graph_stats,
+            source_health=source_health,
+            recent_activity=recent_activity,
+        )
+    finally:
+        session.close()

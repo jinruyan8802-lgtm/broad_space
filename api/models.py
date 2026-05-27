@@ -142,3 +142,31 @@ class AnalyticsResponse(BaseModel):
     trending_topics: list[TrendingTopic] = Field(default_factory=list)
     score_distribution: ScoreBreakdownStats = Field(default_factory=lambda: ScoreBreakdownStats(avg_exploit=0, avg_expand=0, avg_explore=0, avg_final=0))
     source_diversity_by_category: list[CategorySourceDiversity] = Field(default_factory=list)
+
+
+class SourceHealthItem(BaseModel):
+    source: str
+    last_seen: str | None = None
+    status: str = "offline"  # online | stale | offline
+
+
+class KnowledgeGraphStats(BaseModel):
+    nodes: int = 0
+    edges: int = 0
+    today_new_nodes: int = 0
+    today_new_edges: int = 0
+
+
+class RecentActivity(BaseModel):
+    title: str
+    source: str
+    processed_at: str
+    signal_strength: float
+
+
+class DashboardStatsResponse(BaseModel):
+    today_articles: int
+    total_articles: int
+    graph: KnowledgeGraphStats
+    source_health: list[SourceHealthItem]
+    recent_activity: list[RecentActivity]

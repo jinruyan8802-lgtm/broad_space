@@ -1,11 +1,15 @@
 "use client";
 import { SentimentCounts } from "@/lib/api";
 
-export default function SentimentCard({ data }: { data: SentimentCounts }) {
+export default function SentimentCard({ data, theme = "light" }: { data: SentimentCounts; theme?: "dark" | "light" }) {
+  const isDark = theme === "dark";
+  const cardBg = isDark ? "bg-[#1a1a2e]" : "bg-white";
+  const borderColor = isDark ? "border-[#333]" : "border-gray-200";
+
   const total = data.positive + data.neutral + data.negative;
 
   return (
-    <div className="bg-white rounded-lg border p-4">
+    <div className={`${cardBg} rounded-lg border ${borderColor} p-4`}>
       <h3 className="font-semibold text-sm mb-3">情感分布</h3>
       <div className="space-y-2">
         <div className="flex items-center justify-between">

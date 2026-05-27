@@ -132,3 +132,37 @@ export async function fetchAnalytics(days: number = 7): Promise<AnalyticsRespons
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   return res.json();
 }
+
+export interface SourceHealthItem {
+  source: string;
+  last_seen: string | null;
+  status: "online" | "stale" | "offline";
+}
+
+export interface KnowledgeGraphStats {
+  nodes: number;
+  edges: number;
+  today_new_nodes: number;
+  today_new_edges: number;
+}
+
+export interface RecentActivity {
+  title: string;
+  source: string;
+  processed_at: string;
+  signal_strength: number;
+}
+
+export interface DashboardStatsResponse {
+  today_articles: number;
+  total_articles: number;
+  graph: KnowledgeGraphStats;
+  source_health: SourceHealthItem[];
+  recent_activity: RecentActivity[];
+}
+
+export async function fetchDashboardStats(): Promise<DashboardStatsResponse> {
+  const res = await fetch(`${API_BASE}/dashboard/stats`);
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  return res.json();
+}
