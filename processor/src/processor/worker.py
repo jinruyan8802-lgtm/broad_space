@@ -166,12 +166,14 @@ class Worker:
         logger.info("Classified %s: categories=%s duration_ms=%.1f", primary.hash, categories, (t1 - t0) * 1000)
 
         summary_result = self.summarizer.summarize(primary)
+        signal = summary_result.get("signal_strength") or 0.5
+        sentiment = summary_result.get("sentiment") or "neutral"
         t2 = time.perf_counter()
         logger.info(
             "Summarized %s: signal=%.2f sentiment=%s duration_ms=%.1f",
             primary.hash,
-            summary_result.get("signal_strength", 0.5),
-            summary_result.get("sentiment", "neutral"),
+            signal,
+            sentiment,
             (t2 - t1) * 1000,
         )
 
@@ -191,11 +193,11 @@ class Worker:
                 sources=[{"name": a.source_name, "url": a.url} for a in articles],
                 canonical_url=primary.url,
                 title=primary.title,
-                summary=summary_result.get("summary", ""),
-                key_points=summary_result.get("key_points", []),
+                summary=summary_result.get("summary") or "",
+                key_points=summary_result.get("key_points") or [],
                 categories=categories,
-                signal_strength=summary_result.get("signal_strength", 0.5),
-                sentiment=summary_result.get("sentiment", "neutral"),
+                signal_strength=signal,
+                sentiment=sentiment,
                 cross_source_analysis=analysis,
                 triples=[],
             )
@@ -209,11 +211,11 @@ class Worker:
             sources=[{"name": a.source_name, "url": a.url} for a in articles],
             canonical_url=primary.url,
             title=primary.title,
-            summary=summary_result.get("summary", ""),
-            key_points=summary_result.get("key_points", []),
+            summary=summary_result.get("summary") or "",
+            key_points=summary_result.get("key_points") or [],
             categories=categories,
-            signal_strength=summary_result.get("signal_strength", 0.5),
-            sentiment=summary_result.get("sentiment", "neutral"),
+            signal_strength=signal,
+            sentiment=sentiment,
             cross_source_analysis=analysis,
             triples=triples,
         )

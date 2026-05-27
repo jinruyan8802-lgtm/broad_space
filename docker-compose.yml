@@ -84,6 +84,12 @@ services:
         condition: service_healthy
       neo4j:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
 
   delivery:
     build:
@@ -106,7 +112,7 @@ services:
       WECOM_WEBHOOK_URL: ${WECOM_WEBHOOK_URL:-}
     depends_on:
       api:
-        condition: service_started
+        condition: service_healthy
       postgres:
         condition: service_healthy
     healthcheck:
@@ -115,32 +121,8 @@ services:
       timeout: 5s
       retries: 3
 
-  prometheus:
-    image: prom/prometheus:latest
-    volumes:
-      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus_data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-    ports:
-      - "9090:9090"
-    depends_on:
-      - api
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "3001:3000"
-    volumes:
-      - grafana_data:/var/lib/grafana
-    depends_on:
-      - prometheus
-
 volumes:
   postgres_data:
   redis_data:
   neo4j_data:
   neo4j_logs:
-  prometheus_data:
-  grafana_data:

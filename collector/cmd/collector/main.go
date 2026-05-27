@@ -2,7 +2,10 @@ package main
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"os/signal"
 	"sync"
@@ -15,18 +18,25 @@ import (
 	"github.com/broadspace/collector/internal/source"
 )
 
+var (
+	sources   []source.Source
+	publisher *queue.Publisher
+	cfg       *config.Config
+)
+
 func main() {
-	cfg := config.Load()
+	cfg = config.Load()
 	log.Printf("BroadSpace collector starting (concurrency=%d interval=%s)", cfg.MaxConcurrency, cfg.FetchInterval)
 
-	publisher, err := queue.NewPublisher(cfg.RedisURL, "broadspace:articles")
+	var err error
+	publisher, err = queue.NewPublisher(cfg.RedisURL, "broadspace:articles")
 	if err != nil {
 		log.Fatalf("redis publisher: %v", err)
 	}
 	defer publisher.Close()
 	log.Printf("Connected to Redis: %s", cfg.RedisURL)
 
-	sources := []source.Source{
+	sources = []source.Source{
 		source.NewMiniflux(cfg.MinifluxURL, cfg.MinifluxUser, cfg.MinifluxPass),
 		source.NewHackerNews(),
 		source.NewGitHubTrending(),
@@ -51,6 +61,9 @@ func main() {
 		cancel()
 	}()
 
+	// Start ad-hoc trigger API
+	go startAPI(cfg.APIPort)
+
 	ticker := time.NewTicker(30 * time.Minute)
 	defer ticker.Stop()
 
@@ -66,6 +79,75 @@ func main() {
 			return
 		}
 	}
+}
+
+func startAPI(port string) {
+	if port == "" {
+		port = "9100"
+	}
+
+	http.HandleFunc("GET /sources", handleListSources)
+	http.HandleFunc("POST /collect/{source}", handleTriggerCollect)
+
+	log.Printf("Ad-hoc trigger API listening on :%s", port)
+	if err := http.ListenAndServe(":"+port, nil); err != nil {
+		log.Printf("API server error: %v", err)
+	}
+}
+
+func handleListSources(w http.ResponseWriter, r *http.Request) {
+	names := sourceNames(sources)
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]any{"sources": names})
+}
+
+func handleTriggerCollect(w http.ResponseWriter, r *http.Request) {
+	sourceName := r.PathValue("source")
+
+	var target source.Source
+	for _, s := range sources {
+		if s.Name() == sourceName {
+			target = s
+			break
+		}
+	}
+
+	if target == nil {
+		http.Error(w, fmt.Sprintf("unknown source: %s", sourceName), http.StatusNotFound)
+		return
+	}
+
+	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Minute)
+	defer cancel()
+
+	go func() {
+		articles, err := target.Fetch(ctx)
+		if err != nil {
+			log.Printf("ad-hoc collect %s failed: %v", sourceName, err)
+			return
+		}
+
+		published := 0
+		for _, article := range articles {
+			norm := normalizer.Normalize(article)
+			data, err := norm.ToJSON()
+			if err != nil {
+				continue
+			}
+			if err := publisher.Publish(ctx, norm.Hash, data); err != nil {
+				continue
+			}
+			published++
+		}
+		log.Printf("ad-hoc collect %s: fetched %d, published %d", sourceName, len(articles), published)
+	}()
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]any{
+		"status":  "triggered",
+		"source":  sourceName,
+		"message": fmt.Sprintf("collection triggered for %s", sourceName),
+	})
 }
 
 func runCollection(ctx context.Context, sources []source.Source, pub *queue.Publisher, maxConcurrency int) {

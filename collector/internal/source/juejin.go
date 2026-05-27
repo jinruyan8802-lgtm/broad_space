@@ -43,33 +43,36 @@ func (j *JuejinSource) Fetch(ctx context.Context) ([]Article, error) {
 	}
 
 	var result struct {
-		Code int `json:"code"`
-		Data []struct {
-			ArticleInfo struct {
-				ArticleID    string `json:"article_id"`
-				Title        string `json:"title"`
-				BriefContent string `json:"brief_content"`
-			} `json:"article_info"`
+		ErrNo int `json:"err_no"`
+		Data  []struct {
+			ItemInfo struct {
+				ArticleInfo struct {
+					ArticleID    string `json:"article_id"`
+					Title        string `json:"title"`
+					BriefContent string `json:"brief_content"`
+				} `json:"article_info"`
+			} `json:"item_info"`
 		} `json:"data"`
 	}
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return nil, fmt.Errorf("juejin parse: %w", err)
 	}
-	if result.Code != 0 {
-		return nil, fmt.Errorf("juejin API error code: %d", result.Code)
+	if result.ErrNo != 0 {
+		return nil, fmt.Errorf("juejin API error code: %d", result.ErrNo)
 	}
 
 	articles := make([]Article, 0, len(result.Data))
 	for _, item := range result.Data {
-		if item.ArticleInfo.ArticleID == "" {
+		info := item.ItemInfo.ArticleInfo
+		if info.ArticleID == "" {
 			continue
 		}
 		articles = append(articles, Article{
-			ID:         fmt.Sprintf("juejin_%s", item.ArticleInfo.ArticleID),
-			Title:      fmt.Sprintf("[掘金] %s", item.ArticleInfo.Title),
-			URL:        fmt.Sprintf("https://juejin.cn/post/%s", item.ArticleInfo.ArticleID),
+			ID:         fmt.Sprintf("juejin_%s", info.ArticleID),
+			Title:      fmt.Sprintf("[掘金] %s", info.Title),
+			URL:        fmt.Sprintf("https://juejin.cn/post/%s", info.ArticleID),
 			SourceName: "juejin",
-			Content:    item.ArticleInfo.BriefContent,
+			Content:    info.BriefContent,
 		})
 	}
 	return articles, nil

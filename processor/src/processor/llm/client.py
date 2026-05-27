@@ -13,8 +13,18 @@ class LLMClient:
         base_url: str | None = None,
     ):
         self.base_url = base_url or os.environ.get("LLM_BASE_URL", "")
-        self.api_key = api_key or os.environ.get("LLM_API_KEY") or os.environ.get("ANTHROPIC_API_KEY")
-        self.model = model or os.environ.get("LLM_MODEL", "claude-sonnet-4-6")
+        self.api_key = (
+            api_key
+            or os.environ.get("LLM_API_KEY")
+            or os.environ.get("ANTHROPIC_API_KEY")
+            or os.environ.get("ANTHROPIC_AUTH_TOKEN")
+        )
+        self.model = (
+            model
+            or os.environ.get("LLM_MODEL")
+            or os.environ.get("ANTHROPIC_MODEL")
+            or "claude-sonnet-4-6"
+        )
 
         # Use OpenAI-compatible client for local LM Studio / OpenRouter
         if self.base_url:

@@ -65,9 +65,9 @@ func (m *MinifluxSource) Fetch(ctx context.Context) ([]Article, error) {
 	for _, e := range result.Entries {
 		articles = append(articles, Article{
 			ID:          fmt.Sprintf("miniflux_%d", e.ID),
-			Title:       e.Title,
+			Title:       fmt.Sprintf("[Miniflux] %s", e.Title),
 			URL:         e.URL,
-			SourceName:  e.Feed.Title,
+			SourceName:  "miniflux",
 			PublishedAt: e.PublishedAt,
 			Content:     e.Content,
 		})

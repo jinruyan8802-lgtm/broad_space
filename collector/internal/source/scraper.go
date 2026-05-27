@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/url"
+	"os"
 	"time"
 )
 
@@ -15,11 +17,27 @@ type ScraperSource struct {
 }
 
 func NewScraper(name, fetchURL string, parseFunc func([]byte) ([]Article, error)) *ScraperSource {
+	client := &http.Client{Timeout: 30 * time.Second}
+
+	// Support proxy: check V2EX_PROXY, then HTTPS_PROXY, then HTTP_PROXY
+	proxy := os.Getenv(name + "_PROXY")
+	if proxy == "" {
+		proxy = os.Getenv("HTTPS_PROXY")
+	}
+	if proxy == "" {
+		proxy = os.Getenv("HTTP_PROXY")
+	}
+	if proxy != "" {
+		if proxyURL, err := url.Parse(proxy); err == nil {
+			client.Transport = &http.Transport{Proxy: http.ProxyURL(proxyURL)}
+		}
+	}
+
 	return &ScraperSource{
 		name:      name,
 		fetchURL:  fetchURL,
 		parseFunc: parseFunc,
-		client:    &http.Client{Timeout: 30 * time.Second},
+		client:    client,
 	}
 }
 

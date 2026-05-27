@@ -5,12 +5,13 @@ import (
 )
 
 type Config struct {
-	RedisURL      string
-	MinifluxURL   string
-	MinifluxUser  string
-	MinifluxPass  string
+	RedisURL       string
+	MinifluxURL    string
+	MinifluxUser   string
+	MinifluxPass   string
 	MaxConcurrency int
 	FetchInterval  string
+	APIPort        string
 }
 
 func Load() *Config {
@@ -21,6 +22,7 @@ func Load() *Config {
 		MinifluxPass:   getEnv("MINIFLUX_PASSWORD", "admin123"),
 		MaxConcurrency: 50,
 		FetchInterval:  getEnv("FETCH_INTERVAL", "30m"),
+		APIPort:        getEnv("COLLECTOR_API_PORT", "9100"),
 	}
 }
 
