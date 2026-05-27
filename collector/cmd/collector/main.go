@@ -32,6 +32,10 @@ func main() {
 		source.NewGitHubTrending(),
 		source.NewArXiv(),
 		source.NewV2EX(),
+		source.NewJuejin(),
+		source.NewLobsters(),
+		source.NewDevTo(),
+		source.NewKr36(),
 		// source.NewZhihu(), // requires auth, enable when ready
 	}
 	log.Printf("Configured %d sources: %v", len(sources), sourceNames(sources))
