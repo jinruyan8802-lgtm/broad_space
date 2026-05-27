@@ -72,6 +72,11 @@ class LLMClient:
 
     def _extract_json(self, text: str) -> dict[str, Any]:
         text = text.strip()
+
+        # Strip {html}<think>...</think> blocks from reasoning models (DeepSeek R1, MiniMax-M2.7, Qwen thinking variants)
+        if "</think>" in text:
+            text = text.split("</think>")[-1].strip()
+
         if text.startswith("```json"):
             text = text[7:]
         elif text.startswith("```"):

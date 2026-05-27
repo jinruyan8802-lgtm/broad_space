@@ -332,8 +332,8 @@ def _query_score_distribution(days: int, session):
 
 
 DEFAULT_SOURCES = [
-    "Hacker News", "GitHub Trending", "ArXiv", "V2EX",
-    "机器之心", "量子位", "Miniflux", "Reddit",
+    "hackernews", "github_trending", "arxiv", "v2ex",
+    "miniflux", "juejin", "lobsters", "devto", "kr36",
 ]
 
 
@@ -359,7 +359,7 @@ def _query_source_diversity_by_category(days: int, session):
             category=r.category,
             covered_sources=covered,
             missing_sources=missing,
-            coverage_ratio=len(covered) / max(len(DEFAULT_SOURCES), 1),
+            coverage_ratio=min(len(covered) / max(len(DEFAULT_SOURCES), 1), 1.0),
         ))
     return results
 

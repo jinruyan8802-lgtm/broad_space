@@ -64,7 +64,7 @@ class TripleExtractor:
     def extract(self, content: ProcessedContent) -> list[dict]:
         prompt = f"Title: {content.title}\nSummary: {content.summary}\nKey points: {content.key_points}"
         try:
-            result = self.llm.chat_json(SYSTEM_PROMPT, prompt)
+            result = self.llm.chat_json(SYSTEM_PROMPT, prompt, max_tokens=4096)
             triples = result.get("triples", [])
             enriched = []
             for t in triples:
