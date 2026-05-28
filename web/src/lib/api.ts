@@ -19,6 +19,10 @@ export interface ContentItem {
   processed_at: string | null;
   final_score: number;
   score_breakdown: ScoreBreakdown;
+  language: string;
+  title_zh: string;
+  summary_zh: string;
+  key_points_zh: string[];
 }
 
 export interface GraphSearchResult {

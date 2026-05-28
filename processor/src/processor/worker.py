@@ -17,6 +17,7 @@ from processor.pipeline.analyzer import CrossSourceAnalyzer
 from processor.pipeline.classifier import Classifier
 from processor.pipeline.dedup import Deduplicator
 from processor.pipeline.summarizer import Summarizer
+from processor.pipeline.translator import Translator
 from processor.worker_models import ProcessedArticle, Base
 
 logger = logging.getLogger("processor.worker")
@@ -76,6 +77,7 @@ class Worker:
         self.llm = llm
         self.classifier = Classifier(llm)
         self.summarizer = Summarizer(llm)
+        self.translator = Translator(llm)
         self.analyzer = CrossSourceAnalyzer(llm)
         self.knowledge_extractor = TripleExtractor(llm)
         self.graphiti_client = GraphitiClient()
@@ -177,6 +179,19 @@ class Worker:
             (t2 - t1) * 1000,
         )
 
+        # Translate to Chinese if English
+        t0_trans = time.perf_counter()
+        translation = self.translator.translate(
+            title=primary.title,
+            summary=summary_result.get("summary") or "",
+            key_points=summary_result.get("key_points") or [],
+        )
+        t1_trans = time.perf_counter()
+        logger.info(
+            "Translated %s: language=%s duration_ms=%.1f",
+            primary.hash, translation["language"], (t1_trans - t0_trans) * 1000,
+        )
+
         analysis = self.analyzer.analyze(articles)
         t3 = time.perf_counter()
         logger.info(
@@ -218,6 +233,10 @@ class Worker:
             sentiment=sentiment,
             cross_source_analysis=analysis,
             triples=triples,
+            language=translation["language"],
+            title_zh=translation["title_zh"],
+            summary_zh=translation["summary_zh"],
+            key_points_zh=translation["key_points_zh"],
         )
 
     def _save(self, content: ProcessedContent):
@@ -235,6 +254,10 @@ class Worker:
                 cross_source_analysis=content.cross_source_analysis,
                 triples=content.triples,
                 sources=content.sources,
+                language=content.language,
+                title_zh=content.title_zh,
+                summary_zh=content.summary_zh,
+                key_points_zh=content.key_points_zh,
             )
             session.merge(db_article)
             session.commit()

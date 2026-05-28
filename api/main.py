@@ -47,8 +47,24 @@ async def lifespan(app: FastAPI):
             """))
             session.commit()
             print("Added triples column to processed_articles")
+
+        for col in ["language", "title_zh", "summary_zh", "key_points_zh"]:
+            exists = session.execute(text("""
+                SELECT column_name FROM information_schema.columns
+                WHERE table_name='processed_articles' AND column_name=:col
+            """), {"col": col}).fetchall()
+            if not exists:
+                dtype = "JSONB DEFAULT '[]'" if col == "key_points_zh" else "TEXT DEFAULT ''"
+                if col == "language":
+                    dtype = "TEXT DEFAULT 'en'"
+                session.execute(text(f"""
+                    ALTER TABLE processed_articles
+                    ADD COLUMN {col} {dtype}
+                """))
+                session.commit()
+                print(f"Added {col} column to processed_articles")
     except Exception as e:
-        print(f"Note: triples column check error (may already exist): {e}")
+        print(f"Note: column migration error (may already exist): {e}")
     finally:
         session.close()
     yield
@@ -108,7 +124,8 @@ def list_content(
         query_parts = [
             """
             SELECT id, title, url, summary, categories, key_points,
-                   signal_strength, sentiment, sources, processed_at, triples
+                   signal_strength, sentiment, sources, processed_at, triples,
+                   language, title_zh, summary_zh, key_points_zh
             FROM processed_articles
             WHERE signal_strength >= :min_signal
             """
@@ -170,6 +187,10 @@ def list_content(
                     expand=expand,
                     explore=explore,
                 ),
+                language=row.language or "en",
+                title_zh=row.title_zh or "",
+                summary_zh=row.summary_zh or "",
+                key_points_zh=row.key_points_zh or [],
             ))
         return results
     finally:

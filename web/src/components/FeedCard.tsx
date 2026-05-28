@@ -1,6 +1,7 @@
 "use client";
 
 import { ScoreBreakdown } from "@/lib/api";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface FeedCardProps {
   id: string;
@@ -17,6 +18,10 @@ interface FeedCardProps {
   theme?: "dark" | "light";
   isSelected?: boolean;
   onClick?: () => void;
+  language?: string;
+  title_zh?: string;
+  summary_zh?: string;
+  key_points_zh?: string[];
 }
 
 export default function FeedCard({
@@ -33,8 +38,17 @@ export default function FeedCard({
   theme = "dark",
   isSelected = false,
   onClick,
+  language,
+  title_zh,
+  summary_zh,
+  key_points_zh,
 }: FeedCardProps) {
   const isDark = theme === "dark";
+  const { displayLanguage } = useLanguage();
+
+  const displayTitle = displayLanguage === "zh" ? (title_zh || title) : title;
+  const displaySummary = displayLanguage === "zh" ? (summary_zh || summary) : summary;
+  const displayKeyPoints = displayLanguage === "zh" ? (key_points_zh?.length ? key_points_zh : key_points) : key_points;
 
   const signalColor = signal_strength >= 0.8
     ? "text-red-500"
@@ -68,14 +82,14 @@ export default function FeedCard({
       onClick={onClick}
     >
       <div className="flex justify-between items-start gap-4">
-        <h2 className={`text-base font-semibold ${textPrimary} flex-1`}>{title}</h2>
+        <h2 className={`text-base font-semibold ${textPrimary} flex-1`}>{displayTitle}</h2>
         <div className="flex flex-col items-end gap-1">
           <span className={`font-bold text-lg ${signalColor}`}>{signal_strength.toFixed(2)}</span>
           <span className={`text-xs ${textMuted}`}>{final_score?.toFixed(2) || signal_strength.toFixed(2)}</span>
         </div>
       </div>
 
-      <p className={`${textSecondary} mt-2 text-sm`}>{summary}</p>
+      <p className={`${textSecondary} mt-2 text-sm`}>{displaySummary}</p>
 
       {/* Badges */}
       <div className="flex gap-2 mt-3 flex-wrap">
@@ -102,9 +116,9 @@ export default function FeedCard({
       )}
 
       {/* Key Points */}
-      {key_points && key_points.length > 0 && (
+      {displayKeyPoints && displayKeyPoints.length > 0 && (
         <div className={`mt-3 space-y-1 ${textSecondary}`}>
-          {key_points.slice(0, 3).map((point, i) => (
+          {displayKeyPoints.slice(0, 3).map((point, i) => (
             <div key={i} className="flex gap-2 text-xs">
               <span className={isDark ? "text-gray-500" : "text-gray-400"}>•</span>
               <span>{point}</span>

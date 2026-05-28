@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import FeedCard from "@/components/FeedCard";
 import ContextPanel from "@/components/ContextPanel";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { fetchContent, fetchAnalytics, ContentItem, AnalyticsResponse } from "@/lib/api";
 
 const CATEGORIES = [
@@ -26,6 +27,7 @@ export default function Home() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [selectedItem, setSelectedItem] = useState<ContentItem | null>(null);
+  const { displayLanguage, toggleLanguage } = useLanguage();
 
   const loadContent = useCallback(async () => {
     setLoading(true);
@@ -79,6 +81,12 @@ export default function Home() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <h1 className={`text-xl font-bold ${textColor}`}>🔭 BroadSpace</h1>
           <div className="flex items-center gap-4">
+            <button
+              onClick={toggleLanguage}
+              className={`text-sm px-3 py-1 rounded border ${borderColor} ${textColor} hover:opacity-80`}
+            >
+              {displayLanguage === "zh" ? "EN 原文" : "ZH 中文"}
+            </button>
             <button
               onClick={() => setTheme(isDark ? "light" : "dark")}
               className={`text-sm px-3 py-1 rounded border ${borderColor} ${textColor} hover:opacity-80`}

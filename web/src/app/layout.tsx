@@ -1,4 +1,5 @@
 import NavBarWrapper from "@/components/NavBarWrapper";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -11,8 +12,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="zh-CN">
       <body className="min-h-screen">
-        <NavBarWrapper />
-        {children}
+        <LanguageProvider>
+          <NavBarWrapper />
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

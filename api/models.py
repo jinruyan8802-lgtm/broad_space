@@ -51,6 +51,10 @@ class ContentResponse(BaseModel):
     triples: list["TripleItem"] = []
     final_score: float = Field(ge=0.0, le=1.0, description="加权总分 = 0.5*exploit + 0.3*expand + 0.2*explore")
     score_breakdown: ScoreBreakdown
+    language: str = "en"
+    title_zh: str = ""
+    summary_zh: str = ""
+    key_points_zh: list[str] = Field(default_factory=list)
 
 
 class TripleItem(BaseModel):

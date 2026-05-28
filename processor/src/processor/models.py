@@ -29,3 +29,7 @@ class ProcessedContent(BaseModel):
     cross_source_analysis: dict[str, Any] = Field(default_factory=dict)
     triples: list[dict[str, str]] = Field(default_factory=list)
     processed_at: datetime = Field(default_factory=datetime.utcnow)
+    language: str = "en"
+    title_zh: str = ""
+    summary_zh: str = ""
+    key_points_zh: list[str] = Field(default_factory=list)
