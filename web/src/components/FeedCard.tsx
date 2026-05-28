@@ -21,6 +21,7 @@ interface FeedCardProps {
 
 export default function FeedCard({
   title,
+  url,
   summary,
   categories,
   signal_strength,
@@ -116,10 +117,37 @@ export default function FeedCard({
       <div className={`flex items-center gap-4 mt-3 text-xs ${textMuted}`}>
         <span>情绪: {sentiment}</span>
         <span className="truncate">
-          来源: {sources.map((s) => s.name).join(", ")}
+          来源:{" "}
+          {sources.map((s, i) => (
+            <span key={i}>
+              {i > 0 && ", "}
+              {s.url ? (
+                <a
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="hover:underline hover:text-blue-400"
+                >
+                  {s.name}
+                </a>
+              ) : (
+                s.name
+              )}
+            </span>
+          ))}
         </span>
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className={`${isDark ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-500"} hover:underline ml-auto whitespace-nowrap`}
+        >
+          阅读原文 ↗
+        </a>
         {isSelected && (
-          <span className="text-blue-400 ml-auto">✓ 已选中</span>
+          <span className="text-blue-400 ml-2">✓ 已选中</span>
         )}
       </div>
     </div>

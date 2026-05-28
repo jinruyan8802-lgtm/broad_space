@@ -149,6 +149,7 @@ export interface KnowledgeGraphStats {
 export interface RecentActivity {
   title: string;
   source: string;
+  url: string;
   processed_at: string;
   signal_strength: number;
 }

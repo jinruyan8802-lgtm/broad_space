@@ -160,6 +160,7 @@ class KnowledgeGraphStats(BaseModel):
 class RecentActivity(BaseModel):
     title: str
     source: str
+    url: str
     processed_at: str
     signal_strength: float
 

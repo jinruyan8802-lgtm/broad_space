@@ -76,11 +76,11 @@ class TripleExtractor:
             enriched = []
             for t in triples:
                 t.setdefault("confidence", "EXTRACTED")
-                t.setdefault("subject_zh", t["subject"])
-                t.setdefault("predicate_zh", PREDICATE_ZH_MAP.get(t["predicate"], t["predicate"]))
-                t.setdefault("object_zh", t["object"])
                 t.setdefault("subject_type", "Concept")
                 t.setdefault("object_type", "Concept")
+                t["subject_zh"] = t.get("subject_zh") or t["subject"]
+                t["predicate_zh"] = t.get("predicate_zh") or PREDICATE_ZH_MAP.get(t["predicate"], t["predicate"])
+                t["object_zh"] = t.get("object_zh") or t["object"]
                 enriched.append(t)
             return enriched
         except Exception as e:

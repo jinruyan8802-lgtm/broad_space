@@ -39,7 +39,18 @@ export default function ActivityLog({ data, theme = "light" }: { data: RecentAct
             <div className="min-w-0">
               <span className="text-[10px] text-blue-400">{item.source}</span>
               <span className={`mx-1 ${textSecondary}`}>·</span>
-              <span className={monospaceText}>{item.title.length > 40 ? item.title.slice(0, 40) + "…" : item.title}</span>
+              {item.url ? (
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${monospaceText} hover:underline hover:text-blue-400`}
+                >
+                  {item.title.length > 40 ? item.title.slice(0, 40) + "…" : item.title}
+                </a>
+              ) : (
+                <span className={monospaceText}>{item.title.length > 40 ? item.title.slice(0, 40) + "…" : item.title}</span>
+              )}
             </div>
           </div>
         ))}

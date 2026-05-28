@@ -179,6 +179,78 @@ run_test() {
     python -m pytest tests/integration/test_pipeline.py -v
 }
 
+build_all() {
+    cd /home/jinru/workon/broad_space
+    load_env
+
+    mkdir -p "$LOG_DIR"
+    log_ts "=== BroadSpace Build ==="
+
+    # 1. Build Go collector
+    log_ts "[1/4] Building Go collector..."
+    (cd collector && go build -o bin/collector ./cmd/collector 2>&1 | while IFS= read -r line; do log_ts "$line"; done)
+    log_ts "  -> collector/bin/collector"
+
+    # 2. Build api Docker image
+    log_ts "[2/4] Building api Docker image..."
+    docker compose build api 2>&1 | while IFS= read -r line; do log_ts "$line"; done
+    log_ts "  -> broadspace-api image"
+
+    # 3. Build delivery Docker image
+    log_ts "[3/4] Building delivery Docker image..."
+    docker compose build delivery 2>&1 | while IFS= read -r line; do log_ts "$line"; done
+    log_ts "  -> broadspace-delivery image"
+
+    # 4. Build Next.js production bundle
+    log_ts "[4/4] Building Next.js web app..."
+    (cd web && npm run build 2>&1 | while IFS= read -r line; do log_ts "$line"; done)
+    log_ts "  -> web/.next"
+
+    log_ts ""
+    log_ts "=== Build complete ==="
+}
+
+build_component() {
+    cd /home/jinru/workon/broad_space
+    load_env
+    mkdir -p "$LOG_DIR"
+
+    case "${2:-}" in
+        collector)
+            log_ts "Building Go collector..."
+            (cd collector && go build -o bin/collector ./cmd/collector 2>&1 | while IFS= read -r line; do log_ts "$line"; done)
+            log_ts "Done -> collector/bin/collector"
+            ;;
+        api)
+            log_ts "Building api Docker image..."
+            docker compose build api 2>&1 | while IFS= read -r line; do log_ts "$line"; done
+            log_ts "Done -> broadspace-api image"
+            ;;
+        delivery)
+            log_ts "Building delivery Docker image..."
+            docker compose build delivery 2>&1 | while IFS= read -r line; do log_ts "$line"; done
+            log_ts "Done -> broadspace-delivery image"
+            ;;
+        web)
+            log_ts "Building Next.js web app..."
+            (cd web && npm run build 2>&1 | while IFS= read -r line; do log_ts "$line"; done)
+            log_ts "Done -> web/.next"
+            ;;
+        *)
+            echo "Usage: $0 build <component>"
+            echo ""
+            echo "Components:"
+            echo "  collector   - Go collector binary"
+            echo "  api         - API Docker image"
+            echo "  delivery    - Delivery Docker image"
+            echo "  web         - Next.js production build"
+            echo ""
+            echo "Or run '$0 build' to build all components."
+            exit 1
+            ;;
+    esac
+}
+
 case "${1:-start}" in
     start)
         start_services
@@ -194,11 +266,27 @@ case "${1:-start}" in
     status)
         get_status
         ;;
+    build)
+        if [ -n "${2:-}" ]; then
+            build_component "$@"
+        else
+            build_all
+        fi
+        ;;
     test)
         run_test
         ;;
     *)
-        echo "Usage: $0 {start|stop|restart|status|test}"
+        echo "Usage: $0 {start|stop|restart|status|build|test}"
+        echo ""
+        echo "Commands:"
+        echo "  start               - Start all services"
+        echo "  stop                - Stop all services"
+        echo "  restart             - Restart all services"
+        echo "  status              - Show service status"
+        echo "  build               - Build all components (collector, api, delivery, web)"
+        echo "  build <component>   - Build a specific component (collector|api|delivery|web)"
+        echo "  test                - Run integration tests"
         exit 1
         ;;
 esac

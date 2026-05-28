@@ -542,7 +542,7 @@ def _query_recent_activity(session):
     """Get the 10 most recently processed articles."""
     rows = session.execute(
         text("""
-            SELECT title, sources->0->>'name' AS source, processed_at, signal_strength
+            SELECT title, sources->0->>'name' AS source, url, processed_at, signal_strength
             FROM processed_articles
             ORDER BY processed_at DESC
             LIMIT 10
@@ -553,6 +553,7 @@ def _query_recent_activity(session):
         RecentActivity(
             title=r.title or "",
             source=r.source or "unknown",
+            url=r.url or "",
             processed_at=r.processed_at.isoformat() if r.processed_at else "",
             signal_strength=r.signal_strength or 0.0,
         )

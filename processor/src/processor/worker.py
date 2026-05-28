@@ -257,6 +257,13 @@ class Worker:
 
 
 if __name__ == "__main__":
+    from dotenv import load_dotenv
+    from pathlib import Path
+
+    # Load .env from project root (two levels up from this file)
+    env_path = Path(__file__).resolve().parents[3] / ".env"
+    load_dotenv(env_path)
+
     _setup_logging()
 
     import os
