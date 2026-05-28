@@ -46,7 +46,8 @@ stop_services() {
     rm -f "$PID_FILE"
     # Kill any remaining child processes by name (subshell PIDs may not propagate)
     pkill -f "processor.worker" 2>/dev/null || true
-    pkill -f "feed-server.js" 2>/dev/null || true
+    pkill -f "next-server" 2>/dev/null || true
+    pkill -f "next dev" 2>/dev/null || true
     pkill -f "bin/collector" 2>/dev/null || true
     # Stop Docker services
     docker compose down 2>/dev/null || true
