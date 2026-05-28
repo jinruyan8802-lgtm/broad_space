@@ -125,36 +125,49 @@ start_services() {
     echo "  - startup.log      (Orchestration)"
 }
 
+find_pids_by_pattern() {
+    # Returns lines of "PID|command" for matching processes, sorted by PID
+    ps aux 2>/dev/null | grep -E "$1" | grep -v grep | awk '{printf "%s|%s\n", $2, $11}' | sort -n
+}
+
+show_service_status() {
+    local name="$1" main_pattern="$2" all_pattern="$3"
+    [ -z "$all_pattern" ] && all_pattern="$main_pattern"
+
+    local main_pid main_cmd
+    main_pid=$(ps aux 2>/dev/null | grep -E "$main_pattern" | grep -v grep | awk '{print $2}' | head -1)
+    main_cmd=$(ps aux 2>/dev/null | grep -E "$main_pattern" | grep -v grep | awk '{print $11}' | head -1)
+
+    if [ -z "$main_pid" ]; then
+        printf "| %-8s | %-28s | %-14s |\n" "-" "$name" "not found"
+        return
+    fi
+
+    printf "| %-8s | %-28s | %-14s |\n" "$main_pid" "$name" "running"
+
+    # Show other related processes as children
+    local children
+    children=$(ps aux 2>/dev/null | grep -E "$all_pattern" | grep -v grep | awk '{printf "%s|%s\n", $2, $11}' | grep -v "^${main_pid}|" | sort -n)
+    if [ -n "$children" ]; then
+        while IFS='|' read -r pid cmd; do
+            printf "| %-8s | %-28s | %-14s |\n" "$pid" "  +-- $(basename "$cmd")" "child"
+        done <<< "$children"
+    fi
+}
+
 get_status() {
     echo "=== BroadSpace Services Status ==="
     echo ""
 
-    if [ -f "$PID_FILE" ]; then
-        echo "Application Processes:"
-        echo "+------+------------------------------+------------------+"
-        printf "| %-4s | %-28s | %-14s |\n" "PID" "Service" "Status"
-        echo "+------+------------------------------+------------------+"
+    echo "Application Processes:"
+    echo "+----------+------------------------------+------------------+"
+    printf "| %-8s | %-28s | %-14s |\n" "PID" "Service" "Status"
+    echo "+----------+------------------------------+------------------+"
 
-        local idx=1
-        while IFS= read -r pid; do
-            local name=""
-            case $idx in
-                1) name="collector" ;;
-                2) name="processor" ;;
-                3) name="web" ;;
-            esac
-
-            if kill -0 "$pid" 2>/dev/null; then
-                printf "| %-4s | %-28s | %-14s |\n" "$pid" "$name" "running"
-            else
-                printf "| %-4s | %-28s | %-14s |\n" "$pid" "$name" "stopped"
-            fi
-            idx=$((idx + 1))
-        done < "$PID_FILE"
-        echo "+------+------------------------------+------------------+"
-    else
-        echo "No PID file found (services not running?)"
-    fi
+    show_service_status "collector" "collector/bin/collector"
+    show_service_status "processor (worker)" "python.*processor\.worker|python.*processor/worker"
+    show_service_status "web (next.js)" "next-server" "next-server|next dev|next start"
+    echo "+----------+------------------------------+------------------+"
 
     echo ""
     echo "Docker Services:"
