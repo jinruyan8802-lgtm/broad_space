@@ -5,6 +5,6 @@ import NavBar from "./NavBar";
 
 export default function NavBarWrapper() {
   const pathname = usePathname();
-  const active = pathname === "/dashboard" ? "dashboard" : pathname === "/graph" ? "graph" : pathname === "/signal" ? "signal" : pathname === "/trend" ? "trend" : pathname === "/search" ? "search" : "feed";
+  const active = pathname === "/dashboard" ? "dashboard" : pathname === "/graph" ? "graph" : pathname === "/signal" ? "signal" : pathname === "/trend" ? "trend" : "feed";
   return <NavBar active={active} />;
 }

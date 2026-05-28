@@ -18,6 +18,7 @@ export default function SourceHealthPanel({ data, theme = "light" }: { data: Sou
   const borderColor = isDark ? "border-[#333]" : "border-gray-200";
   const itemBg = isDark ? "bg-[#222]" : "bg-gray-50";
   const textSecondary = isDark ? "text-gray-500" : "text-gray-400";
+  const textColor = isDark ? "text-gray-100" : "text-gray-900";
 
   const statusColors: Record<string, string> = {
     online: "bg-green-500",
@@ -27,13 +28,13 @@ export default function SourceHealthPanel({ data, theme = "light" }: { data: Sou
 
   return (
     <div className={`${cardBg} rounded-lg border ${borderColor} p-4`}>
-      <h3 className="font-semibold text-sm mb-3">🔌 数据源健康</h3>
+      <h3 className={`font-semibold text-sm mb-3 ${textColor}`}>🔌 数据源健康</h3>
       <div className="grid grid-cols-3 gap-2">
         {data.map((item) => (
           <div key={item.source} className={`${itemBg} rounded p-2 flex items-center gap-2`}>
             <span className={`w-2 h-2 rounded-full ${statusColors[item.status]}`} />
             <div className="min-w-0">
-              <div className="text-xs font-medium truncate">{item.source}</div>
+              <div className={`text-xs font-medium truncate ${textColor}`}>{item.source}</div>
               <div className={`text-[10px] ${textSecondary}`}>{relativeTime(item.last_seen)}</div>
             </div>
           </div>

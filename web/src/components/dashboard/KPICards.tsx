@@ -23,6 +23,7 @@ export default function KPICards({
   const cardBg = isDark ? "bg-[#1a1a2e]" : "bg-white";
   const borderColor = isDark ? "border-[#333]" : "border-gray-200";
   const subText = isDark ? "text-gray-500" : "text-gray-400";
+  const textColor = isDark ? "text-gray-100" : "text-gray-900";
 
   const cards = [
     { value: todayArticles, label: "今日采集", sub: `共 ${totalArticles.toLocaleString()} 条`, color: "text-blue-400" },
@@ -37,7 +38,7 @@ export default function KPICards({
       {cards.map((card) => (
         <div key={card.label} className={`${cardBg} border ${borderColor} rounded-lg p-4 text-center`}>
           <div className={`text-2xl font-bold ${card.color}`}>{card.value}</div>
-          <div className="text-sm mt-1">{card.label}</div>
+          <div className={`text-sm mt-1 ${textColor}`}>{card.label}</div>
           <div className={`text-xs mt-1 ${subText}`}>{card.sub}</div>
         </div>
       ))}

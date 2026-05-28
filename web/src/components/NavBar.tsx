@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-type ActiveTab = "feed" | "graph" | "dashboard" | "signal" | "trend" | "search";
+type ActiveTab = "feed" | "graph" | "dashboard" | "signal" | "trend";
 
 const NAV_ITEMS = [
   { key: "feed" as const, href: "/", label: "Feed" },
@@ -11,7 +11,6 @@ const NAV_ITEMS = [
   { key: "signal" as const, href: "/signal", label: "信号" },
   { key: "trend" as const, href: "/trend", label: "趋势" },
   { key: "dashboard" as const, href: "/dashboard", label: "面板" },
-  { key: "search" as const, href: "/search", label: "搜索" },
 ];
 
 export default function NavBar({ active }: { active?: ActiveTab }) {

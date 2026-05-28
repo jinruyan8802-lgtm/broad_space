@@ -19,6 +19,7 @@ class ProcessedArticle(Base):
     triples = Column(JSON)
     sources = Column(JSON)
     processed_at = Column(DateTime, default=datetime.utcnow)
+    published_at = Column(String, nullable=True)
     language = Column(String, default="en")
     title_zh = Column(String, default="")
     summary_zh = Column(String, default="")

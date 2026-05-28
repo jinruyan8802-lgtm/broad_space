@@ -17,6 +17,7 @@ export interface ContentItem {
   sentiment: string;
   sources: { name: string; url: string }[];
   processed_at: string | null;
+  published_at: string | null;
   final_score: number;
   score_breakdown: ScoreBreakdown;
   language: string;

@@ -4,10 +4,27 @@ from processor.models import RawArticle
 CATEGORIES = [
     "AI/ML", "Infrastructure", "Programming Languages",
     "Security", "Frontend", "Mobile", "Database",
-    "DevOps", "Open Source", "Academic"
+    "DevOps", "Open Source", "Academic",
+    "Startup", "Science", "Hardware", "Product"
 ]
 
 SYSTEM_PROMPT = f"""You are a tech news classifier. Given an article title and content, classify it into one or more categories from this list: {', '.join(CATEGORIES)}.
+
+Category guidelines:
+- AI/ML: artificial intelligence, machine learning, LLM, deep learning
+- Infrastructure: cloud, servers, networking, distributed systems
+- Programming Languages: language design, compilers, new languages
+- Security: vulnerabilities, hacking, encryption, privacy
+- Frontend: web UI, React, Vue, CSS, browsers
+- Mobile: iOS, Android, mobile apps
+- Database: SQL, NoSQL, data storage
+- DevOps: CI/CD, containers, Kubernetes, deployment
+- Open Source: open source projects, licenses, communities
+- Academic: research papers, conferences, academic work
+- Startup: startup news, funding rounds, entrepreneurship, VC
+- Science: physics, chemistry, biology, math, astronomy, space
+- Hardware: chips, processors, embedded systems, IoT, robotics
+- Product: product launches, reviews, tools, apps
 
 Respond with JSON only:
 {{

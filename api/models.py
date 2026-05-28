@@ -48,6 +48,7 @@ class ContentResponse(BaseModel):
     sentiment: str
     sources: list[dict[str, str]]
     processed_at: datetime
+    published_at: str | None = None
     triples: list["TripleItem"] = []
     final_score: float = Field(ge=0.0, le=1.0, description="加权总分 = 0.5*exploit + 0.3*expand + 0.2*explore")
     score_breakdown: ScoreBreakdown

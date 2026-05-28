@@ -166,7 +166,7 @@ export default function SignalPage() {
                     strokeDashoffset={`${-(score_distribution.avg_exploit + score_distribution.avg_expand) * 251.2}`}
                   />
                 </svg>
-                <div className="absolute flex flex-col gap-1 text-xs">
+                <div className={`absolute flex flex-col gap-1 text-xs ${textSecondary}`}>
                   <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-blue-500"></span>深耕</span>
                   <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-green-500"></span>扩展</span>
                   <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-purple-500"></span>探索</span>

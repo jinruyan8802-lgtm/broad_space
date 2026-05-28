@@ -11,6 +11,7 @@ export default function KnowledgeGraphCard({ graph, theme = "light" }: Knowledge
   const cardBg = isDark ? "bg-[#1a1a2e]" : "bg-white";
   const borderColor = isDark ? "border-[#333]" : "border-gray-200";
   const itemBg = isDark ? "bg-[#222]" : "bg-gray-50";
+  const textColor = isDark ? "text-gray-100" : "text-gray-900";
 
   const metrics = [
     { value: graph.nodes.toLocaleString(), label: "节点总数", color: "text-purple-400" },
@@ -21,7 +22,7 @@ export default function KnowledgeGraphCard({ graph, theme = "light" }: Knowledge
 
   return (
     <div className={`${cardBg} rounded-lg border ${borderColor} p-4`}>
-      <h3 className="font-semibold text-sm mb-3">🧠 知识图谱</h3>
+      <h3 className={`font-semibold text-sm mb-3 ${textColor}`}>🧠 知识图谱</h3>
       <div className="grid grid-cols-2 gap-2">
         {metrics.map((m) => (
           <div key={m.label} className={`${itemBg} rounded p-3 text-center`}>

@@ -20,12 +20,13 @@ export default function CategoryDistribution({ data, theme = "light" }: { data: 
   const borderColor = isDark ? "border-[#333]" : "border-gray-200";
   const barBg = isDark ? "bg-[#222]" : "bg-gray-100";
   const textSecondary = isDark ? "text-gray-500" : "text-gray-400";
+  const textColor = isDark ? "text-gray-100" : "text-gray-900";
 
   const maxCount = data.length > 0 ? Math.max(...data.map((d) => d.count)) : 1;
 
   return (
     <div className={`${cardBg} rounded-lg border ${borderColor} p-4`}>
-      <h3 className="font-semibold text-sm mb-3">🏷️ 分类分布</h3>
+      <h3 className={`font-semibold text-sm mb-3 ${textColor}`}>🏷️ 分类分布</h3>
       <div className="space-y-2">
         {data.slice(0, 8).map((item) => {
           const pct = ((item.count / maxCount) * 100).toFixed(0);

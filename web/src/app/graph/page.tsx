@@ -26,7 +26,7 @@ function buildGraphFromTriples(results: GraphSearchResult[]): {
         id,
         label: name,
         labelZh: nameZh || undefined,
-        group: group || "Concept",
+        group: group || "Unknown",
       });
     }
     return id;
@@ -89,6 +89,7 @@ export default function GraphPage() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [rawResults, setRawResults] = useState<GraphSearchResult[]>([]);
 
   const isDark = theme === "dark";
   const bgColor = isDark ? "bg-[#0f0f1a]" : "bg-gray-50";
@@ -105,8 +106,10 @@ export default function GraphPage() {
           setStatus("无结果，请先处理一些文章");
           setNodes([]);
           setLinks([]);
+          setRawResults([]);
           return;
         }
+        setRawResults(data.results);
         const { nodes: n, links: l } = buildGraphFromTriples(data.results);
         setNodes(n);
         setLinks(l);
@@ -150,6 +153,12 @@ export default function GraphPage() {
   const handleNodeSelect = useCallback((node: GraphNode | null) => {
     setSelectedNode(node);
   }, []);
+
+  const getScoreColor = (score: number) => {
+    if (score >= 0.8) return "text-red-500";
+    if (score >= 0.5) return "text-yellow-500";
+    return "text-blue-500";
+  };
 
   return (
     <div className={`${bgColor} min-h-screen`}>
@@ -250,7 +259,15 @@ export default function GraphPage() {
                         className="w-3 h-3 rounded-full"
                         style={{
                           background:
-                            selectedNode.group === "Entity" ? "#06b6d4" : "#3b82f6",
+                            selectedNode.group === "Technology" ? "#ef4444" :
+                            selectedNode.group === "Organization" ? "#22c55e" :
+                            selectedNode.group === "Person" ? "#a855f7" :
+                            selectedNode.group === "Event" ? "#f59e0b" :
+                            selectedNode.group === "Entity" ? "#06b6d4" :
+                            selectedNode.group === "Paper" ? "#10b981" :
+                            selectedNode.group === "Trend" ? "#f97316" :
+                            selectedNode.group === "Platform" ? "#ec4899" :
+                            "#3b82f6",
                         }}
                       />
                       <span className={`text-xs ${textSecondary}`}>{selectedNode.group}</span>
@@ -335,6 +352,46 @@ export default function GraphPage() {
                       <span className={textSecondary}>关系数</span>
                       <span className={textPrimary}>{links.length}</span>
                     </div>
+
+                    {/* Entity Type Breakdown */}
+                    {nodes.length > 0 && (
+                      <div className="mt-3 pt-3 border-t border-gray-600">
+                        <div className={`text-xs font-medium ${textPrimary} mb-2`}>实体类型分布</div>
+                        <div className="space-y-1">
+                          {Object.entries(
+                            nodes.reduce((acc, n) => {
+                              const type = n.group || "Unknown";
+                              acc[type] = (acc[type] || 0) + 1;
+                              return acc;
+                            }, {} as Record<string, number>)
+                          )
+                            .sort((a, b) => b[1] - a[1])
+                            .map(([type, count]) => (
+                              <div key={type} className="flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                  <span
+                                    className="w-2 h-2 rounded-full"
+                                    style={{
+                                      background:
+                                        type === "Technology" ? "#ef4444" :
+                                        type === "Organization" ? "#22c55e" :
+                                        type === "Person" ? "#a855f7" :
+                                        type === "Event" ? "#f59e0b" :
+                                        type === "Entity" ? "#06b6d4" :
+                                        type === "Paper" ? "#10b981" :
+                                        type === "Trend" ? "#f97316" :
+                                        type === "Platform" ? "#ec4899" :
+                                        "#3b82f6",
+                                    }}
+                                  />
+                                  <span className={textSecondary}>{type}</span>
+                                </div>
+                                <span className={`font-mono ${textPrimary}`}>{count}</span>
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Usage hint */}
@@ -354,6 +411,61 @@ export default function GraphPage() {
             </div>
           </div>
         </div>
+
+        {/* Search Results Table */}
+        {rawResults.length > 0 && (
+          <div className={`${cardBg} border ${borderColor} rounded-lg mt-4 overflow-hidden`}>
+            <div className="px-4 py-3 border-b border-gray-600">
+              <h3 className={`text-sm font-semibold ${textPrimary}`}>
+                搜索结果 ({rawResults.length} 条)
+              </h3>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className={isDark ? "bg-gray-800" : "bg-gray-50"}>
+                    <th className={`px-4 py-2 text-left font-medium ${textSecondary}`}>#</th>
+                    <th className={`px-4 py-2 text-left font-medium ${textSecondary}`}>Score</th>
+                    <th className={`px-4 py-2 text-left font-medium ${textSecondary}`}>Text</th>
+                    <th className={`px-4 py-2 text-left font-medium ${textSecondary}`}>Entities</th>
+                    <th className={`px-4 py-2 text-left font-medium ${textSecondary}`}>Confidence</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-700">
+                  {rawResults.map((r, idx) => (
+                    <tr
+                      key={idx}
+                      className={`transition-colors ${isDark ? "hover:bg-gray-800" : "hover:bg-gray-50"}`}
+                    >
+                      <td className={`px-4 py-2 ${textSecondary}`}>{idx + 1}</td>
+                      <td className="px-4 py-2">
+                        <span className={`font-mono ${getScoreColor(r.score)}`}>
+                          {r.score.toFixed(2)}
+                        </span>
+                      </td>
+                      <td className={`px-4 py-2 max-w-md ${textPrimary}`}>
+                        <p className="line-clamp-2">{r.text}</p>
+                      </td>
+                      <td className="px-4 py-2">
+                        <div className="flex flex-wrap gap-1">
+                          {r.entities.slice(0, 3).map((e, i) => (
+                            <span key={i} className={`text-xs px-1.5 py-0.5 rounded ${isDark ? "bg-purple-500/20 text-purple-400" : "bg-purple-100 text-purple-600"}`}>
+                              {r.entity_names_zh[i] || e}
+                            </span>
+                          ))}
+                          {r.entities.length > 3 && (
+                            <span className={`text-xs ${textSecondary}`}>+{r.entities.length - 3}</span>
+                          )}
+                        </div>
+                      </td>
+                      <td className={`px-4 py-2 ${textSecondary}`}>{r.confidence}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );

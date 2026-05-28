@@ -18,6 +18,7 @@ interface FeedCardProps {
   theme?: "dark" | "light";
   isSelected?: boolean;
   onClick?: () => void;
+  published_at?: string | null;
   language?: string;
   title_zh?: string;
   summary_zh?: string;
@@ -38,6 +39,7 @@ export default function FeedCard({
   theme = "dark",
   isSelected = false,
   onClick,
+  published_at,
   language,
   title_zh,
   summary_zh,
@@ -49,6 +51,18 @@ export default function FeedCard({
   const displayTitle = displayLanguage === "zh" ? (title_zh || title) : title;
   const displaySummary = displayLanguage === "zh" ? (summary_zh || summary) : summary;
   const displayKeyPoints = displayLanguage === "zh" ? (key_points_zh?.length ? key_points_zh : key_points) : key_points;
+
+  const formatDate = (dateStr: string | null | undefined) => {
+    if (!dateStr) return "2026-05-27";
+    try {
+      const d = new Date(dateStr);
+      if (isNaN(d.getTime())) return dateStr;
+      return d.toLocaleDateString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" });
+    } catch {
+      return dateStr;
+    }
+  };
+  const formattedDate = formatDate(published_at);
 
   const signalColor = signal_strength >= 0.8
     ? "text-red-500"
@@ -129,6 +143,7 @@ export default function FeedCard({
 
       {/* Footer */}
       <div className={`flex items-center gap-4 mt-3 text-xs ${textMuted}`}>
+        <span>发布: {formattedDate}</span>
         <span>情绪: {sentiment}</span>
         <span className="truncate">
           来源:{" "}

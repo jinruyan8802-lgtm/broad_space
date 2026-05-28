@@ -48,7 +48,7 @@ async def lifespan(app: FastAPI):
             session.commit()
             print("Added triples column to processed_articles")
 
-        for col in ["language", "title_zh", "summary_zh", "key_points_zh"]:
+        for col in ["published_at", "language", "title_zh", "summary_zh", "key_points_zh"]:
             exists = session.execute(text("""
                 SELECT column_name FROM information_schema.columns
                 WHERE table_name='processed_articles' AND column_name=:col
@@ -124,7 +124,7 @@ def list_content(
         query_parts = [
             """
             SELECT id, title, url, summary, categories, key_points,
-                   signal_strength, sentiment, sources, processed_at, triples,
+                   signal_strength, sentiment, sources, processed_at, published_at, triples,
                    language, title_zh, summary_zh, key_points_zh
             FROM processed_articles
             WHERE signal_strength >= :min_signal
@@ -180,6 +180,7 @@ def list_content(
                 sentiment=row.sentiment or "neutral",
                 sources=row.sources or [],
                 processed_at=row.processed_at,
+                published_at=row.published_at,
                 triples=triples_list,
                 final_score=final_score,
                 score_breakdown=ScoreBreakdown(
@@ -455,12 +456,12 @@ async def graph_search(
             entity_names_zh=entity_zh,
             subject=subject,
             subject_zh=subject_zh,
-            subject_type=r.get("subject_type") or "Concept",
+            subject_type=r.get("subject_type") or "Unknown",
             predicate=predicate,
             predicate_zh=predicate_zh,
             object=obj,
             object_zh=object_zh,
-            object_type=r.get("object_type") or "Concept",
+            object_type=r.get("object_type") or "Unknown",
             confidence=confidence,
         ))
 

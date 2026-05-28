@@ -19,6 +19,7 @@ export default function ActivityLog({ data, theme = "light" }: { data: RecentAct
   const borderColor = isDark ? "border-[#333]" : "border-gray-200";
   const textSecondary = isDark ? "text-gray-500" : "text-gray-400";
   const monospaceText = isDark ? "text-gray-400" : "text-gray-600";
+  const textColor = isDark ? "text-gray-100" : "text-gray-900";
 
   const signalColor = (s: number) => {
     if (s >= 0.8) return "text-red-400";
@@ -28,7 +29,7 @@ export default function ActivityLog({ data, theme = "light" }: { data: RecentAct
 
   return (
     <div className={`${cardBg} rounded-lg border ${borderColor} p-4`}>
-      <h3 className="font-semibold text-sm mb-3">📋 最近活动</h3>
+      <h3 className={`font-semibold text-sm mb-3 ${textColor}`}>📋 最近活动</h3>
       <div className="space-y-2 max-h-64 overflow-y-auto">
         {data.map((item, i) => (
           <div key={i} className="flex items-start gap-2 text-xs">

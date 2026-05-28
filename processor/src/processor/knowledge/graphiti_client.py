@@ -111,12 +111,12 @@ class GraphitiClient:
                         "score": 1.0,
                         "subject": row.get("subject", ""),
                         "subject_zh": row.get("subject_zh", ""),
-                        "subject_type": row.get("subject_type", "Concept"),
+                        "subject_type": row.get("subject_type") or "Unknown",
                         "predicate": row.get("predicate", ""),
                         "predicate_zh": row.get("predicate_zh", ""),
                         "object": row.get("object", ""),
                         "object_zh": row.get("object_zh", ""),
-                        "object_type": row.get("object_type", "Concept"),
+                        "object_type": row.get("object_type") or "Unknown",
                         "confidence": row.get("confidence", ""),
                     })
                 return results

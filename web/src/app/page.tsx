@@ -17,6 +17,10 @@ const CATEGORIES = [
   "DevOps",
   "Open Source",
   "Academic",
+  "Startup",
+  "Science",
+  "Hardware",
+  "Product",
 ];
 
 export default function Home() {
@@ -27,6 +31,7 @@ export default function Home() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [selectedItem, setSelectedItem] = useState<ContentItem | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const { displayLanguage, toggleLanguage } = useLanguage();
 
   const loadContent = useCallback(async () => {
@@ -74,6 +79,14 @@ export default function Home() {
   const cardBg = isDark ? "bg-[#1a1a2e]" : "bg-white";
   const borderColor = isDark ? "border-[#333]" : "border-gray-200";
 
+  const filteredItems = searchQuery
+    ? items.filter(item =>
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.categories.some(c => c.toLowerCase().includes(searchQuery.toLowerCase()))
+      )
+    : items;
+
   return (
     <div className={`${bgColor} min-h-screen`}>
       {/* Header */}
@@ -105,6 +118,29 @@ export default function Home() {
         <div className="flex gap-6">
           {/* Left: Feed */}
           <div className="flex-1">
+            {/* Search input */}
+            <div className={`${cardBg} border ${borderColor} rounded-lg px-4 py-3 mb-4`}>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="搜索文章标题、摘要、分类..."
+                  className={`flex-1 border rounded px-3 py-2 text-sm ${
+                    isDark ? "bg-gray-800 text-gray-100 border-gray-600" : "bg-white text-gray-900 border-gray-200"
+                  }`}
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className={`px-3 py-2 rounded text-sm ${isDark ? "bg-gray-700 text-gray-300" : "bg-gray-100 text-gray-600"} hover:opacity-80`}
+                  >
+                    清除
+                  </button>
+                )}
+              </div>
+            </div>
+
             {/* Category filter chips */}
             <div className="flex flex-wrap gap-2 mb-6">
               <button
@@ -172,13 +208,13 @@ export default function Home() {
               <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg text-sm">
                 Error: {error}
               </div>
-            ) : items.length === 0 ? (
+            ) : filteredItems.length === 0 ? (
               <p className={`${isDark ? "text-gray-400" : "text-gray-500"} text-sm`}>
-                No content yet. Run the pipeline to populate.
+                {searchQuery ? "未找到匹配内容，请尝试其他关键词" : "No content yet. Run the pipeline to populate."}
               </p>
             ) : (
               <div className="space-y-4">
-                {items.map((a) => (
+                {filteredItems.map((a) => (
                   <FeedCard
                     key={a.id}
                     {...a}

@@ -7,6 +7,7 @@ LOG_DIR="logs"
 # Helper: log with timestamp to both stdout and startup.log
 log_ts() {
     local ts="[$(date '+%Y-%m-%d %H:%M:%S')]"
+    mkdir -p "$LOG_DIR" 2>/dev/null
     echo "$ts $*" | tee -a "$LOG_DIR/startup.log"
 }
 

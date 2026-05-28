@@ -17,7 +17,8 @@ from processor.models import ProcessedContent
 DEFAULT_CATEGORIES = [
     "AI/ML", "Infrastructure", "Programming Languages",
     "Security", "Frontend", "Mobile", "Database",
-    "DevOps", "Open Source", "Academic"
+    "DevOps", "Open Source", "Academic",
+    "Startup", "Science", "Hardware", "Product"
 ]
 
 

@@ -36,6 +36,10 @@ const GROUP_COLORS: Record<string, string> = {
   Person: "#a855f7",
   Event: "#f59e0b",
   Entity: "#06b6d4",
+  Paper: "#10b981",
+  Trend: "#f97316",
+  Platform: "#ec4899",
+  Unknown: "#6b7280",
   Other: "#6b7280",
 };
 

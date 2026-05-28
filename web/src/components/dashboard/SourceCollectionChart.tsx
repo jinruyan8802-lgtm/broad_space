@@ -22,10 +22,11 @@ export default function SourceCollectionChart({ data, theme = "light" }: { data:
   const tickColor = isDark ? "#9ca3af" : "#6b7280";
   const tooltipBg = isDark ? "#1a1a2e" : "#fff";
   const tooltipBorder = isDark ? "1px solid #333" : "1px solid #e5e7eb";
+  const textColor = isDark ? "text-gray-100" : "text-gray-900";
 
   return (
     <div className={`${cardBg} rounded-lg border ${borderColor} p-4`}>
-      <h3 className="font-semibold text-sm mb-3">📊 各数据源今日采集量</h3>
+      <h3 className={`font-semibold text-sm mb-3 ${textColor}`}>📊 各数据源今日采集量</h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} layout="vertical">
