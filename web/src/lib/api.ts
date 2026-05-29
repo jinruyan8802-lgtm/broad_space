@@ -57,6 +57,7 @@ export interface GraphSearchResponse {
 
 export async function fetchContent(params?: {
   category?: string;
+  sources?: string[];
   min_signal?: number;
   limit?: number;
   sort_by?: "signal" | "time";
@@ -66,6 +67,7 @@ export async function fetchContent(params?: {
 }): Promise<PaginatedContentResponse> {
   const qs = new URLSearchParams();
   if (params?.category) qs.set("category", params.category);
+  if (params?.sources?.length) qs.set("source", params.sources.join(","));
   if (params?.min_signal !== undefined) qs.set("min_signal", String(params.min_signal));
   if (params?.limit) qs.set("limit", String(params.limit));
   if (params?.sort_by) qs.set("sort_by", params.sort_by);
