@@ -26,6 +26,14 @@ export interface ContentItem {
   key_points_zh: string[];
 }
 
+export interface PaginatedContentResponse {
+  items: ContentItem[];
+  total: number;
+  page: number;
+  page_size: number;
+  total_pages: number;
+}
+
 export interface GraphSearchResult {
   text: string;
   score: number;
@@ -51,11 +59,19 @@ export async function fetchContent(params?: {
   category?: string;
   min_signal?: number;
   limit?: number;
-}): Promise<ContentItem[]> {
+  sort_by?: "signal" | "time";
+  sort_order?: "asc" | "desc";
+  page?: number;
+  page_size?: number;
+}): Promise<PaginatedContentResponse> {
   const qs = new URLSearchParams();
   if (params?.category) qs.set("category", params.category);
   if (params?.min_signal !== undefined) qs.set("min_signal", String(params.min_signal));
   if (params?.limit) qs.set("limit", String(params.limit));
+  if (params?.sort_by) qs.set("sort_by", params.sort_by);
+  if (params?.sort_order) qs.set("sort_order", params.sort_order);
+  if (params?.page !== undefined) qs.set("page", String(params.page));
+  if (params?.page_size) qs.set("page_size", String(params.page_size));
   const res = await fetch(`${API_BASE}/content?${qs}`);
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   return res.json();
