@@ -7,6 +7,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { fetchContent, fetchAnalytics, ContentItem, AnalyticsResponse } from "@/lib/api";
 import SortSelect from "@/components/SortSelect";
 import Pagination from "@/components/Pagination";
+import SourceFilter from "@/components/SourceFilter";
 
 const CATEGORIES = [
   "AI/ML",
@@ -31,6 +32,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeSources, setActiveSources] = useState<string[]>([]);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [selectedItem, setSelectedItem] = useState<ContentItem | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -50,6 +52,7 @@ export default function Home() {
         sort_by: sortBy,
         sort_order: sortOrder,
         ...(activeCategory ? { category: activeCategory } : {}),
+        ...(activeSources.length > 0 ? { sources: activeSources } : {}),
       });
       setItems(data.items);
       setTotalPages(data.total_pages);
@@ -58,7 +61,7 @@ export default function Home() {
     } finally {
       setLoading(false);
     }
-  }, [activeCategory, sortBy, sortOrder, page]);
+  }, [activeCategory, activeSources, sortBy, sortOrder, page]);
 
   const loadAnalytics = useCallback(async () => {
     try {
@@ -180,6 +183,21 @@ export default function Home() {
                   {cat}
                 </button>
               ))}
+            </div>
+
+            {/* Source filter checkboxes */}
+            <div className={`${cardBg} border ${borderColor} rounded-lg px-4 py-3 mb-4`}>
+              <span className={`text-xs ${isDark ? "text-gray-400" : "text-gray-500"} block mb-2`}>
+                数据源筛选：
+              </span>
+              <SourceFilter
+                activeSources={activeSources}
+                onChange={(sources) => {
+                  setActiveSources(sources);
+                  setPage(1);
+                }}
+                theme={theme}
+              />
             </div>
 
             {/* Sort selector */}
