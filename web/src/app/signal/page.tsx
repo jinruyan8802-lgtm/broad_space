@@ -15,7 +15,7 @@ export default function SignalPage() {
       fetchContent({ limit: 50 }),
     ]).then(([analyticsData, contentData]) => {
       setAnalytics(analyticsData);
-      setContents(contentData);
+      setContents(contentData.items);
     }).catch(console.error)
     .finally(() => setLoading(false));
   }, []);

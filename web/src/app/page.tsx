@@ -5,6 +5,8 @@ import FeedCard from "@/components/FeedCard";
 import ContextPanel from "@/components/ContextPanel";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { fetchContent, fetchAnalytics, ContentItem, AnalyticsResponse } from "@/lib/api";
+import SortSelect from "@/components/SortSelect";
+import Pagination from "@/components/Pagination";
 
 const CATEGORIES = [
   "AI/ML",
@@ -32,6 +34,10 @@ export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [selectedItem, setSelectedItem] = useState<ContentItem | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortBy, setSortBy] = useState<"signal" | "time">("signal");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const { displayLanguage, toggleLanguage } = useLanguage();
 
   const loadContent = useCallback(async () => {
@@ -39,16 +45,20 @@ export default function Home() {
     setError(null);
     try {
       const data = await fetchContent({
-        limit: 30,
+        page,
+        page_size: 30,
+        sort_by: sortBy,
+        sort_order: sortOrder,
         ...(activeCategory ? { category: activeCategory } : {}),
       });
-      setItems(data);
+      setItems(data.items);
+      setTotalPages(data.total_pages);
     } catch (e: any) {
       setError(e.message || "Failed to load content");
     } finally {
       setLoading(false);
     }
-  }, [activeCategory]);
+  }, [activeCategory, sortBy, sortOrder, page]);
 
   const loadAnalytics = useCallback(async () => {
     try {
@@ -172,6 +182,21 @@ export default function Home() {
               ))}
             </div>
 
+            {/* Sort selector */}
+            <div className="flex items-center gap-2 mb-4">
+              <span className={`text-sm ${isDark ? "text-gray-400" : "text-gray-500"}`}>排序：</span>
+              <SortSelect
+                sortBy={sortBy}
+                sortOrder={sortOrder}
+                onChange={(newSortBy, newSortOrder) => {
+                  setSortBy(newSortBy);
+                  setSortOrder(newSortOrder);
+                  setPage(1);
+                }}
+                theme={theme}
+              />
+            </div>
+
             {/* Score distribution bar */}
             {analytics && (
               <div className={`${cardBg} border ${borderColor} rounded-lg px-4 py-3 mb-6 flex items-center gap-4`}>
@@ -225,6 +250,14 @@ export default function Home() {
                 ))}
               </div>
             )}
+
+            {/* Pagination */}
+            <Pagination
+              page={page}
+              totalPages={totalPages}
+              onPageChange={setPage}
+              theme={theme}
+            />
           </div>
 
           {/* Right: Context Panel */}
