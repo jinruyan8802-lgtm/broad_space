@@ -54,6 +54,49 @@ class TestContentEndpoint:
         resp = client.get("/content?min_signal=0.5&limit=10")
         assert resp.status_code == 200
 
+    def test_content_sort_by_time(self, client, mock_session):
+        mock_session.execute.return_value = []
+        resp = client.get("/content?sort_by=time&sort_order=desc")
+        assert resp.status_code == 200
+        data = resp.json()
+        assert isinstance(data, list)
+
+    def test_content_sort_by_signal_asc(self, client, mock_session):
+        mock_session.execute.return_value = []
+        resp = client.get("/content?sort_by=signal&sort_order=asc")
+        assert resp.status_code == 200
+
+    def test_content_pagination_mode(self, client, mock_session):
+        # Mock count query result
+        count_row = MagicMock()
+        count_row.total = 0
+        mock_count_result = MagicMock()
+        mock_count_result.fetchone.return_value = count_row
+
+        # Mock data query result (empty list, iterable)
+        mock_data_result = []
+
+        # First execute() call = count, second = data
+        mock_session.execute.side_effect = [mock_count_result, mock_data_result]
+
+        resp = client.get("/content?page=1&page_size=10")
+        assert resp.status_code == 200
+        data = resp.json()
+        assert "items" in data
+        assert "total" in data
+        assert data["total"] == 0
+        assert data["page"] == 1
+        assert data["page_size"] == 10
+        assert data["total_pages"] == 1
+
+    def test_content_backward_compat_no_page(self, client, mock_session):
+        """Without page param, returns array format (backward compatible)."""
+        mock_session.execute.return_value = []
+        resp = client.get("/content")
+        assert resp.status_code == 200
+        data = resp.json()
+        assert isinstance(data, list)
+
 
 class TestAnalyticsEndpoint:
     def _mock_analytics(self, mock_session):
