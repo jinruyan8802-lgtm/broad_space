@@ -157,7 +157,8 @@ def list_content(
             source_names = [s.strip() for s in source.split(",") if s.strip()]
             if source_names:
                 where_parts.append(
-                    "AND jsonb_path_exists(sources::jsonb, '$[*] ? (@.name in ($src_names))')"
+                    "AND EXISTS (SELECT 1 FROM jsonb_array_elements(sources::jsonb) AS src "
+                    "WHERE src->>'name' = ANY(:src_names))"
                 )
                 params["src_names"] = source_names
 
