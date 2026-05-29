@@ -115,6 +115,7 @@ def metrics():
 @app.get("/content")
 def list_content(
     category: str | None = Query(None, description="Filter by category"),
+    source: str | None = Query(None, description="Filter by source name(s), comma-separated"),
     min_signal: float = Query(0.0, ge=0.0, le=1.0),
     limit: int = Query(20, ge=1, le=100),
     offset: int = Query(0, ge=0),
@@ -151,6 +152,14 @@ def list_content(
         if category:
             where_parts.append("AND to_jsonb(categories) @> to_jsonb(:category_json)")
             params["category_json"] = [category]
+
+        if source:
+            source_names = [s.strip() for s in source.split(",") if s.strip()]
+            if source_names:
+                where_parts.append(
+                    "AND jsonb_path_exists(sources::jsonb, '$[*] ? (@.name in ($src_names))')"
+                )
+                params["src_names"] = source_names
 
         where_str = " ".join(where_parts)
 

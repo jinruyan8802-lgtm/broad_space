@@ -97,6 +97,34 @@ class TestContentEndpoint:
         data = resp.json()
         assert isinstance(data, list)
 
+    def test_content_with_source_filter(self, client, mock_session):
+        mock_session.execute.return_value = []
+        resp = client.get("/content?source=hackernews")
+        assert resp.status_code == 200
+
+    def test_content_with_multiple_sources(self, client, mock_session):
+        mock_session.execute.return_value = []
+        resp = client.get("/content?source=hackernews,arxiv")
+        assert resp.status_code == 200
+
+    def test_content_source_and_category_combined(self, client, mock_session):
+        mock_session.execute.return_value = []
+        resp = client.get("/content?source=hackernews&category=AI/ML")
+        assert resp.status_code == 200
+
+    def test_content_source_pagination(self, client, mock_session):
+        count_row = MagicMock()
+        count_row.total = 0
+        mock_count_result = MagicMock()
+        mock_count_result.fetchone.return_value = count_row
+        mock_data_result = []
+        mock_session.execute.side_effect = [mock_count_result, mock_data_result]
+        resp = client.get("/content?source=hackernews,arxiv&page=1&page_size=10")
+        assert resp.status_code == 200
+        data = resp.json()
+        assert "items" in data
+        assert data["total"] == 0
+
 
 class TestAnalyticsEndpoint:
     def _mock_analytics(self, mock_session):
