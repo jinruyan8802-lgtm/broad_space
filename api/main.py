@@ -12,7 +12,7 @@ from sqlalchemy.orm import sessionmaker
 
 from processor.knowledge.graphiti_client import GraphitiClient
 
-from models import ContentResponse, TripleItem, GraphSearchResponse, GraphSearchResult, AnalyticsResponse, SignalDistribution, CategoryCount, SentimentCounts, VolumeDataPoint, SourceCount, ScoreBreakdown, TrendingTopic, CategorySourceDiversity, ScoreBreakdownStats, DashboardStatsResponse, SourceHealthItem, KnowledgeGraphStats, RecentActivity
+from models import ContentResponse, PaginatedContentResponse, TripleItem, GraphSearchResponse, GraphSearchResult, AnalyticsResponse, SignalDistribution, CategoryCount, SentimentCounts, VolumeDataPoint, SourceCount, ScoreBreakdown, TrendingTopic, CategorySourceDiversity, ScoreBreakdownStats, DashboardStatsResponse, SourceHealthItem, KnowledgeGraphStats, RecentActivity
 
 REQUEST_COUNT = Counter("api_requests_total", "Total requests", ["method", "endpoint", "status"])
 REQUEST_LATENCY = Histogram("api_request_duration_seconds", "Request latency")
@@ -112,39 +112,73 @@ def metrics():
     return Response(content=generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
 
-@app.get("/content", response_model=list[ContentResponse])
+@app.get("/content")
 def list_content(
     category: str | None = Query(None, description="Filter by category"),
     min_signal: float = Query(0.0, ge=0.0, le=1.0),
     limit: int = Query(20, ge=1, le=100),
     offset: int = Query(0, ge=0),
+    sort_by: str = Query("signal", description="Sort field: signal or time"),
+    sort_order: str = Query("desc", description="Sort direction: asc or desc"),
+    page: int | None = Query(None, ge=1, description="Page number (1-based), enables pagination mode"),
+    page_size: int = Query(30, ge=1, le=100, description="Items per page"),
 ):
+    if sort_by not in ("signal", "time"):
+        sort_by = "signal"
+    if sort_order not in ("asc", "desc"):
+        sort_order = "desc"
+
+    use_pagination = page is not None
+    if use_pagination:
+        effective_limit = page_size
+        effective_offset = (page - 1) * page_size
+    else:
+        effective_limit = limit
+        effective_offset = offset
+
     session = Session()
     try:
-        query_parts = [
-            """
-            SELECT id, title, url, summary, categories, key_points,
-                   signal_strength, sentiment, sources, processed_at, published_at, triples,
-                   language, title_zh, summary_zh, key_points_zh
-            FROM processed_articles
-            WHERE signal_strength >= :min_signal
-            """
+        # Build WHERE clause
+        where_parts = [
+            "FROM processed_articles WHERE signal_strength >= :min_signal"
         ]
         params: dict = {
             "min_signal": min_signal,
-            "limit": limit,
-            "offset": offset,
+            "limit": effective_limit,
+            "offset": effective_offset,
         }
 
         if category:
-            query_parts.append("AND to_jsonb(categories) @> to_jsonb(:category_json)")
+            where_parts.append("AND to_jsonb(categories) @> to_jsonb(:category_json)")
             params["category_json"] = [category]
 
-        query_parts.append("ORDER BY signal_strength DESC, processed_at DESC")
-        query_parts.append("LIMIT :limit OFFSET :offset")
+        where_str = " ".join(where_parts)
 
-        query_str = " ".join(query_parts)
-        query = session.execute(text(query_str), params)
+        # Count query (pagination mode only)
+        if use_pagination:
+            count_result = session.execute(
+                text(f"SELECT COUNT(*) AS total {where_str}"),
+                params,
+            )
+            total = count_result.fetchone().total or 0
+            total_pages = max(1, (total + page_size - 1) // page_size)
+
+        # Sort clause
+        if sort_by == "time":
+            order_clause = f"ORDER BY published_at {sort_order.upper()} NULLS LAST"
+        else:
+            order_clause = f"ORDER BY signal_strength {sort_order.upper()}, processed_at DESC"
+
+        # Data query
+        data_query_str = f"""
+            SELECT id, title, url, summary, categories, key_points,
+                   signal_strength, sentiment, sources, processed_at, published_at, triples,
+                   language, title_zh, summary_zh, key_points_zh
+            {where_str}
+            {order_clause}
+            LIMIT :limit OFFSET :offset
+        """
+        query = session.execute(text(data_query_str), params)
 
         results = []
         for row in query:
@@ -161,10 +195,6 @@ def list_content(
                         object_zh=t.get("object_zh", t.get("object", "")),
                         confidence=t.get("confidence", "EXTRACTED"),
                     ))
-            # Compute exploit/expand/explore as proxy from signal_strength
-            # exploit: ~50% of signal for user interest overlap
-            # expand: ~30% of signal for graph proximity
-            # explore: ~20% of signal for novelty + high signal
             exploit = (row.signal_strength or 0.0) * 0.5
             expand = (row.signal_strength or 0.0) * 0.3
             explore = (row.signal_strength or 0.0) * 0.2
@@ -193,6 +223,15 @@ def list_content(
                 summary_zh=row.summary_zh or "",
                 key_points_zh=row.key_points_zh or [],
             ))
+
+        if use_pagination:
+            return PaginatedContentResponse(
+                items=results,
+                total=total,
+                page=page,
+                page_size=page_size,
+                total_pages=total_pages,
+            )
         return results
     finally:
         session.close()
