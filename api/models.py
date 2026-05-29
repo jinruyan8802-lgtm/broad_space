@@ -176,3 +176,11 @@ class DashboardStatsResponse(BaseModel):
     graph: KnowledgeGraphStats
     source_health: list[SourceHealthItem]
     recent_activity: list[RecentActivity]
+
+
+class PaginatedContentResponse(BaseModel):
+    items: list[ContentResponse]
+    total: int
+    page: int
+    page_size: int
+    total_pages: int
