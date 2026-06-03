@@ -41,42 +41,48 @@ class GraphitiClient:
     def add_triples(self, content_id: str, triples: list[dict], valid_at: datetime | None = None) -> bool:
         if not self.driver:
             return False
+        if not triples:
+            return True
         valid_at = valid_at or datetime.now(timezone.utc)
-        all_ok = True
-        with self.driver.session() as session:
+        try:
+            batch = []
             for t in triples:
-                try:
-                    session.run(
-                        """
-                        MERGE (s:Entity {name: $subject})
-                        SET s.entity_type = $subject_type, s.name_zh = $subject_zh
-                        MERGE (o:Entity {name: $object})
-                        SET o.entity_type = $object_type, o.name_zh = $object_zh
-                        MERGE (s)-[r:RELATES {source_id: $content_id, predicate: $predicate}]->(o)
-                        SET r.fact = $fact,
-                            r.subject_zh = $subject_zh,
-                            r.predicate_zh = $predicate_zh,
-                            r.object_zh = $object_zh,
-                            r.confidence = $confidence,
-                            r.valid_at = $valid_at
-                        """,
-                        subject=t.get("subject", ""),
-                        object=t.get("object", ""),
-                        predicate=t.get("predicate", ""),
-                        content_id=content_id,
-                        fact=t.get("fact", f"{t.get('subject', '')} {t.get('predicate', '')} {t.get('object', '')}"),
-                        subject_zh=t.get("subject_zh", ""),
-                        subject_type=t.get("subject_type", "Concept"),
-                        predicate_zh=t.get("predicate_zh", ""),
-                        object_zh=t.get("object_zh", ""),
-                        object_type=t.get("object_type", "Concept"),
-                        confidence=t.get("confidence", "EXTRACTED"),
-                        valid_at=valid_at.isoformat(),
-                    )
-                except Exception as e:
-                    logger.warning("Failed to add triple %s -> %s: %s", t.get("subject"), t.get("object"), e)
-                    all_ok = False
-        return all_ok
+                batch.append({
+                    "subject": t.get("subject", ""),
+                    "object": t.get("object", ""),
+                    "predicate": t.get("predicate", ""),
+                    "fact": t.get("fact", f"{t.get('subject', '')} {t.get('predicate', '')} {t.get('object', '')}"),
+                    "subject_zh": t.get("subject_zh", ""),
+                    "subject_type": t.get("subject_type", "Concept"),
+                    "predicate_zh": t.get("predicate_zh", ""),
+                    "object_zh": t.get("object_zh", ""),
+                    "object_type": t.get("object_type", "Concept"),
+                    "confidence": t.get("confidence", "EXTRACTED"),
+                })
+            with self.driver.session() as session:
+                session.run(
+                    """
+                    UNWIND $triples as t
+                    MERGE (s:Entity {name: t.subject})
+                    SET s.entity_type = t.subject_type, s.name_zh = t.subject_zh
+                    MERGE (o:Entity {name: t.object})
+                    SET o.entity_type = t.object_type, o.name_zh = t.object_zh
+                    MERGE (s)-[r:RELATES {source_id: $content_id, predicate: t.predicate}]->(o)
+                    SET r.fact = t.fact,
+                        r.subject_zh = t.subject_zh,
+                        r.predicate_zh = t.predicate_zh,
+                        r.object_zh = t.object_zh,
+                        r.confidence = t.confidence,
+                        r.valid_at = $valid_at
+                    """,
+                    triples=batch,
+                    content_id=content_id,
+                    valid_at=valid_at.isoformat(),
+                )
+            return True
+        except Exception as e:
+            logger.warning("Failed to add triples batch for %s: %s", content_id, e)
+            return False
 
     def search(self, query: str, limit: int = 10) -> list[dict[str, Any]]:
         if not self.driver:

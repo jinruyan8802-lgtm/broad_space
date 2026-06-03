@@ -5,21 +5,19 @@ from unittest.mock import patch, MagicMock, AsyncMock
 from processor.knowledge.graphiti_client import GraphitiClient
 
 
-@pytest.mark.asyncio
-async def test_add_triples_no_client():
-    """When Graphiti is not available, returns False gracefully."""
-    with patch("processor.knowledge.graphiti_client.GRAPHTI_AVAILABLE", False):
+def test_add_triples_no_client():
+    """When Neo4j is not available, returns False gracefully."""
+    with patch("processor.knowledge.graphiti_client.NEO4J_AVAILABLE", False):
         client = GraphitiClient(uri="bolt://localhost:7687", user="neo4j", password="broad")
-        result = await client.add_triples("evt_001", [{"subject": "Python", "predicate": "drives", "object": "AI"}])
+        result = client.add_triples("evt_001", [{"subject": "Python", "predicate": "drives", "object": "AI"}])
         assert result is False
 
 
-@pytest.mark.asyncio
-async def test_search_no_client():
-    """When Graphiti is not available, returns empty list gracefully."""
-    with patch("processor.knowledge.graphiti_client.GRAPHTI_AVAILABLE", False):
+def test_search_no_client():
+    """When Neo4j is not available, returns empty list gracefully."""
+    with patch("processor.knowledge.graphiti_client.NEO4J_AVAILABLE", False):
         client = GraphitiClient(uri="bolt://localhost:7687", user="neo4j", password="broad")
-        result = await client.search("Python AI")
+        result = client.search("Python AI")
         assert result == []
 
 

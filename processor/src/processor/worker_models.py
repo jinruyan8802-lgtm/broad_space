@@ -24,3 +24,4 @@ class ProcessedArticle(Base):
     title_zh = Column(String, default="")
     summary_zh = Column(String, default="")
     key_points_zh = Column(JSON, default=list)
+    final_score = Column(Float, default=0.0)

@@ -83,14 +83,24 @@ class LLMClient:
     def _extract_json(self, text: str) -> dict[str, Any]:
         text = text.strip()
 
-        # Strip {html}<think>...</think> blocks from reasoning models (DeepSeek R1, MiniMax-M2.7, Qwen thinking variants)
+        # Strip <think>...</think> blocks from reasoning models (DeepSeek R1, Qwen, etc.)
         if "</think>" in text:
             text = text.split("</think>")[-1].strip()
 
-        if text.startswith("```json"):
-            text = text[7:]
-        elif text.startswith("```"):
-            text = text[3:]
+        # Strip markdown code fences
+        if text.startswith("```"):
+            first_nl = text.find("\n")
+            if first_nl != -1:
+                text = text[first_nl + 1 :]
+            else:
+                text = text[3:]
         if text.endswith("```"):
-            text = text[:-3]
-        return json.loads(text.strip())
+            text = text[:-3].strip()
+
+        text = text.strip()
+
+        # Use raw_decode to extract the first JSON object, ignoring trailing text.
+        # Handles LLMs that emit JSON followed by explanations or multiple objects.
+        decoder = json.JSONDecoder()
+        obj, idx = decoder.raw_decode(text)
+        return obj

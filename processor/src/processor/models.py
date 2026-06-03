@@ -34,3 +34,4 @@ class ProcessedContent(BaseModel):
     title_zh: str = ""
     summary_zh: str = ""
     key_points_zh: list[str] = Field(default_factory=list)
+    final_score: float = Field(ge=0.0, le=1.0, default=0.0)
