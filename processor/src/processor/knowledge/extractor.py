@@ -75,6 +75,8 @@ class TripleExtractor:
             triples = result.get("triples", [])
             enriched = []
             for t in triples:
+                if not all(t.get(k) for k in ("subject", "predicate", "object")):
+                    continue
                 t.setdefault("confidence", "EXTRACTED")
                 t.setdefault("subject_type", "Concept")
                 t.setdefault("object_type", "Concept")

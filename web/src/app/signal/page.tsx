@@ -12,7 +12,7 @@ export default function SignalPage() {
   useEffect(() => {
     Promise.all([
       fetchAnalytics(7),
-      fetchContent({ limit: 50 }),
+      fetchContent({ page: 1, page_size: 50 }),
     ]).then(([analyticsData, contentData]) => {
       setAnalytics(analyticsData);
       setContents(contentData.items);
